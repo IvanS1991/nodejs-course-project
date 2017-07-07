@@ -1,0 +1,30 @@
+{
+  "name": "nodejs-course-project",
+  "version": "1.0.0",
+  "description": "Course project for the 'Web apps with Node.js' course at Telerik Academy",
+  "main": "index.js",
+  "repository": "https://github.com/Team-Express-1/nodejs-course-project.git",
+  "author": "Ivan Shtarbanov <haifischy91@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node app.js",
+    "test": "mocha -R spec ./tests/tests.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "cors": "^2.8.3",
+    "express": "^4.15.3",
+    "gulp": "^3.9.1",
+    "lodash": "^4.17.4",
+    "mongodb": "^2.2.29",
+    "passport": "^0.3.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "chai": "^4.0.2",
+    "eslint": "^4.1.1",
+    "eslint-config-google": "^0.8.0",
+    "mocha": "^3.4.2",
+    "sinon": "^2.3.6"
+  }
+}
