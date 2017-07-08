@@ -1,5 +1,5 @@
 const gulp = require('gulp');
 
 gulp.task('works', () => {
-    console.log('Gulp works');
+  console.log('Gulp works');
 });

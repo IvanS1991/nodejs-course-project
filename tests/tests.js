@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 
 describe('Data tests', () => {
-    const data = require('../app/data');
+    const data = require('../data');
 
     it('Should export an object', () => {
         expect(data).to.be.an('object');

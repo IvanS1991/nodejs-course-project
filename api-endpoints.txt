@@ -23,7 +23,7 @@ DELETE - /api/collections/:id/delete - header X-authKey
 Comments
 
 * Create
-POST - /api/comments/create - { recipient:..., title:..., content:... }
+POST - /api/comments/create - { author:..., title:..., content:... }
 * View
 GET - /api/comments/:id/view
 * Delete

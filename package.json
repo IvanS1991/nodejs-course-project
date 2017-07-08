@@ -7,7 +7,8 @@
   "author": "Ivan Shtarbanov <haifischy91@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "node app.js",
+    "start": "node server.js",
+    "dev-server": "nodemon server.js",
     "test": "mocha -R spec ./tests/tests.js"
   },
   "dependencies": {
