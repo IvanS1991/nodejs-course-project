@@ -7,7 +7,7 @@ const loader = (dir, filter) => {
 
     _(fs.readdirSync(dir))
         .filter((file) => {
-            return file.search('.util.js');
+            return file.search(filter) >= 0;
         })
         .forEach((file) => {
             const filePath = path.join(dir, file);

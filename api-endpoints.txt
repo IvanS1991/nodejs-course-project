@@ -1,0 +1,30 @@
+Users
+
+* Register
+POST - /api/users/register - { username:..., passHash:... }
+* Login
+PUT - /api/users/auth - { username:..., passHash: ... }
+* Check profile
+GET - /api/users/profile - header X-authKey
+* Update profile
+PUT - /api/users/update - { stuff to update }
+
+Collections
+
+* Create
+POST - /api/collections/create - { name:..., private:boolean }
+* View
+GET - /api/collections/:id/view
+* Update
+PUT - /api/collections/:id/update - { stuff to update }
+* Delete
+DELETE - /api/collections/:id/delete - header X-authKey
+
+Comments
+
+* Create
+POST - /api/comments/create - { recipient:..., title:..., content:... }
+* View
+GET - /api/comments/:id/view
+* Delete
+DELETE - /api/comments/:id/delete - header X-authKey
