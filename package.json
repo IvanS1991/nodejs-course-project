@@ -16,6 +16,7 @@
     "cors": "^2.8.3",
     "express": "^4.15.3",
     "gulp": "^3.9.1",
+    "imdb-data-scraper": "git+https://github.com/IvanS1991/imdb-data-scraper.git",
     "lodash": "^4.17.4",
     "mongodb": "^2.2.29",
     "passport": "^0.3.2"

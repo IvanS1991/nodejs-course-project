@@ -1,9 +1,3 @@
-const mongo = require('mongodb');
-const assert = require('assert');
-
-const models = require('../models');
-const { DB_PATH } = require('../constants');
-
 const comments = (() => {
   class CommentsController {
     create(req, res) {

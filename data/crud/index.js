@@ -48,6 +48,18 @@ const crud = (collectionName) => {
       });
     }
 
+    insertMany(db, items) {
+      return new Promise((resolve, reject) => {
+        return db.collection(collectionName)
+          .insertMany(items, (insertErr, result) => {
+            if (insertErr) {
+              return reject(insertErr);
+            }
+            return resolve(db);
+          });
+      });
+    }
+
     update(db, query, data) {
       return new Promise((resolve, reject) => {
         return db.collection(collectionName)
