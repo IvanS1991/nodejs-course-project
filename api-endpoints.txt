@@ -4,27 +4,36 @@ Users
 POST - /api/users/register - { username:..., passHash:... }
 * Login
 PUT - /api/users/auth - { username:..., passHash: ... }
-* Check profile
+* Check own profile
 GET - /api/users/profile - header X-authKey
+* Check an user's profile
+GET - /api/users/profile/:id
 * Update profile
-PUT - /api/users/update - { stuff to update }
+PUT - /api/users/update - { stuff to update } - header X-authkey
 
 Collections
 
 * Create
-POST - /api/collections/create - { name:..., private:boolean }
+POST - /api/collections/create - { name:..., private:boolean } - header X-authkey
 * View
-GET - /api/collections/:id/view
+GET - /api/collections/view/:id
 * Update
-PUT - /api/collections/:id/update - { stuff to update }
+PUT - /api/collections/update/:id - { stuff to update } - header X-authkey
 * Delete
-DELETE - /api/collections/:id/delete - header X-authKey
+DELETE - /api/collections/delete/:id - header X-authKey
 
 Comments
 
 * Create
-POST - /api/comments/create - { author:..., title:..., content:... }
+POST - /api/comments/create - { author:..., title:..., content:... } - header X-authkey
 * View
-GET - /api/comments/:id/view
+GET - /api/comments/view/:id
 * Delete
-DELETE - /api/comments/:id/delete - header X-authKey
+DELETE - /api/comments/delete/:id - header X-authKey
+
+Movies
+
+* View one
+GET - /api/movies/view/:id
+* View some
+GET - /api/movies/pages/:pages/size/:size
