@@ -1,41 +1,25 @@
 const scrapeMovies = require('imdb-data-scraper');
 
-const { DB_PATH, MOVIE_META } = require('../constants');
+const { MOVIE_META } = require('../constants');
 
-const {
-  connectDb,
-  closeDb,
-  find,
-  insertMany,
-  remove,
-} = require('./crud')('movies');
+const movies = (database) => {
+  const { find, insertMany, remove } = database('movies');
 
-const movies = (() => {
   class MoviesController {
     viewOne(req, res) {
       const id = parseInt(req.params.id, 10);
       const filter = { id: id };
 
-      connectDb(DB_PATH)
-        .then((db) => {
-          return find(db, filter);
+      return find(filter)
+        .then((matches) => {
+          return matches[0];
         })
-        .then((options) => {
-          const { db, matches } = options;
-          const match = matches[0];
+        .then((match) => {
           if (!match) {
-            res.status(404)
+            return res.status(404)
               .json('no such movie');
-            return closeDb(db);
           }
-          res.status(200)
-            .json(match);
-          return closeDb(db);
-        })
-        .catch((db, err) => {
-          res.status(404)
-            .json(err);
-          return closeDb(db);
+          return match;
         });
     }
 
@@ -49,27 +33,24 @@ const movies = (() => {
         genres = genres
           .split(',')
           .map((genre) => {
-            return ' ' + genre[0].toUpperCase() + genre.slice(1);
+            return genre.split('-')
+              .map((piece) => {
+                return piece[0].toUpperCase() + piece.slice(1);
+              })
+              .join('-');
           });
         filter.genres = { $all: genres };
       }
 
-      connectDb(DB_PATH)
-        .then((db) => {
-          return find(db, filter);
-        })
-        .then((options) => {
-          const { db, matches } = options;
+      return find(filter)
+        .then((matches) => {
           const startIndex = (page - 1) * size || 0;
           const endIndex = startIndex + size || matches.length;
-          res.status(200)
-            .json(matches.slice(startIndex, endIndex));
-          return closeDb(db);
-        })
-        .catch((db, err) => {
-          res.send(404)
-            .json(err);
-          return closeDb(db);
+          if (matches.length === 0) {
+            return res.status(404)
+              .json('no movies match this query');
+          }
+          return matches.slice(startIndex, endIndex);
         });
     }
 
@@ -83,35 +64,22 @@ const movies = (() => {
         };
       })();
 
-      scrapeMovies(MOVIE_META.PAGES, ...MOVIE_META.GENRES)
-        .then((movieList) => {
-          movieList.forEach((movie) => {
-            movie.comments = [];
+      return scrapeMovies(MOVIE_META.PAGES, ...MOVIE_META.GENRES)
+        .then((moviesList) => {
+          moviesList.forEach((movie) => {
             movie.id = getId();
+            movie.comments =[];
           });
-          data = movieList;
-          return connectDb(DB_PATH);
+          data = moviesList;
+          return remove({});
         })
-        .then((db) => {
-          return remove(db, {});
-        })
-        .then((db) => {
-          return insertMany(db, data);
-        })
-        .then((db) => {
-          res.status(200)
-            .json('inserted ' + data.length + ' movies');
-          return closeDb(db);
-        })
-        .catch((db, err) => {
-          res.status(404)
-            .json(err);
-          return closeDb(db);
+        .then(() => {
+          return insertMany(data);
         });
     }
   }
 
-  return new MoviesController();
-})();
+  return new MoviesController(database);
+};
 
 module.exports = movies;

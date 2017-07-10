@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const _ = require('lodash');
 
-const loader = (dir, filter) => {
+const loader = (dir, filter, ...dependencies) => {
   const output = {};
 
   _(fs.readdirSync(dir))
@@ -13,7 +13,11 @@ const loader = (dir, filter) => {
       const filePath = path.join(dir, file);
       const dotIndex = file.indexOf('.');
       const label = file.slice(0, dotIndex);
-      output[label] = require(filePath);
+      if (dependencies.length > 0) {
+        output[label] = require(filePath)(...dependencies);
+      } else {
+        output[label] = require(filePath);
+      }
     });
 
   return output;

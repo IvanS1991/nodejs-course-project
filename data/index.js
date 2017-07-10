@@ -2,4 +2,8 @@
 
 const { loader } = require('../utils');
 
-module.exports = loader(__dirname, '.data.js');
+const data = (db) => {
+  return loader(__dirname, '.data.js', db);
+};
+
+module.exports = data;

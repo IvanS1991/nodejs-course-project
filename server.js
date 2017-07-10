@@ -1,9 +1,12 @@
 /* globals __dirname */
 
-const express = require('express');
-const app = express();
-
-const config = require('./app');
-const data = require('./data');
-
-config(app, data, __dirname);
+Promise.resolve()
+  .then(() => {
+    return require('./db');
+  })
+  .then((db) => {
+    return require('./data')(db);
+  })
+  .then((data) => {
+    return require('./app')(data, __dirname);
+  });

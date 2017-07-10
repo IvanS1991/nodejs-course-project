@@ -1,4 +1,4 @@
-const collections = (() => {
+const collections = (database) => {
   class CollectionsController {
     create(req, res) {
       res.json('create collection');
@@ -20,7 +20,7 @@ const collections = (() => {
     }
   }
 
-  return new CollectionsController();
-})();
+  return new CollectionsController(database);
+};
 
 module.exports = collections;

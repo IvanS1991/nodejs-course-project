@@ -1,17 +1,10 @@
 const models = require('../models');
 
-const { DB_PATH } = require('../constants');
 const { getAuthKey } = require('../utils');
 
-const {
-  connectDb,
-  closeDb,
-  find,
-  insertOne,
-  update,
-} = require('./crud')('users');
+const users = (database) => {
+  const { find, insertOne, update } = database('users');
 
-const users = (() => {
   class UsersController {
     register(req, res) {
       const userData = req.body;
@@ -19,57 +12,42 @@ const users = (() => {
       user.userId = getAuthKey(user.username);
       user.authKey = getAuthKey(user.username);
 
-      return connectDb(DB_PATH)
-        .then((db) => {
-          return find(db, { username: user.username });
+      return find({ username: user.username })
+        .then((matches) => {
+          return matches[0];
         })
-        .then((options) => {
-          const { db, matches } = options;
-          if (matches.length > 0) {
-            res.status(404)
+        .then((match) => {
+          if (match) {
+            return res.status(404)
               .json('existing user');
-            return closeDb(db);
           }
-          return insertOne(db, user);
+          return insertOne(user);
         })
-        .then((db) => {
-          res.status(200)
-            .json('OK');
-            return closeDb(db);
-        })
-        .catch((db, err) => {
-          res.status(404)
-            .json(err);
-          return closeDb(db);
+        .then((inserted) => {
+          const { username, authKey } = inserted;
+          return {
+            username,
+            authKey,
+          };
         });
     }
 
     auth(req, res) {
-      const userData = req.body;
+      const { username, passHash } = req.body;
 
-      return connectDb(DB_PATH)
-        .then((db) => {
-          return find(db, {
-            username: userData.username,
-            passHash: userData.passHash,
-          });
+      return find({ username, passHash })
+        .then((matches) => {
+          return matches[0];
         })
-        .then((options) => {
-          const { db, matches } = options;
-          if (matches.length === 0) {
-            res.status(404)
+        .then((match) => {
+          if (!match) {
+            return res.status(404)
               .json('wrong username or password');
-            return closeDb(db);
           }
-          const match = matches[0];
-          res.status(200)
-            .json(match.authKey);
-          return closeDb(db);
+          return match.authKey;
         })
-        .catch((db, err) => {
-          res.status(404)
-            .json(err);
-          return closeDb(db);
+        .catch((err) => {
+          throw err;
         });
     }
 
@@ -80,30 +58,21 @@ const users = (() => {
         filter = { userId: id };
       }
 
-      return connectDb(DB_PATH)
-        .then((db) => {
-          return find(db, filter);
+      return find(filter)
+        .then((matches) => {
+          return matches[0];
         })
-        .then((options) => {
-          const { db, matches } = options;
-          if (matches.length === 0) {
-            res.status(404)
+        .then((match) => {
+          if (!match) {
+            return res.status(404)
               .json('no such user');
-            return closeDb(db);
           }
-          const match = matches[0];
-          res.status(200)
-            .json({
-              username: match.username,
-              comments: match.comments,
-              collections: match.collections,
-            });
-          return closeDb(db);
-        })
-        .catch((db, err) => {
-          res.status(404)
-            .json(err);
-          return closeDb(db);
+          const { username, collections, comments } = match;
+          return {
+            username,
+            collections,
+            comments,
+          };
         });
     }
 
@@ -116,33 +85,21 @@ const users = (() => {
       const data = req.body;
       const filter = { authKey: req.headers['x-authkey'] };
 
-      return connectDb(DB_PATH)
-        .then((db) => {
-          return find(db, filter);
+      return find(filter)
+        .then((matches) => {
+          return matches[0];
         })
-        .then((options) => {
-          const { db, matches } = options;
-          if (matches.length === 0) {
-            res.status(404)
+        .then((match) => {
+          if (!match) {
+            return res.status(404)
               .json('no such user');
-            return closeDb(db);
           }
-          return update(db, filter, data);
-        })
-        .then((db) => {
-          res.status(200)
-            .json('updated user data');
-          return closeDb(db);
-        })
-        .catch((db, err) => {
-          res.status(404)
-            .json(err);
-          return closeDb(db);
+          return update(filter, data);
         });
     }
   }
 
   return new UsersController();
-})();
+};
 
 module.exports = users;

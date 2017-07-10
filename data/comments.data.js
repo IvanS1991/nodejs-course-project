@@ -1,4 +1,4 @@
-const comments = (() => {
+const comments = (database) => {
   class CommentsController {
     create(req, res) {
       res.json('create comment');
@@ -15,7 +15,7 @@ const comments = (() => {
     }
   }
 
-  return new CommentsController();
-})();
+  return new CommentsController(database);
+};
 
 module.exports = comments;
