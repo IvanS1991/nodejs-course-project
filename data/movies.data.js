@@ -63,7 +63,7 @@ const movies = (() => {
           const startIndex = (page - 1) * size || 0;
           const endIndex = startIndex + size || matches.length;
           res.status(200)
-            .json(matches.slice(startIndex, endIndex).length);
+            .json(matches.slice(startIndex, endIndex));
           return closeDb(db);
         })
         .catch((db, err) => {
