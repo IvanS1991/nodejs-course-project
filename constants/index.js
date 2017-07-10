@@ -26,13 +26,15 @@ const constants = {
     MOVIES: {
       ROOT: '/api/movies',
       VIEW_ONE: '/view/:id',
-      VIEW_SOME: '/pages/:pages/size/:size',
+      VIEW_SOME: '/view',
       UPDATE: '/update',
     },
   },
   MOVIE_META: {
-    PAGES: 1,
-    GENRES: ['action'],
+    PAGES: 4,
+    GENRES: ['action', 'sci-fi', 'fantasy',
+      'adventure', 'comedy', 'thriller',
+      'drama', 'romance', 'animation'],
   },
 };
 

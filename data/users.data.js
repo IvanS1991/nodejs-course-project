@@ -26,8 +26,9 @@ const users = (() => {
         .then((options) => {
           const { db, matches } = options;
           if (matches.length > 0) {
-            return res.status(404)
+            res.status(404)
               .json('existing user');
+            return closeDb(db);
           }
           return insertOne(db, user);
         })
@@ -37,9 +38,9 @@ const users = (() => {
             return closeDb(db);
         })
         .catch((db, err) => {
-          db.close();
-          return res.status(404)
+          res.status(404)
             .json(err);
+          return closeDb(db);
         });
     }
 
@@ -56,9 +57,9 @@ const users = (() => {
         .then((options) => {
           const { db, matches } = options;
           if (matches.length === 0) {
-            db.close();
-            return res.status(404)
+            res.status(404)
               .json('wrong username or password');
+            return closeDb(db);
           }
           const match = matches[0];
           res.status(200)
@@ -66,9 +67,9 @@ const users = (() => {
           return closeDb(db);
         })
         .catch((db, err) => {
-          db.close();
-          return res.status(404)
+          res.status(404)
             .json(err);
+          return closeDb(db);
         });
     }
 
@@ -86,8 +87,9 @@ const users = (() => {
         .then((options) => {
           const { db, matches } = options;
           if (matches.length === 0) {
-            return res.status(404)
+            res.status(404)
               .json('no such user');
+            return closeDb(db);
           }
           const match = matches[0];
           res.status(200)
@@ -99,9 +101,9 @@ const users = (() => {
           return closeDb(db);
         })
         .catch((db, err) => {
-          db.close();
-          return res.status(404)
+          res.status(404)
             .json(err);
+          return closeDb(db);
         });
     }
 
@@ -121,8 +123,9 @@ const users = (() => {
         .then((options) => {
           const { db, matches } = options;
           if (matches.length === 0) {
-            return res.status(404)
+            res.status(404)
               .json('no such user');
+            return closeDb(db);
           }
           return update(db, filter, data);
         })
@@ -132,9 +135,9 @@ const users = (() => {
           return closeDb(db);
         })
         .catch((db, err) => {
-          db.close();
-          return res.status(404)
+          res.status(404)
             .json(err);
+          return closeDb(db);
         });
     }
   }

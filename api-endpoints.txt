@@ -33,7 +33,9 @@ DELETE - /api/comments/delete/:id - header X-authKey
 
 Movies
 
+* Update
+POST - /api/movies/update
 * View one
 GET - /api/movies/view/:id
 * View some
-GET - /api/movies/pages/:pages/size/:size
+GET - /api/movies/view?page=...&size=...&genres=... - page=2&size=10&genres=action,comedy will select the movies with those two genres and return a slice with the 10th to the 20th from the matches
