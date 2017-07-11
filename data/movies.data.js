@@ -3,53 +3,28 @@ const scrapeMovies = require('imdb-data-scraper');
 const { MOVIE_META } = require('../constants');
 
 const movies = (database) => {
-  const { find, insertMany, remove } = database('movies');
+  const moviesDb = database('movies');
 
-  class MoviesController {
-    viewOne(req, res) {
-      const id = parseInt(req.params.id, 10);
-      const filter = { id: id };
-
-      return find(filter)
-        .then((matches) => {
-          return matches[0];
-        })
+  class MoviesData {
+    viewOne(filter) {
+      return moviesDb.findOne(filter)
         .then((match) => {
           if (!match) {
-            return res.status(404)
-              .json('no such movie');
+            return Promise.reject(new Error('no such movie'));
           }
           return match;
         });
     }
 
-    viewSome(req, res) {
-      const page = parseInt(req.query.page, 10);
-      const size = parseInt(req.query.size, 10);
-
-      let genres = req.query.genres;
-      const filter = {};
-      if (genres) {
-        genres = genres
-          .split(',')
-          .map((genre) => {
-            return genre.split('-')
-              .map((piece) => {
-                return piece[0].toUpperCase() + piece.slice(1);
-              })
-              .join('-');
-          });
-        filter.genres = { $all: genres };
-      }
-
-      return find(filter)
+    viewSome(options) {
+      const { page, size, filter } = options;
+      return moviesDb.findMany(filter)
         .then((matches) => {
+          if (matches.length === 0) {
+            return Promise.reject(new Error('no movies match this query'));
+          }
           const startIndex = (page - 1) * size || 0;
           const endIndex = startIndex + size || matches.length;
-          if (matches.length === 0) {
-            return res.status(404)
-              .json('no movies match this query');
-          }
           return matches.slice(startIndex, endIndex);
         });
     }
@@ -71,15 +46,15 @@ const movies = (database) => {
             movie.comments =[];
           });
           data = moviesList;
-          return remove({});
+          return moviesDb.remove({});
         })
         .then(() => {
-          return insertMany(data);
+          return moviesDb.insertMany(data);
         });
     }
   }
 
-  return new MoviesController(database);
+  return new MoviesData(database);
 };
 
 module.exports = movies;

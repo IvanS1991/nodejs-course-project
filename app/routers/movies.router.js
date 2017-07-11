@@ -5,8 +5,12 @@ const attach = (app, data) => {
   const { movies } = data;
   const router = new Router();
 
+  // MOVIES GET
   router.get(ROUTES.MOVIES.VIEW_ONE, (req, res) => {
-    movies.viewOne(req, res)
+    const id = parseInt(req.params.id, 10);
+    const filter = { id: id };
+
+    movies.viewOne(filter)
       .then((movie) => {
         return res.status(200)
           .json(movie);
@@ -16,8 +20,27 @@ const attach = (app, data) => {
       });
   });
 
+  // MOVIES GET
   router.get(ROUTES.MOVIES.VIEW_SOME, (req, res) => {
-    return movies.viewSome(req, res)
+    const page = parseInt(req.query.page, 10);
+    const size = parseInt(req.query.size, 10);
+
+    let genres = req.query.genres;
+    const filter = {};
+    if (genres) {
+      genres = genres
+        .split(',')
+        .map((genre) => {
+          return genre.split('-')
+            .map((piece) => {
+              return piece[0].toUpperCase() + piece.slice(1);
+            })
+            .join('-');
+        });
+      filter.genres = { $all: genres };
+    }
+
+    return movies.viewSome({ page, size, filter })
       .then((matches) => {
         return res.status(200)
           .json(matches);
@@ -27,6 +50,7 @@ const attach = (app, data) => {
       });
   });
 
+  // MOVIES POST
   router.post(ROUTES.MOVIES.UPDATE, movies.update);
 
   app.use(ROUTES.MOVIES.ROOT, router);

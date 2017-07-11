@@ -25,9 +25,7 @@ DELETE - /api/collections/delete/:id - header X-authKey
 Comments
 
 * Create
-POST - /api/comments/create - { author:..., title:..., content:... } - header X-authkey
-* View
-GET - /api/comments/view/:id
+POST - /api/comments/create - { title:..., content:..., movieId:... } - header X-authkey
 * Delete
 DELETE - /api/comments/delete/:id - header X-authKey
 

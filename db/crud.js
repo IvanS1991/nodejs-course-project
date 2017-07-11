@@ -1,7 +1,7 @@
 const crud = (db) => {
   const getCrud = (collectionName) => {
     class Crud {
-      find(query) {
+      findMany(query) {
         return new Promise((resolve, reject) => {
           return db.collection(collectionName)
             .find(query)
@@ -12,6 +12,23 @@ const crud = (db) => {
               return resolve(matches);
             });
         });
+      }
+
+      findOne(query) {
+        return new Promise((resolve, reject) => {
+          return db.collection(collectionName)
+            .find(query)
+            .toArray((findErr, matches) => {
+              console.log(matches);
+              if (findErr) {
+                return reject(findErr);
+              }
+              return resolve(matches);
+            });
+          })
+          .then((matches) => {
+            return matches[0];
+          });
       }
 
       insertOne(item) {
@@ -42,6 +59,18 @@ const crud = (db) => {
         return new Promise((resolve, reject) => {
           return db.collection(collectionName)
             .updateOne(query, { $set: data }, (updateErr, result) => {
+              if (updateErr) {
+                return reject(updateErr);
+              }
+              return resolve(data);
+            });
+        });
+      }
+
+      updatePush(query, data) {
+        return new Promise((resolve, reject) => {
+          return db.collection(collectionName)
+            .updateOne(query, { $push: data }, (updateErr, result) => {
               if (updateErr) {
                 return reject(updateErr);
               }

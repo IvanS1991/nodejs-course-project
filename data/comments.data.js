@@ -1,21 +1,45 @@
+const { commentModel } = require('../models');
+
+const { getKey } = require('../utils');
+
 const comments = (database) => {
-  class CommentsController {
+  const moviesDb = database('movies');
+  const usersDb = database('users');
+
+  class CommentsData {
     create(req, res) {
-      res.json('create comment');
+      const commentData = req.body;
+
+      const userFilter = { authKey: req.headers['x-authkey'] };
+      const movieFilter = { id: commentData.movieId };
+
+      const comment = commentModel(commentData);
+      comment.id = getKey('comment' + Math.floor(Math.random() * 100000));
+
+      return usersDb.findOne(userFilter)
+        .then((user) => {
+          if (!user) {
+            return res.status(404)
+              .json('no such user');
+          }
+          comment.author = user.username;
+          return usersDb.updatePush(userFilter, { comments: comment });
+        })
+        .then(() => {
+          return moviesDb.findOne(movieFilter);
+        })
+        .then((movie) => {
+          return moviesDb.updatePush(movieFilter, { comments: comment });
+        });
     }
 
-    view(req, res) {
-      const id = req.params.id;
-      res.json('view comment ' + id);
-    }
-
-    delete(req, res) {
+    remove(req, res) {
       const id = req.params.id;
       res.json('delete comment ' + id);
     }
   }
 
-  return new CommentsController(database);
+  return new CommentsData(database);
 };
 
 module.exports = comments;

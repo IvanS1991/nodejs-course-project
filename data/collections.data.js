@@ -1,5 +1,7 @@
 const collections = (database) => {
-  class CollectionsController {
+  const usersDb = database('users');
+
+  class CollectionsData {
     create(req, res) {
       res.json('create collection');
     }
@@ -20,7 +22,7 @@ const collections = (database) => {
     }
   }
 
-  return new CollectionsController(database);
+  return new CollectionsData(database);
 };
 
 module.exports = collections;

@@ -1,8 +1,8 @@
-const getAuthKey = (username) => {
+const getKey = (prefix) => {
   const symbols =
     'qwertyuiopasdfghjklzxcvbnm1234567890QWERTYUIOPASDFGHJKLZXCVBNM';
   const len = symbols.length;
-  let output = username;
+  let output = prefix;
 
   const randomInRange = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -17,4 +17,4 @@ const getAuthKey = (username) => {
   return output;
 };
 
-module.exports = getAuthKey;
+module.exports = getKey;

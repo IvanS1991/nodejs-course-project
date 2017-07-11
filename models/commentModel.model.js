@@ -1,13 +1,12 @@
 const collectionModel = (options) => {
   class CollectionModel {
-    constructor(author, title, content) {
-      this.author = author;
+    constructor(title, content) {
       this.title = title;
       this.content = content;
     }
   }
 
-  return new CollectionModel(options.author, options.title, options.content);
+  return new CollectionModel(options.title, options.content);
 };
 
 module.exports = collectionModel;

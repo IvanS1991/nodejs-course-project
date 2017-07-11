@@ -9,4 +9,7 @@ Promise.resolve()
   })
   .then((data) => {
     return require('./app')(data, __dirname);
+  })
+  .catch((err) => {
+    throw err;
   });
