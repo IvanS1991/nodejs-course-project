@@ -1,5 +1,5 @@
 const collections = (database) => {
-  const usersDb = database('users');
+  const usersData = database('users');
 
   class CollectionsData {
     create(req, res) {

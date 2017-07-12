@@ -1,11 +1,11 @@
 const { Router } = require('express');
 const { ROUTES } = require('../../constants');
 
-const attach = (app, data) => {
+const moviesRouter = (app, data) => {
   const { movies } = data;
   const router = new Router();
 
-  // MOVIES GET
+  // VIEW BY ID
   router.get(ROUTES.MOVIES.VIEW_ONE, (req, res) => {
     const id = parseInt(req.params.id, 10);
     const filter = { id: id };
@@ -16,11 +16,12 @@ const attach = (app, data) => {
           .json(movie);
       })
       .catch((err) => {
-        throw err;
+        return res.status(404)
+          .json(err);
       });
   });
 
-  // MOVIES GET
+  // VIEW BY QUERY
   router.get(ROUTES.MOVIES.VIEW_SOME, (req, res) => {
     const page = parseInt(req.query.page, 10);
     const size = parseInt(req.query.size, 10);
@@ -46,14 +47,15 @@ const attach = (app, data) => {
           .json(matches);
       })
       .catch((err) => {
-        throw err;
+        return res.status(404)
+          .json(err);
       });
   });
 
-  // MOVIES POST
+  // POST
   router.post(ROUTES.MOVIES.UPDATE, movies.update);
 
   app.use(ROUTES.MOVIES.ROOT, router);
 };
 
-module.exports = attach;
+module.exports = moviesRouter;

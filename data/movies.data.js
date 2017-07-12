@@ -3,14 +3,14 @@ const scrapeMovies = require('imdb-data-scraper');
 const { MOVIE_META } = require('../constants');
 
 const movies = (database) => {
-  const moviesDb = database('movies');
+  const moviesData = database('movies');
 
   class MoviesData {
     viewOne(filter) {
-      return moviesDb.findOne(filter)
+      return moviesData.findOne(filter)
         .then((match) => {
           if (!match) {
-            return Promise.reject(new Error('no such movie'));
+            return Promise.reject('no such movie');
           }
           return match;
         });
@@ -18,10 +18,10 @@ const movies = (database) => {
 
     viewSome(options) {
       const { page, size, filter } = options;
-      return moviesDb.findMany(filter)
+      return moviesData.findMany(filter)
         .then((matches) => {
           if (matches.length === 0) {
-            return Promise.reject(new Error('no movies match this query'));
+            return Promise.reject('no movies match this criteria');
           }
           const startIndex = (page - 1) * size || 0;
           const endIndex = startIndex + size || matches.length;
@@ -30,7 +30,6 @@ const movies = (database) => {
     }
 
     update(req, res) {
-      let data;
       const getId = (() => {
         let id = 0;
         return () => {
@@ -45,11 +44,10 @@ const movies = (database) => {
             movie.id = getId();
             movie.comments =[];
           });
-          data = moviesList;
-          return moviesDb.remove({});
+          return moviesData.insertMany(moviesList);
         })
-        .then(() => {
-          return moviesDb.insertMany(data);
+        .then((result) => {
+          return result.length;
         });
     }
   }

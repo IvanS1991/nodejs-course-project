@@ -1,22 +1,22 @@
 const users = (database) => {
-  const usersDb = database('users');
+  const usersData = database('users');
 
   class UsersData {
     register(user) {
-      return usersDb.findOne({ username: user.username })
+      return usersData.findOne({ username: user.username })
         .then((match) => {
           if (match) {
-            return Promise.reject(new Error('existing user'));
+            return Promise.reject('existing user');
           }
-          return usersDb.insertOne(user);
+          return usersData.insertOne(user);
         });
     }
 
     auth(filter) {
-      return usersDb.findOne(filter)
+      return usersData.findOne(filter)
         .then((match) => {
           if (!match) {
-            return Promise.reject(new Error('wrong username or password'));
+            return Promise.reject('wrong username or password');
           }
           return {
             authKey: match.authKey,
@@ -25,10 +25,10 @@ const users = (database) => {
     }
 
     profile(filter) {
-      return usersDb.findOne(filter)
+      return usersData.findOne(filter)
         .then((match) => {
           if (!match) {
-            return Promise.reject(new Error('no such user'));
+            return Promise.reject('no such user');
           }
           const { username, collections, comments } = match;
           return {
@@ -41,12 +41,12 @@ const users = (database) => {
 
     update(options) {
       const { filter, data } = options;
-      return usersDb.findOne(filter)
+      return usersData.findOne(filter)
         .then((match) => {
           if (!match) {
-            return Promise.reject(new Error('no such user'));
+            return Promise.reject('no such user');
           }
-          return usersDb.update(filter, data);
+          return usersData.update(filter, data);
         });
     }
   }

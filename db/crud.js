@@ -19,7 +19,6 @@ const crud = (db) => {
           return db.collection(collectionName)
             .find(query)
             .toArray((findErr, matches) => {
-              console.log(matches);
               if (findErr) {
                 return reject(findErr);
               }

@@ -86,7 +86,7 @@ describe(`data.moviesDb tests`, () => {
         moviesDb.viewOne({})
           .catch((err) => {
             return expect(err).to.exist
-              .and.to.be.an.instanceof(Error);
+              .and.to.be.a('string');
           });
       });
     });
@@ -156,7 +156,7 @@ describe(`data.moviesDb tests`, () => {
         moviesDb.viewSome({})
           .catch((err) => {
             return expect(err).to.exist
-              .and.to.be.an.instanceof(Error);
+              .and.to.be.a('string');
           });
       });
     });

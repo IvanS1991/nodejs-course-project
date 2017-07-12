@@ -84,11 +84,11 @@ describe('data.usersDb tests', () => {
         crud.findOne.restore();
       });
 
-      it(`expect to reject with an error`, () => {
+      it(`expect to reject with an error string`, () => {
         usersDb.register({})
           .catch((err) => {
             return expect(err).to.exist
-              .and.to.be.an.instanceof(Error);
+              .and.to.be.a('string');
           });
       });
     });
@@ -145,7 +145,7 @@ describe('data.usersDb tests', () => {
         usersDb.auth({})
           .catch((err) => {
             return expect(err).to.exist
-              .and.to.be.an.instanceof(Error);
+              .and.to.be.a('string');
           });
       });
     });
@@ -205,7 +205,7 @@ describe('data.usersDb tests', () => {
         usersDb.profile({})
           .catch((err) => {
             return expect(err).to.exist
-              .and.to.be.an.instanceof(Error);
+              .and.to.be.a('string');
           });
       });
     });
@@ -261,7 +261,7 @@ describe('data.usersDb tests', () => {
         usersDb.update({})
           .catch((err) => {
             return expect(err).to.exist
-              .and.to.be.an.instanceof(Error);
+              .and.to.be.a('string');
           });
       });
     });

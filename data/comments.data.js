@@ -3,8 +3,8 @@ const { commentModel } = require('../models');
 const { getKey } = require('../utils');
 
 const comments = (database) => {
-  const moviesDb = database('movies');
-  const usersDb = database('users');
+  const moviesData = database('movies');
+  const usersData = database('users');
 
   class CommentsData {
     create(req, res) {
@@ -16,20 +16,20 @@ const comments = (database) => {
       const comment = commentModel(commentData);
       comment.id = getKey('comment' + Math.floor(Math.random() * 100000));
 
-      return usersDb.findOne(userFilter)
+      return usersData.findOne(userFilter)
         .then((user) => {
           if (!user) {
             return res.status(404)
               .json('no such user');
           }
           comment.author = user.username;
-          return usersDb.updatePush(userFilter, { comments: comment });
+          return usersData.updatePush(userFilter, { comments: comment });
         })
         .then(() => {
-          return moviesDb.findOne(movieFilter);
+          return moviesData.findOne(movieFilter);
         })
         .then((movie) => {
-          return moviesDb.updatePush(movieFilter, { comments: comment });
+          return moviesData.updatePush(movieFilter, { comments: comment });
         });
     }
 

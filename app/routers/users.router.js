@@ -3,10 +3,11 @@ const { ROUTES } = require('../../constants');
 
 const { userModel } = require('../../models');
 
-const userRouter = (app, data) => {
+const usersRouter = (app, data) => {
   const { users } = data;
   const router = new Router();
 
+  // REGISTER
   router.post(ROUTES.USERS.REGISTER, (req, res) => {
     const userData = req.body;
     const user = userModel(userData);
@@ -24,6 +25,7 @@ const userRouter = (app, data) => {
       });
   });
 
+  // LOGIN
   router.put(ROUTES.USERS.AUTH, (req, res) => {
     const { username, passHash } = req.body;
     const filter = { username, passHash };
@@ -34,16 +36,15 @@ const userRouter = (app, data) => {
           .json(authKey);
       })
       .catch((err) => {
-        throw err;
+        return res.status(404)
+          .json(err);
       });
   });
 
+  // VIEW PROFILE
   router.get(ROUTES.USERS.PROFILE, (req, res) => {
     const id = req.params.id;
-    let filter = { authKey: req.headers['x-authkey'] };
-    if (id) {
-      filter = { userId: id };
-    }
+    const filter = { id };
 
     return users.profile(filter)
       .then((match) => {
@@ -51,16 +52,14 @@ const userRouter = (app, data) => {
           .json(match);
       })
       .catch((err) => {
-        throw err;
+        return res.status(404)
+          .json(err);
       });
   });
 
+  // VIEW OWN PROFILE
   router.get(ROUTES.USERS.OWN_PROFILE, (req, res) => {
-    const id = req.params.id;
-    let filter = { authKey: req.headers['x-authkey'] };
-    if (id) {
-      filter = { userId: id };
-    }
+    const filter = { authKey: req.headers['x-authkey'] };
 
     return users.profile(filter)
       .then((match) => {
@@ -68,10 +67,12 @@ const userRouter = (app, data) => {
           .json(match);
       })
       .catch((err) => {
-        throw err;
+        return res.status(404)
+          .json(err);
       });
   });
 
+  // UPDATE USER DETAILS
   router.put(ROUTES.USERS.UPDATE, (req, res) => {
     const authKey = req.headers['x-authkey'];
     if (!authKey) {
@@ -90,11 +91,12 @@ const userRouter = (app, data) => {
           .json(updateData);
       })
       .catch((err) => {
-        throw err;
+        return res.status(404)
+          .json(err);
       });
   });
 
   app.use(ROUTES.USERS.ROOT, router);
 };
 
-module.exports = userRouter;
+module.exports = usersRouter;
