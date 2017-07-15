@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "body-parser": "^1.17.2",
+    "bootstrap": "^3.3.7",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.3",
     "express": "^4.15.3",
@@ -23,12 +24,14 @@
     "gulp": "^3.9.1",
     "imdb-data-scraper": "git+https://github.com/IvanS1991/imdb-data-scraper.git",
     "istanbul": "^0.4.5",
+    "jquery": "^3.2.1",
+    "jquery-ui": "^1.12.1",
     "lodash": "^4.17.4",
     "mongodb": "^2.2.29",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "pug": "^2.0.0-rc.2",
-    "sinon": "^2.3.7"
+    "toastr": "^2.1.2"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
@@ -36,6 +39,7 @@
     "eslint": "^4.1.1",
     "eslint-config-google": "^0.8.0",
     "mocha": "^3.4.2",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "sinon": "^2.3.8"
   }
 }

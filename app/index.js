@@ -1,4 +1,5 @@
-const app = require('express')();
+const express = require('express');
+const app = express();
 
 const { PORT } = require('../constants');
 const routers = require('./routers');
@@ -8,6 +9,9 @@ const attach = (data, root) => {
   const passport = require('./passport.config')(data);
 
   app.set('view engine', 'pug');
+
+  app.use('/', express.static('../public'));
+  app.use('/lib', express.static('../node_modules'));
 
   middlewares(app, passport);
   routers(app, data, passport);

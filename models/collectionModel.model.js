@@ -1,8 +1,11 @@
+const { parseTime } = require('../utils');
+
 const collectionModel = (options) => {
   class CollectionModel {
     constructor(collectionName) {
       this.collectionName = collectionName;
       this.movies = [];
+      this.created = parseTime(new Date());
     }
   }
 

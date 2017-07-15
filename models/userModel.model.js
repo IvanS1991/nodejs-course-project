@@ -1,4 +1,4 @@
-const { getKey } = require('../utils');
+const { getKey, parseTime } = require('../utils');
 
 const userModel = (options) => {
   if (!options.username || !options.passHash) {
@@ -8,11 +8,12 @@ const userModel = (options) => {
   class UserModel {
     constructor(username, passHash) {
       this.username = username;
+      this.usernameLC = username.toLowerCase();
       this.passHash = passHash;
       this.comments = [];
       this.collections = [];
-      this.id = getKey(username);
       this.authKey = getKey(username);
+      this.joined = parseTime(new Date());
     }
   }
 
