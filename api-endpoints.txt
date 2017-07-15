@@ -1,39 +1,39 @@
 Users
 
 * Register
-POST - /api/users/register - { username:..., passHash:... }
+POST - /users/register - { username:..., passHash:... }
 * Login
-PUT - /api/users/auth - { username:..., passHash: ... }
+PUT - /users/auth - { username:..., passHash: ... }
 * Check own profile
-GET - /api/users/profile - header X-authKey
+GET - /users/profile - header X-authKey
 * Check an user's profile
-GET - /api/users/profile/:id
+GET - /users/profile/:id
 * Update profile
-PUT - /api/users/update - { stuff to update } - header X-authkey
+PUT - /users/update - { stuff to update } - header X-authkey
 
 Collections
 
 * Create
-POST - /api/collections/create - { name:..., private:boolean } - header X-authkey
+POST - /collections/create - { name:..., private:boolean } - header X-authkey
 * View
-GET - /api/collections/view/:id
+GET - /collections/view/:id
 * Update
-PUT - /api/collections/update/:id - { stuff to update } - header X-authkey
+PUT - /collections/update/:id - { stuff to update } - header X-authkey
 * Delete
-DELETE - /api/collections/delete/:id - header X-authKey
+DELETE - /collections/delete/:id - header X-authKey
 
 Comments
 
 * Create
-POST - /api/comments/create - { title:..., content:..., movieId:... } - header X-authkey
+POST - /comments/create - { title:..., content:..., movieId:... } - header X-authkey
 * Delete
-DELETE - /api/comments/delete/:id - header X-authKey
+DELETE - /comments/delete/:id - header X-authKey
 
 Movies
 
 * Update
-POST - /api/movies/update
+POST - /movies/update
 * View one
-GET - /api/movies/view/:id
+GET - /movies/view/:id
 * View some
-GET - /api/movies/view?page=...&size=...&genres=... - page=2&size=10&genres=action,comedy will select the movies with those two genres and return a slice with the 10th to the 20th from the matches
+GET - /movies/view?page=...&size=...&genres=... - page=2&size=10&genres=action,comedy will select the movies with those two genres and return a slice with the 10th to the 20th from the matches

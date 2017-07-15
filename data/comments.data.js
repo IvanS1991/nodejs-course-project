@@ -7,11 +7,8 @@ const comments = (database) => {
   const usersData = database('users');
 
   class CommentsData {
-    create(req, res) {
-      const commentData = req.body;
-
-      const userFilter = { authKey: req.headers['x-authkey'] };
-      const movieFilter = { id: commentData.movieId };
+    create(options) {
+      const { commentData, userFilter, movieFilter } = options;
 
       const comment = commentModel(commentData);
       comment.id = getKey('comment' + Math.floor(Math.random() * 100000));
@@ -19,8 +16,7 @@ const comments = (database) => {
       return usersData.findOne(userFilter)
         .then((user) => {
           if (!user) {
-            return res.status(404)
-              .json('no such user');
+            return Promise.reject('no such user');
           }
           comment.author = user.username;
           return usersData.updatePush(userFilter, { comments: comment });
@@ -29,6 +25,7 @@ const comments = (database) => {
           return moviesData.findOne(movieFilter);
         })
         .then((movie) => {
+          console.log(movie);
           return moviesData.updatePush(movieFilter, { comments: comment });
         });
     }

@@ -3,21 +3,26 @@ const { ROUTES } = require('../../constants');
 
 const { userModel } = require('../../models');
 
-const usersRouter = (app, data) => {
+const usersRouter = (app, data, passport) => {
   const { users } = data;
   const router = new Router();
 
   // REGISTER
   router.post(ROUTES.USERS.REGISTER, (req, res) => {
     const userData = req.body;
-    const user = userModel(userData);
+    const user = userModel({
+      username: userData.username,
+      passHash: userData.password,
+    });
 
     return users.register(user)
       .then((newUser) => {
-        return res.status(200)
-          .json({
-            authKey: newUser.authKey,
-          });
+        req.login(newUser, (err) => {
+          if (err) {
+            throw err;
+          }
+          return res.redirect('/');
+        });
       })
       .catch((err) => {
         return res.status(404)
@@ -26,19 +31,8 @@ const usersRouter = (app, data) => {
   });
 
   // LOGIN
-  router.put(ROUTES.USERS.AUTH, (req, res) => {
-    const { username, passHash } = req.body;
-    const filter = { username, passHash };
-
-    return users.auth(filter)
-      .then((authKey) => {
-        return res.status(200)
-          .json(authKey);
-      })
-      .catch((err) => {
-        return res.status(404)
-          .json(err);
-      });
+  router.post(ROUTES.USERS.AUTH, passport.authenticate('local'), (req, res) => {
+    res.redirect('/');
   });
 
   // VIEW PROFILE
@@ -59,12 +53,13 @@ const usersRouter = (app, data) => {
 
   // VIEW OWN PROFILE
   router.get(ROUTES.USERS.OWN_PROFILE, (req, res) => {
-    const filter = { authKey: req.headers['x-authkey'] };
+    const filter = { authKey: req.user.authKey };
 
     return users.profile(filter)
       .then((match) => {
-        return res.status(200)
-          .json(match);
+        return res.render('profile', {
+          context: match,
+        });
       })
       .catch((err) => {
         return res.status(404)
@@ -73,14 +68,9 @@ const usersRouter = (app, data) => {
   });
 
   // UPDATE USER DETAILS
-  router.put(ROUTES.USERS.UPDATE, (req, res) => {
-    const authKey = req.headers['x-authkey'];
-    if (!authKey) {
-      return res.status(404)
-        .json('couldnt authorize user');
-    }
+  router.post(ROUTES.USERS.UPDATE, (req, res) => {
     const newData = req.body;
-    const filter = { authKey: req.headers['x-authkey'] };
+    const filter = { authKey: req.user.authKey };
 
     return users.update({
       filter,

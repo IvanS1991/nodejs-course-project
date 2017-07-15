@@ -1,0 +1,9 @@
+html
+  head
+    title
+      | Some title
+    body
+      form(action="/users/auth" autocomplete="off" enctype="application/x-www-form-urlencoded" method="post")
+        input(type="text" name="username" placeholder="Username")
+        input(type="password" name="password" placeholder="Password")
+        input(type="submit" value="Submit")

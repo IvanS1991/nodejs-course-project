@@ -7,7 +7,13 @@ const commentsRouter = (app, data) => {
 
   // CREATE
   router.post(ROUTES.COMMENTS.CREATE, (req, res) => {
-    return comments.create(req, res)
+    const commentData = req.body;
+
+    const userFilter = { authKey: req.user.authKey };
+    const movieFilter = { id: parseInt(commentData.movieId, 10) };
+
+
+    return comments.create({ commentData, userFilter, movieFilter })
       .then((movie) => {
         return res.status(200)
           .json(movie);

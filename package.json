@@ -16,14 +16,18 @@
   },
   "dependencies": {
     "body-parser": "^1.17.2",
+    "cookie-parser": "^1.4.3",
     "cors": "^2.8.3",
     "express": "^4.15.3",
+    "express-session": "^1.15.3",
     "gulp": "^3.9.1",
     "imdb-data-scraper": "git+https://github.com/IvanS1991/imdb-data-scraper.git",
     "istanbul": "^0.4.5",
     "lodash": "^4.17.4",
     "mongodb": "^2.2.29",
     "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "pug": "^2.0.0-rc.2",
     "sinon": "^2.3.7"
   },
   "devDependencies": {

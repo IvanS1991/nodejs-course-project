@@ -1,5 +1,3 @@
-/* globals __dirname */
-
 Promise.resolve()
   .then(() => {
     return require('./db');
@@ -8,7 +6,7 @@ Promise.resolve()
     return require('./data')(db);
   })
   .then((data) => {
-    return require('./app')(data, __dirname);
+    return require('./app')(data);
   })
   .catch((err) => {
     throw err;

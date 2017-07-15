@@ -3,7 +3,7 @@ const constants = {
   DB_PATH: 'mongodb://localhost:27017/test',
   ROUTES: {
     USERS: {
-      ROOT: '/api/users',
+      ROOT: '/users',
       REGISTER: '/register',
       AUTH: '/auth',
       OWN_PROFILE: '/profile',
@@ -11,20 +11,20 @@ const constants = {
       UPDATE: '/update',
     },
     COLLECTIONS: {
-      ROOT: '/api/collections',
+      ROOT: '/collections',
       CREATE: '/create',
       UPDATE: '/update/:id',
       VIEW: '/view/:id',
       DELETE: '/delete/:id',
     },
     COMMENTS: {
-      ROOT: '/api/comments',
+      ROOT: '/comments',
       CREATE: '/create',
       VIEW: '/view/:id',
       DELETE: '/delete/:id',
     },
     MOVIES: {
-      ROOT: '/api/movies',
+      ROOT: '/movies',
       VIEW_ONE: '/view/:id',
       VIEW_SOME: '/view',
       UPDATE: '/update',

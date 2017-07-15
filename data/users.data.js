@@ -1,7 +1,21 @@
+const { getKey } = require('../utils');
+
 const users = (database) => {
   const usersData = database('users');
 
   class UsersData {
+    findByUsername(username) {
+      return usersData.findOne({ username: username });
+    }
+
+    findByAuthKey(authKey) {
+      return usersData.findOne({ authKey: authKey });
+    }
+
+    getNewAuthKey(user) {
+      return usersData.update(user, { authKey: getKey(user.username) });
+    }
+
     register(user) {
       return usersData.findOne({ username: user.username })
         .then((match) => {
