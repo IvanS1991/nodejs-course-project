@@ -6,7 +6,7 @@ const moviesRouter = (app, data) => {
   const router = new Router();
 
   // VIEW BY ID
-  router.get(ROUTES.MOVIES.VIEW_ONE, (req, res) => {
+  router.get(ROUTES.MOVIES.VIEW_ONE, (req, res, next) => {
     const id = parseInt(req.params.id, 10);
     const filter = { id: id };
 
@@ -16,13 +16,12 @@ const moviesRouter = (app, data) => {
           .json(movie);
       })
       .catch((err) => {
-        return res.status(404)
-          .json(err);
+        next(err);
       });
   });
 
   // VIEW BY QUERY
-  router.get(ROUTES.MOVIES.VIEW_SOME, (req, res) => {
+  router.get(ROUTES.MOVIES.VIEW_SOME, (req, res, next) => {
     const page = parseInt(req.query.page, 10);
     const size = parseInt(req.query.size, 10);
 
@@ -47,8 +46,7 @@ const moviesRouter = (app, data) => {
           .json(matches);
       })
       .catch((err) => {
-        return res.status(404)
-          .json(err);
+        next(err);
       });
   });
 

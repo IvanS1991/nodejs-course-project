@@ -26,18 +26,6 @@ const users = (database) => {
         });
     }
 
-    auth(filter) {
-      return usersData.findOne(filter)
-        .then((match) => {
-          if (!match) {
-            return Promise.reject('wrong username or password');
-          }
-          return {
-            authKey: match.authKey,
-          };
-        });
-    }
-
     profile(filter) {
       return usersData.findOne(filter)
         .then((match) => {

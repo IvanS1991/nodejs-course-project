@@ -1,0 +1,14 @@
+mixin isLoggedIn()
+  if context.user.username
+    div
+      | Logged in as
+      a(href='/users/profile')
+        | &nbsp #{context.user.username} &nbsp
+      a(href='/logout')
+        | Logout
+  else
+    a(href='/login')
+      | Login
+    | &nbsp or &nbsp
+    a(href='/register')
+      | Register

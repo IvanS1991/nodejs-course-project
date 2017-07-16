@@ -6,7 +6,7 @@ const commentsRouter = (app, data) => {
   const router = new Router();
 
   // CREATE
-  router.post(ROUTES.COMMENTS.CREATE, (req, res) => {
+  router.post(ROUTES.COMMENTS.CREATE, (req, res, next) => {
     const commentData = req.body;
 
     const userFilter = { authKey: req.user.authKey };
@@ -19,8 +19,7 @@ const commentsRouter = (app, data) => {
           .json(movie);
       })
       .catch((err) => {
-        return res.status(404)
-          .json(err);
+        next(err);
       });
   });
 

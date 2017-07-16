@@ -1,15 +1,19 @@
-const { parseTime } = require('../utils');
+const { getKey, parseTime } = require('../utils');
 
-const collectionModel = (options) => {
-  class CollectionModel {
-    constructor(title, content) {
-      this.title = title;
+const commentModel = (options) => {
+  if (!options.content) {
+    throw new Error('comment must have content');
+  }
+
+  class Comment {
+    constructor(content) {
       this.content = content;
+      this.id = getKey('comm');
       this.created = parseTime(new Date());
     }
   }
 
-  return new CollectionModel(options.title, options.content);
+  return new Comment(options.content);
 };
 
-module.exports = collectionModel;
+module.exports = commentModel;
