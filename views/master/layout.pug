@@ -1,0 +1,13 @@
+include components/head
+include components/isLoggedIn
+include components/nav
+
+html
+  head
+    +head()
+    title Course project
+  body
+    div.container
+      +isLoggedIn()
+      +nav()
+      block content

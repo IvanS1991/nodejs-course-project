@@ -7,6 +7,12 @@ const attach = (data) => {
   passport.use(new LocalStrat((username, password, done) => {
     users.findByUsername(username)
       .then((user) => {
+        if (!user) {
+          done('no such user', null);
+        }
+        if (user.passHash !== password) {
+          done('wrong password', null);
+        }
         done(null, user);
       });
   }));

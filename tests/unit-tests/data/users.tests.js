@@ -94,63 +94,6 @@ describe('data.usersDb tests', () => {
     });
   });
 
-  describe(`data.usersDb.auth tests`, () => {
-    describe(`if there is such user in db...`, () => {
-      let match;
-
-      beforeEach(() => {
-        match = {
-          username: 'asdsa',
-          passHash: 'geqwgqw',
-          authKey: 'ggqwewq',
-          collections: [],
-          comments: [],
-        };
-
-        sinon.stub(crud, 'findOne')
-          .callsFake(() => {
-            return Promise.resolve(match);
-          });
-      });
-
-      afterEach(() => {
-        crud.findOne.restore();
-      });
-
-      it(`expect to resolve with an object with 1 property
-       - authKey`, (done) => {
-        usersDb.auth({})
-          .then((result) => {
-            expect(result).to.be.an('object');
-            expect(result).to.have.property('authKey');
-            expect(Object.keys(result)).to.have.length(1);
-          })
-          .then(done, done);
-      });
-    });
-
-    describe(`if there is no such user in db...`, () => {
-      beforeEach(() => {
-        sinon.stub(crud, 'findOne')
-          .callsFake(() => {
-            return Promise.resolve();
-          });
-      });
-
-      afterEach(() => {
-        crud.findOne.restore();
-      });
-
-      it(`expect to reject with an Error`, () => {
-        usersDb.auth({})
-          .catch((err) => {
-            return expect(err).to.exist
-              .and.to.be.a('string');
-          });
-      });
-    });
-  });
-
   describe(`data.usersDb.profile tests`, () => {
     describe(`if a match is found...`, () => {
       let match;

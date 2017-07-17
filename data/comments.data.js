@@ -25,7 +25,6 @@ const comments = (database) => {
           return moviesData.findOne(movieFilter);
         })
         .then((movie) => {
-          console.log(movie);
           return moviesData.updatePush(movieFilter, { comments: comment });
         });
     }

@@ -8,7 +8,7 @@ const usersRouter = (app, data, passport) => {
   const router = new Router();
 
   // REGISTER
-  router.post(ROUTES.USERS.REGISTER, (req, res) => {
+  router.post(ROUTES.USERS.REGISTER, (req, res, next) => {
     const userData = req.body;
     const user = userModel({
       username: userData.username,
@@ -19,24 +19,24 @@ const usersRouter = (app, data, passport) => {
       .then((newUser) => {
         req.login(newUser, (err) => {
           if (err) {
-            throw err;
+            next(err);
           }
           return res.redirect('/');
         });
       })
       .catch((err) => {
-        return res.status(404)
-          .json(err);
+        next(err);
       });
   });
 
   // LOGIN
-  router.post(ROUTES.USERS.AUTH, passport.authenticate('local'), (req, res) => {
-    res.redirect('/');
-  });
+  router.post(ROUTES.USERS.AUTH, passport.authenticate('local'),
+    (req, res, next) => {
+      return res.redirect('/');
+    });
 
   // VIEW PROFILE
-  router.get(ROUTES.USERS.PROFILE, (req, res) => {
+  router.get(ROUTES.USERS.PROFILE, (req, res, next) => {
     const id = req.params.id;
     const filter = { id };
 
@@ -46,29 +46,30 @@ const usersRouter = (app, data, passport) => {
           .json(match);
       })
       .catch((err) => {
-        return res.status(404)
-          .json(err);
+        next(err);
       });
   });
 
   // VIEW OWN PROFILE
-  router.get(ROUTES.USERS.OWN_PROFILE, (req, res) => {
+  router.get(ROUTES.USERS.OWN_PROFILE, (req, res, next) => {
     const filter = { authKey: req.user.authKey };
 
     return users.profile(filter)
       .then((match) => {
         return res.render('profile', {
-          context: match,
+          context: {
+            user: req.user || {},
+            match: match,
+          },
         });
       })
       .catch((err) => {
-        return res.status(404)
-          .json(err);
+        next(err);
       });
   });
 
   // UPDATE USER DETAILS
-  router.post(ROUTES.USERS.UPDATE, (req, res) => {
+  router.post(ROUTES.USERS.UPDATE, (req, res, next) => {
     const newData = req.body;
     const filter = { authKey: req.user.authKey };
 
@@ -81,8 +82,7 @@ const usersRouter = (app, data, passport) => {
           .json(updateData);
       })
       .catch((err) => {
-        return res.status(404)
-          .json(err);
+        next(err);
       });
   });
 

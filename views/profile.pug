@@ -1,11 +1,9 @@
-html
-  head
-    title
-      | Profile page
-    body
-      p #{context.username}
-      each comment in context.comments
-        div(class="comment")
-          h2 #{comment.title}
-          p #{comment.content}
-          hr
+extends master/layout
+
+block content
+  p #{context.match.username}
+  each comment in context.match.comments
+    div(class="comment")
+      h2 #{comment.title}
+      p #{comment.content}
+      hr

@@ -1,15 +1,19 @@
-const { parseTime } = require('../utils');
+const { getKey, parseTime } = require('../utils');
 
 const collectionModel = (options) => {
-  class CollectionModel {
+  if (!options.collectionName) {
+    throw new Error('collection must have name');
+  }
+  class Collection {
     constructor(collectionName) {
       this.collectionName = collectionName;
+      this.id = getKey('coll');
       this.movies = [];
       this.created = parseTime(new Date());
     }
   }
 
-  return new CollectionModel(options.collectionName);
+  return new Collection(options.collectionName);
 };
 
 module.exports = collectionModel;

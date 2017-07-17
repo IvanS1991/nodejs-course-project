@@ -5,7 +5,7 @@ const userModel = (options) => {
     throw new Error('you must pass username and passHash');
   }
 
-  class UserModel {
+  class User {
     constructor(username, passHash) {
       this.username = username;
       this.usernameLC = username.toLowerCase();
@@ -17,7 +17,7 @@ const userModel = (options) => {
     }
   }
 
-  return new UserModel(options.username, options.passHash);
+  return new User(options.username, options.passHash);
 };
 
 module.exports = userModel;
