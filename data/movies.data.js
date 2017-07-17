@@ -1,4 +1,4 @@
-const scrapeMovies = require('imdb-data-scraper');
+const scrapeMovies = require('../imdb-data-scraper');
 
 const { MOVIE_META } = require('../constants');
 
@@ -26,28 +26,6 @@ const movies = (database) => {
           const startIndex = (page - 1) * size || 0;
           const endIndex = startIndex + size || matches.length;
           return matches.slice(startIndex, endIndex);
-        });
-    }
-
-    update(req, res) {
-      const getId = (() => {
-        let id = 0;
-        return () => {
-          id += 1;
-          return id;
-        };
-      })();
-
-      return scrapeMovies(MOVIE_META.PAGES, ...MOVIE_META.GENRES)
-        .then((moviesList) => {
-          moviesList.forEach((movie) => {
-            movie.id = getId();
-            movie.comments =[];
-          });
-          return moviesData.insertMany(moviesList);
-        })
-        .then((result) => {
-          return result.length;
         });
     }
   }

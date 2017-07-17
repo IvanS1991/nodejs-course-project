@@ -1488,14 +1488,6 @@ ignore@^3.3.3:
   version "3.3.3"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.3.tgz#432352e57accd87ab3110e82d3fea0e47812156d"
 
-"imdb-data-scraper@git+https://github.com/IvanS1991/imdb-data-scraper.git":
-  version "1.0.0"
-  resolved "git+https://github.com/IvanS1991/imdb-data-scraper.git#ab7f77cf9a833a6a3aa43dab1dedcf1e43f32e37"
-  dependencies:
-    jsdom "^11.1.0"
-    lodash "^4.17.4"
-    node-fetch "^1.7.1"
-
 imurmurhash@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/imurmurhash/-/imurmurhash-0.1.4.tgz#9218b9b2b928a238b13dc4fb6b6d576f231453ea"

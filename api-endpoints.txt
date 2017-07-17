@@ -1,39 +1,37 @@
 Users
 
-* Register
+* Register - Public
 POST - /users/register - { username:..., passHash:... }
-* Login
+* Login - Public
 PUT - /users/auth - { username:..., passHash: ... }
-* Check own profile
-GET - /users/profile - header X-authKey
-* Check an user's profile
+* Check own profile - Private
+GET - /users/profile
+* Check an user's profile - Public
 GET - /users/profile/:id
-* Update profile
-PUT - /users/update - { stuff to update } - header X-authkey
+* Update profile - Private
+PUT - /users/update - { stuff to update }
 
 Collections
 
-* Create
-POST - /collections/create - { name:..., private:boolean } - header X-authkey
-* View
+* Create - Private
+POST - /collections/create - { name:..., private:boolean }
+* View - Private
 GET - /collections/view/:id
-* Update
-PUT - /collections/update/:id - { stuff to update } - header X-authkey
-* Delete
-DELETE - /collections/delete/:id - header X-authKey
+* Update - Private
+PUT - /collections/update/:id - { stuff to update }
+* Delete - Private
+DELETE - /collections/delete/:id
 
 Comments
 
-* Create
-POST - /comments/create - { title:..., content:..., movieId:... } - header X-authkey
-* Delete
-DELETE - /comments/delete/:id - header X-authKey
+* Create - Private
+POST - /comments/create - { title:..., content:..., movieId:... }
+* Delete - Private
+DELETE - /comments/delete/:id
 
 Movies
 
-* Update
-POST - /movies/update
-* View one
+* View one - Public
 GET - /movies/view/:id
-* View some
+* View some - Public
 GET - /movies/view?page=...&size=...&genres=... - page=2&size=10&genres=action,comedy will select the movies with those two genres and return a slice with the 10th to the 20th from the matches

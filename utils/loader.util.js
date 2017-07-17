@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const _ = require('lodash');
 
+// Loads all modules that match a certain pattern
 const loader = (dir, filter, ...dependencies) => {
   const output = {};
 

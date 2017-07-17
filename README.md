@@ -13,6 +13,11 @@ Clone the repository and run
 ```
 npm install
 ```
+or
+
+```
+yarn
+```
 
 ## Running the tests
 

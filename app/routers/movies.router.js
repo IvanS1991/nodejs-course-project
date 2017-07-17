@@ -52,9 +52,6 @@ const moviesRouter = (app, data) => {
       });
   });
 
-  // POST
-  router.post(ROUTES.MOVIES.UPDATE, movies.update);
-
   app.use(ROUTES.MOVIES.ROOT, router);
 };
 
