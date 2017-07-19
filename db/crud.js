@@ -78,6 +78,18 @@ const crud = (db) => {
         });
       }
 
+      updatePull(query, data) {
+        return new Promise((resolve, reject) => {
+          return db.collection(collectionName)
+            .updateOne(query, { $pull: data }, (updateErr, result) => {
+              if (updateErr) {
+                return reject(updateErr);
+              }
+              return resolve(data);
+            });
+        });
+      }
+
       remove(query) {
         return new Promise((resolve, reject) => {
           return db.collection(collectionName)

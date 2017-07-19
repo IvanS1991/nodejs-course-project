@@ -23,7 +23,6 @@ gulp.task('get-movies', (done) => {
         .then((moviesList) => {
           moviesList.forEach((movie) => {
             movie.id = getId();
-            movie.comments = [];
           });
           return moviesDb.insertMany(moviesList);
         })

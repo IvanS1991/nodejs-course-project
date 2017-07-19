@@ -10,8 +10,6 @@ const userModel = (options) => {
       this.username = username;
       this.usernameLC = username.toLowerCase();
       this.passHash = passHash;
-      this.comments = [];
-      this.collections = [];
       this.authKey = getKey(username);
       this.joined = parseTime(new Date());
     }

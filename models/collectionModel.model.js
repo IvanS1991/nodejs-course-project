@@ -5,15 +5,16 @@ const collectionModel = (options) => {
     throw new Error('collection must have name');
   }
   class Collection {
-    constructor(collectionName) {
+    constructor(collectionName, isPrivate) {
       this.collectionName = collectionName;
+      this.isPrivate = isPrivate === 'true' ? true : false;
       this.id = getKey('coll');
       this.movies = [];
       this.created = parseTime(new Date());
     }
   }
 
-  return new Collection(options.collectionName);
+  return new Collection(options.collectionName, options.isPrivate);
 };
 
 module.exports = collectionModel;

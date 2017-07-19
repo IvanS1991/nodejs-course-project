@@ -1,32 +1,40 @@
 const collections = (database) => {
-  const usersData = database('users');
+  const collectionsData = database('collections');
 
   class CollectionsData {
-    create(options) {
-      const { collection, filter } = options;
-
-      return usersData.updatePush(filter, { collections: collection });
+    create(collection) {
+      return collectionsData.insertOne(collection);
     }
 
     view(options) {
-      const { id, filter } = options;
+      const { filter, user } = options;
 
-      return usersData.findOne(filter)
+      return collectionsData.findOne(filter)
         .then((match) => {
-          const result = match.collections
-            .find((collection) => {
-              return collection.id === id;
-            });
-          if (!result) {
+          if (!match) {
             return Promise.reject('no such collection');
           }
-          return result;
+          if (match.isPrivate) {
+            if (match.owner !== user.username) {
+              return Promise.reject('this is a private collection');
+            }
+            return match;
+          }
+          return match;
         });
     }
 
-    updateInfo(req, res) {
-      const id = req.params.id;
-      res.json('update collection ' + id);
+    updateDetails(options) {
+      const { filter, updateData } = options;
+
+      return collectionsData.update(filter, updateData)
+        .then((match) => {
+          if (!match) {
+            return Promise
+              .reject('you are not the owner of this collection or it does not exist');
+          }
+          return match;
+        });
     }
 
     addToCollection(req, res) {

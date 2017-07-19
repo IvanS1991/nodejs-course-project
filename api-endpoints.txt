@@ -3,7 +3,7 @@ Users
 * Register - Public
 POST - /users/register - { username:..., passHash:... }
 * Login - Public
-PUT - /users/auth - { username:..., passHash: ... }
+POST - /users/auth - { username:..., passHash: ... }
 * Check own profile - Private
 GET - /users/profile
 * Check an user's profile - Public
@@ -14,11 +14,15 @@ PUT - /users/update - { stuff to update }
 Collections
 
 * Create - Private
-POST - /collections/create - { name:..., private:boolean }
+POST - /collections/create - { name:..., isPrivate:boolean }
 * View - Private
 GET - /collections/view/:id
 * Update - Private
-PUT - /collections/update/:id - { stuff to update }
+POST - /collections/update/:id - { collectionName:..., isPrivate:... }
+* Add to collection - Private
+POST - /collections/add/:id
+* Remove from collection - Private
+POST - /collections/remove/:id
 * Delete - Private
 DELETE - /collections/delete/:id
 

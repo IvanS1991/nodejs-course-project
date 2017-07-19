@@ -7,16 +7,13 @@ const commentsRouter = (app, data) => {
 
   // CREATE
   router.post(ROUTES.COMMENTS.CREATE, (req, res, next) => {
+    const user = req.user;
     const commentData = req.body;
 
-    const userFilter = { authKey: req.user.authKey };
-    const movieFilter = { id: parseInt(commentData.movieId, 10) };
-
-
-    return comments.create({ commentData, userFilter, movieFilter })
-      .then((movie) => {
+    return comments.create({ user, commentData })
+      .then((comment) => {
         return res.status(200)
-          .json(movie);
+          .redirect('/');
       })
       .catch((err) => {
         next(err);
@@ -24,7 +21,19 @@ const commentsRouter = (app, data) => {
   });
 
   // DELETE
-  router.delete(ROUTES.COMMENTS.DELETE, comments.remove);
+  router.post(ROUTES.COMMENTS.DELETE, (req, res, next) => {
+    const filter = { id: req.params.id };
+    const user = req.user;
+
+    return comments.remove({ filter, user })
+      .then((comment) => {
+        return res.status(200)
+          .redirect('/');
+      })
+      .catch((err) => {
+        next(err);
+      });
+  });
 
   app.use(ROUTES.COMMENTS.ROOT, router);
 };

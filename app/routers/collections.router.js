@@ -9,31 +9,60 @@ const collectionsRouter = (app, data) => {
 
   // VIEW BY ID
   router.get(ROUTES.COLLECTIONS.VIEW, (req, res, next) => {
-    const id = req.params.id;
-    const filter = { authKey: req.user.authKey };
+    const filter = { id: req.params.id };
+    const user = req.user;
 
-    return collections.view({ id, filter })
+    return collections.view({ filter, user })
       .then((collection) => {
         return res.status(200)
           .json(collection);
+      })
+      .catch((err) => {
+        next(err);
       });
   });
 
   // CREATE
   router.post(ROUTES.COLLECTIONS.CREATE, (req, res, next) => {
-    const filter = { authKey: req.user.authKey };
+    const username = req.user.username;
     const collection = collectionModel(req.body);
+    collection.owner = username;
 
-    return collections.create({ collection, filter })
+    return collections.create(collection)
       .then((output) => {
-        console.log(output);
         return res.redirect('/');
       });
   });
 
-  // UPDATE CONTENTS
-  router.put(ROUTES.COLLECTIONS.UPDATE, (req, res, next) => {
-    return collections.update;
+  // UPDATE DETAILS
+  router.post(ROUTES.COLLECTIONS.UPDATE, (req, res, next) => {
+    const filter = { id: req.params.id, owner: req.user.username };
+
+    const collectionName = req.body.collectionName;
+    const isPrivate = req.body.isPrivate;
+
+    const updateData = {};
+
+    if (collectionName) {
+      updateData.collectionName = collectionName;
+    }
+    if (isPrivate) {
+      updateData.isPrivate = isPrivate;
+    }
+
+    return collections.updateDetails({ filter, updateData })
+      .then(() => {
+        return res.status(200)
+          .redirect('/');
+      })
+      .catch((err) => {
+        next(err);
+      });
+  });
+
+  // ADD TO COLLECTION
+  router.post(ROUTES.COLLECTIONS.ADD, (req, res, next) => {
+    return collections.addToCollection;
   });
 
   // DELETE

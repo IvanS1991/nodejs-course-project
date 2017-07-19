@@ -1,7 +1,3 @@
-const scrapeMovies = require('../imdb-data-scraper');
-
-const { MOVIE_META } = require('../constants');
-
 const movies = (database) => {
   const moviesData = database('movies');
 

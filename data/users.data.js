@@ -2,6 +2,8 @@ const { getKey } = require('../utils');
 
 const users = (database) => {
   const usersData = database('users');
+  const commentsData = database('comments');
+  const collectionsData = database('collections');
 
   class UsersData {
     findByUsername(username) {
@@ -27,17 +29,23 @@ const users = (database) => {
     }
 
     profile(filter) {
+      let user;
+      const profile = {};
       return usersData.findOne(filter)
         .then((match) => {
           if (!match) {
             return Promise.reject('no such user');
           }
-          const { username, collections, comments } = match;
-          return {
-            username,
-            collections,
-            comments,
-          };
+          profile.user = user = match;
+          return commentsData.findMany({ author: user.username });
+        })
+        .then((comments) => {
+          profile.comments = comments;
+          return collectionsData.findMany({ owner: user.username });
+        })
+        .then((collections) => {
+          profile.collections = collections;
+          return profile;
         });
     }
 

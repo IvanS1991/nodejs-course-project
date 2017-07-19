@@ -15,6 +15,7 @@ const constants = {
       CREATE: '/create',
       UPDATE: '/update/:id',
       VIEW: '/view/:id',
+      ADD: '/add/:id',
       DELETE: '/delete/:id',
     },
     COMMENTS: {
