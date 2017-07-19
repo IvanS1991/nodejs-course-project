@@ -7,7 +7,7 @@ gulp.task('works', () => {
 });
 
 gulp.task('get-movies', (done) => {
-  const scrapeMovies = require('../imdb-data-scraper');
+  const scrapeMovies = require('./imdb-data-scraper');
   const { MOVIE_META } = require('./constants');
   const { getId } = require('./utils');
 
