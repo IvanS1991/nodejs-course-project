@@ -1,0 +1,7 @@
+mixin pagination()
+  div.pagination
+    if context.currentPage > 1
+      a.previous-movie(href='/movies/view?page=' + (context.currentPage - 1) + '&size=10&genres=sci-fi')
+        | Previous page...
+    a.next-movie(href='/movies/view?page=' + (context.currentPage + 1) + '&size=10&genres=sci-fi')
+      | Next page...

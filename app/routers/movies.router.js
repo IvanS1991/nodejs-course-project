@@ -43,7 +43,14 @@ const moviesRouter = (app, data) => {
     return movies.viewSome({ page, size, filter })
       .then((matches) => {
         return res.status(200)
-          .json(matches);
+          .render('movies-filtered', {
+            context: {
+              user: req.user || {},
+              movies: matches,
+              genres,
+              currentPage: page,
+            },
+          });
       })
       .catch((err) => {
         next(err);

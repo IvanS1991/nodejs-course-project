@@ -1,9 +1,11 @@
 extends master/layout
 
 block content
-  p #{context.match.username}
-  each comment in context.match.comments
-    div(class="comment")
-      h2 #{comment.title}
-      p #{comment.content}
-      hr
+  h1= context.user.username + "'s profile"
+  div.well.well-lg
+    each collection in context.match.collections
+      div.collection
+        h2 #{collection.collectionName}
+        a.collection-view(href='/collections/view/' + collection.id)
+          | Detailed view
+        hr

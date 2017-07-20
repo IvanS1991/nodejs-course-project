@@ -1,4 +1,5 @@
 const collections = (database) => {
+  const moviesData = database('movies');
   const collectionsData = database('collections');
 
   class CollectionsData {
@@ -37,13 +38,37 @@ const collections = (database) => {
         });
     }
 
-    addToCollection(req, res) {
+    addToCollection(options) {
+      const { user, collectionId, movieId } = options;
 
+      return moviesData.findOne({ id: movieId })
+        .then((movie) => {
+          console.log(movie);
+          return collectionsData.updatePush({
+            owner: user.username,
+            id: collectionId,
+          },
+            {
+              movies: movie,
+            });
+        });
     }
 
-    delete(req, res) {
-      const id = req.params.id;
-      res.json('delete collection ' + id);
+    removeFromCollection(options) {
+      const { collectionId, movieId } = options;
+
+      return collectionsData.updatePull({
+        id: collectionId,
+      },
+      {
+        movies: {
+          id: movieId,
+        },
+      });
+    }
+
+    delete(id) {
+      return collectionsData.remove({ id: id });
     }
   }
 

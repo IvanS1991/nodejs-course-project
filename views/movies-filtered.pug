@@ -1,0 +1,17 @@
+extends master/layout
+
+include components/movie-preview
+include components/pagination
+
+block content
+  ul.nav.nav-pills
+    each genre in context.genres
+      li.genre
+        a(href='/movies/view?page=1&size=10&genres=' + genre.toLowerCase())
+          h1
+            | #{genre}
+  +pagination()
+  ul
+    each movie in context.movies
+      +moviePreview(movie)
+  +pagination()

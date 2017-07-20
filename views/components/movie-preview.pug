@@ -1,0 +1,20 @@
+mixin moviePreview(movieData)
+  h3.movie-title
+    a(href='/movies/view/' + movieData.id)
+      | #{movieData.title}
+    span.year
+      | (#{movieData.year})
+  div.well.well-sm
+    div.img-container.well.well-sm
+      img.poster(src=movieData.imgSrc alt='movie poster')
+    div.info-container
+      p.description.well.well-lg
+        | #{movieData.description}
+      ul.nav.nav-pills
+        each genre in movieData.genres
+          li.genre
+            a(href='/movies/view?page=1&size=10&genres=' + genre.toLowerCase())
+              | #{genre}
+      if !context.isOwner
+        a(href='/')
+          | Add to collection

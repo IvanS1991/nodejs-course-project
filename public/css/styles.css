@@ -36,3 +36,12 @@ ul.navbar-nav>.gray-hover:hover {
 ul.nav.navbar-nav.navbar-right {
     margin-right: 4%;
 }
+
+.poster {
+    margin: auto;
+    height: 200px;
+}
+
+.img-container {
+    float: left;
+}

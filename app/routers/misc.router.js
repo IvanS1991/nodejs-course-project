@@ -53,6 +53,15 @@ const miscRouter = (app, data) => {
       });
   });
 
+  router.get('/collections', (req, res) => {
+    return res.status(200)
+      .render('collections', {
+        context: {
+          user: req.user || {},
+        },
+      });
+  });
+
   app.use('/', router);
 };
 

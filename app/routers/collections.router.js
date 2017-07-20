@@ -15,7 +15,13 @@ const collectionsRouter = (app, data) => {
     return collections.view({ filter, user })
       .then((collection) => {
         return res.status(200)
-          .json(collection);
+          .render('collection-detailed', {
+            context: {
+              user: req.user || {},
+              collection,
+              isOwner: true,
+            },
+          });
       })
       .catch((err) => {
         next(err);
@@ -31,6 +37,9 @@ const collectionsRouter = (app, data) => {
     return collections.create(collection)
       .then((output) => {
         return res.redirect('/');
+      })
+      .catch((err) => {
+        next(err);
       });
   });
 
@@ -62,12 +71,47 @@ const collectionsRouter = (app, data) => {
 
   // ADD TO COLLECTION
   router.post(ROUTES.COLLECTIONS.ADD, (req, res, next) => {
-    return collections.addToCollection;
+    const user = req.user;
+    const collectionId = req.params.id;
+    const movieId = parseInt(req.body.movieId, 10);
+
+    return collections.addToCollection({ user, collectionId, movieId })
+      .then((result) => {
+        return res.status(200)
+          .json('added to collection');
+      })
+      .catch((err) => {
+        next(err);
+      });
+  });
+
+  // REMOVE FROM COLLECTION
+  router.post(ROUTES.COLLECTIONS.REMOVE, (req, res, next) => {
+    const collectionId = req.params.id;
+    const movieId = parseInt(req.body.movieId, 10);
+
+    return collections.removeFromCollection({ collectionId, movieId })
+      .then((result) => {
+        return res.status(200)
+          .json('removed from collection');
+      })
+      .catch((err) => {
+        next(err);
+      });
   });
 
   // DELETE
-  router.delete(ROUTES.COLLECTIONS.DELETE, (req, res, next) => {
-    return collections.delete;
+  router.post(ROUTES.COLLECTIONS.DELETE, (req, res, next) => {
+    const collectionId = req.params.id;
+
+    return collections.delete(collectionId)
+      .then((result) => {
+        return res.status(200)
+          .json('deleted collection');
+      })
+      .catch((err) => {
+        next(err);
+      });
   });
 
   app.use(ROUTES.COLLECTIONS.ROOT, router);

@@ -3,8 +3,8 @@ const sinon = require('sinon');
 
 const init = require('../../../data');
 
-describe('data.usersDb tests', () => {
-  let usersDb;
+describe('data.users tests', () => {
+  let users;
   let db;
   let crud;
 
@@ -37,10 +37,10 @@ describe('data.usersDb tests', () => {
       return crud;
     };
 
-    usersDb = init(db).users;
+    users = init(db).users;
   });
 
-  describe(`data.usersDb.register tests`, () => {
+  describe(`data.users.register tests`, () => {
     describe(`if there is no such user in db...`, () => {
       let expected;
 
@@ -64,7 +64,7 @@ describe('data.usersDb tests', () => {
       });
 
       it(`expect to resolve with an object with property authKey`, (done) => {
-        usersDb.register(expected)
+        users.register(expected)
           .then((result) => {
             expect(result).to.deep.equal(expected);
           })
@@ -85,7 +85,7 @@ describe('data.usersDb tests', () => {
       });
 
       it(`expect to reject with an error string`, () => {
-        usersDb.register({})
+        users.register({})
           .catch((err) => {
             return expect(err).to.exist
               .and.to.be.a('string');
@@ -94,7 +94,7 @@ describe('data.usersDb tests', () => {
     });
   });
 
-  describe(`data.usersDb.profile tests`, () => {
+  describe(`data.users.profile tests`, () => {
     describe(`if a match is found...`, () => {
       let match;
 
@@ -120,7 +120,7 @@ describe('data.usersDb tests', () => {
 
       it(`expect to resolve with an object with exactly 3 properties:
         username, comments, collections`, (done) => {
-          usersDb.profile({})
+          users.profile({})
             .then((result) => {
               expect(result).to.be.an('object');
               expect(result).to.have.property('username');
@@ -145,7 +145,7 @@ describe('data.usersDb tests', () => {
       });
 
       it(`expect to reject with an Error`, () => {
-        usersDb.profile({})
+        users.profile({})
           .catch((err) => {
             return expect(err).to.exist
               .and.to.be.a('string');
@@ -154,7 +154,7 @@ describe('data.usersDb tests', () => {
     });
   });
 
-  describe('data.usersDb.update tests', () => {
+  describe('data.users.update tests', () => {
     describe(`if there is such user in db...`, () => {
       let updateData;
       let expected;
@@ -180,7 +180,7 @@ describe('data.usersDb tests', () => {
       });
 
       it(`expect to resolve with the proper object`, (done) => {
-        usersDb.update(updateData)
+        users.update(updateData)
           .then((result) => {
             expect(result).to.deep.equal(expected);
           })
@@ -201,7 +201,7 @@ describe('data.usersDb tests', () => {
       });
 
       it(`expect to reject with an Error`, () => {
-        usersDb.update({})
+        users.update({})
           .catch((err) => {
             return expect(err).to.exist
               .and.to.be.a('string');

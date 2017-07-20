@@ -3,8 +3,8 @@ const sinon = require('sinon');
 
 const init = require('../../../data');
 
-describe(`data.moviesDb tests`, () => {
-  let moviesDb;
+describe(`data.movies tests`, () => {
+  let movies;
   let db;
   let crud;
 
@@ -16,31 +16,16 @@ describe(`data.moviesDb tests`, () => {
       findMany: () => {
         return null;
       },
-      insertOne: () => {
-        return null;
-      },
-      insertMany: () => {
-        return null;
-      },
-      update: () => {
-        return null;
-      },
-      updatePush: () => {
-        return null;
-      },
-      remove: () => {
-        return null;
-      },
     };
 
     db = () => {
       return crud;
     };
 
-    moviesDb = init(db).movies;
+    movies = init(db).movies;
   });
 
-  describe(`data.moviesDb.viewOne tests`, () => {
+  describe(`data.movies.viewOne tests`, () => {
     describe(`if a match is found...`, () => {
       let match;
 
@@ -62,7 +47,7 @@ describe(`data.moviesDb tests`, () => {
       });
 
       it(`expect to resolve with the match`, (done) => {
-        moviesDb.viewOne({})
+        movies.viewOne({})
           .then((result) => {
             expect(result).to.deep.equal(match);
           })
@@ -83,7 +68,7 @@ describe(`data.moviesDb tests`, () => {
       });
 
       it(`expect to reject with an Error`, () => {
-        moviesDb.viewOne({})
+        movies.viewOne({})
           .catch((err) => {
             return expect(err).to.exist
               .and.to.be.a('string');
@@ -92,7 +77,7 @@ describe(`data.moviesDb tests`, () => {
     });
   });
 
-  describe(`data.moviesDb.viewSome tests`, () => {
+  describe(`data.movies.viewSome tests`, () => {
     describe(`if matches are found...`, () => {
       let options;
       let data;
@@ -131,7 +116,7 @@ describe(`data.moviesDb tests`, () => {
       });
 
       it(`expect to resolve with an array of proper length`, (done) => {
-        moviesDb.viewSome({})
+        movies.viewSome({})
           .then((result) => {
             expect(result).to.have.length(options.size);
             expect(indexOfMatch).to.equal(startIndex);
@@ -153,7 +138,7 @@ describe(`data.moviesDb tests`, () => {
       });
 
       it(`expect to reject with an Error`, () => {
-        moviesDb.viewSome({})
+        movies.viewSome({})
           .catch((err) => {
             return expect(err).to.exist
               .and.to.be.a('string');
