@@ -41,7 +41,8 @@ const moviesRouter = (app, data) => {
     }
 
     return movies.viewSome({ page, size, filter })
-      .then((matches) => {
+      .then((result) => {
+        const { matches, maxPages } = result;
         return res.status(200)
           .render('movies-filtered', {
             context: {
@@ -49,6 +50,7 @@ const moviesRouter = (app, data) => {
               movies: matches,
               genres,
               currentPage: page,
+              maxPages,
             },
           });
       })

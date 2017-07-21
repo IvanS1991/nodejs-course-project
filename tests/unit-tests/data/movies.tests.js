@@ -118,7 +118,7 @@ describe(`data.movies tests`, () => {
       it(`expect to resolve with an array of proper length`, (done) => {
         movies.viewSome({})
           .then((result) => {
-            expect(result).to.have.length(options.size);
+            expect(result.matches).to.have.length(options.size);
             expect(indexOfMatch).to.equal(startIndex);
           })
           .then(done, done);

@@ -9,6 +9,9 @@ const constants = {
         MOVIE_IMG: '.poster img',
         MOVIE_DESCRIPTION: '.summary_text',
         MOVIE_GENRES: '.see-more.canwrap',
+        MOVIE_SCORE: '.metacriticScore span',
+        MOVIE_DIRECTOR: '.plot_summary_wrapper .credit_summary_item',
+        MOVIE_ACTORS: 'tbody span.itemprop',
     },
 };
 

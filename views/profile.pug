@@ -3,9 +3,12 @@ extends master/layout
 block content
   h1= context.user.username + "'s profile"
   div.well.well-lg
+    h2 Collections
+    hr
+    a(href='/collections/new') Create new collection...
+    hr
     each collection in context.match.collections
       div.collection
-        h2 #{collection.collectionName}
-        a.collection-view(href='/collections/view/' + collection.id)
-          | Detailed view
+        h2 #{collection.collectionName} (#{collection.movies.length})
+        a.collection-view(href='/collections/view/' + collection.id) Detailed view
         hr

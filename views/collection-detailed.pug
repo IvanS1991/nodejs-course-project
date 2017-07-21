@@ -3,8 +3,7 @@ extends master/layout
 include components/movie-preview
 
 block content
-  h1
-    | #{context.collection.collectionName}
+  h1 #{context.collection.collectionName}
   hr
   each movie in context.collection.movies
     +moviePreview(movie)

@@ -45,3 +45,23 @@ ul.nav.navbar-nav.navbar-right {
 .img-container {
     float: left;
 }
+
+.low-rate, .mid-rate, .high-rate {
+    font-size: 20px;
+}
+
+.low-rate {
+    background-color: lightcoral;
+}
+
+.mid-rate {
+    background-color: yellow;
+}
+
+.high-rate {
+    background-color: lightgreen;
+}
+
+.pagination {
+    margin: auto;
+}

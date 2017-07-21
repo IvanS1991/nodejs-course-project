@@ -7,7 +7,7 @@ const collectionModel = (options) => {
   class Collection {
     constructor(collectionName, isPrivate) {
       this.collectionName = collectionName;
-      this.isPrivate = isPrivate === 'true' ? true : false;
+      this.isPrivate = isPrivate === 'on' ? true : false;
       this.id = getKey('coll');
       this.movies = [];
       this.created = parseTime(new Date());

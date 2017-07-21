@@ -21,7 +21,7 @@ const usersRouter = (app, data, passport) => {
           if (err) {
             next(err);
           }
-          return res.redirect('/');
+          return res.redirect('#');
         });
       })
       .catch((err) => {

@@ -1,6 +1,7 @@
 extends master/layout
 
+include components/forms/movie-form
+
 block content
-  h1
-    | Movies
-  div.well.well-lg
+  h1 Movies
+  +movieForm()

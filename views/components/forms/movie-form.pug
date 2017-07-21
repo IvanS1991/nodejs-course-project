@@ -1,0 +1,8 @@
+mixin movieForm()
+  div.well.well-lg
+    form.form-group
+      each genre in context.genres
+        label.form-control
+          input.genre-option(type="checkbox" value=genre)
+          | #{genre}
+      input.form-control(type="submit" value="Submit")

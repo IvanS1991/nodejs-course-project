@@ -33,6 +33,15 @@ const parseMovie = (url) => {
             const description = document
                 .querySelector(SELECTORS.MOVIE_DESCRIPTION);
 
+            const metaCriticScore = document
+                .querySelector(SELECTORS.MOVIE_SCORE);
+
+            const director = [].slice.call(document
+                .querySelectorAll(SELECTORS.MOVIE_DIRECTOR))[0];
+
+            const actors = document
+                .querySelectorAll(SELECTORS.MOVIE_ACTORS);
+
             if (title) {
                 output.title = title
                     .firstChild
@@ -65,6 +74,23 @@ const parseMovie = (url) => {
                 output.description = description.innerHTML
                     .replace(/\n/g, '')
                     .trim();
+            }
+
+            if (metaCriticScore) {
+                output.rating = parseInt(metaCriticScore.innerHTML, 10);
+            }
+
+            if (director) {
+                output.director = []
+                    .slice.call(director.querySelectorAll('a span'))[0]
+                    .innerHTML;
+            }
+
+            if (actors) {
+                output.actors = [].slice.call(actors)
+                    .map((span) => {
+                        return span.innerHTML;
+                    });
             }
 
             return output;

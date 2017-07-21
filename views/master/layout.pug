@@ -1,5 +1,6 @@
-include ../components/head
-include ../components/isLoggedIn
+include ../components/layout/head
+include ../components/layout/scripts
+include ../components/is-logged-in
 include ../components/nav
 
 html
@@ -11,3 +12,4 @@ html
         +nav()
         .container.main-container
           block content
+      +scripts()

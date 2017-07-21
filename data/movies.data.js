@@ -21,7 +21,10 @@ const movies = (database) => {
           }
           const startIndex = (page - 1) * size || 0;
           const endIndex = startIndex + size || matches.length;
-          return matches.slice(startIndex, endIndex);
+          return {
+            matches: matches.slice(startIndex, endIndex),
+            maxPages: Math.ceil(matches.length / size),
+          };
         });
     }
   }

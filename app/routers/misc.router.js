@@ -1,5 +1,7 @@
 const { Router } = require('express');
 
+const { MOVIE_META } = require('../../constants');
+
 const miscRouter = (app, data) => {
   const router = new Router();
 
@@ -49,6 +51,7 @@ const miscRouter = (app, data) => {
       .render('movies', {
         context: {
           user: req.user || {},
+          genres: MOVIE_META.GENRES,
         },
       });
   });
@@ -56,6 +59,15 @@ const miscRouter = (app, data) => {
   router.get('/collections', (req, res) => {
     return res.status(200)
       .render('collections', {
+        context: {
+          user: req.user || {},
+        },
+      });
+  });
+
+  router.get('/collections/new', (req, res, next) => {
+    return res.status(200)
+      .render('collection-create', {
         context: {
           user: req.user || {},
         },

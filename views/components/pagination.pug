@@ -1,7 +1,55 @@
+mixin anchor(page)
+  a(href=href='/movies/view?page=' + page + '&size=10&genres=' + context.genres.join(',').toLowerCase()) #{page}
+
+mixin firstPages()
+  li
+    a(href='/movies/view?page=' + (context.currentPage - 1) + '&size=10&genres=' + context.genres.join(',').toLowerCase() aria-label="Previous") Previous
+    if context.currentPage <= 4
+      - for (var i = 1; i <= context.currentPage + 2; i += 1)
+        li
+          +anchor(i)
+    else
+      - for (var i = 1; i <= 3; i += 1)
+        li
+          +anchor(i)
+
+mixin middlePages()
+  li
+    - for (var i = context.currentPage - 1; i <= context.currentPage + 1; i += 1)
+      li
+        +anchor(i)
+
+mixin lastPages()
+  if context.currentPage >= context.maxPages - 3
+    - for (var i = context.currentPage - 2; i <= context.maxPages; i += 1)
+      li
+        +anchor(i)
+  else
+    -for (var i = context.maxPages - 2; i <= context.maxPages; i += 1)
+      li
+        +anchor(i)
+  li
+    a(href='/movies/view?page=' + (context.currentPage + 1) + '&size=10&genres=' + context.genres.join(',').toLowerCase() aria-label="Next") Next
+    
+mixin break()
+  li
+    a(href='#') ...
+
 mixin pagination()
-  div.pagination
-    if context.currentPage > 1
-      a.previous-movie(href='/movies/view?page=' + (context.currentPage - 1) + '&size=10&genres=sci-fi')
-        | Previous page...
-    a.next-movie(href='/movies/view?page=' + (context.currentPage + 1) + '&size=10&genres=sci-fi')
-      | Next page...
+  nav(aria-label="Page navigation")
+    ul.pagination
+      if context.currentPage <= 4
+        +firstPages()
+        +break()
+        +lastPages()
+      if context.currentPage > 4 && context.currentPage < context.maxPages - 3
+        +firstPages()
+        +break()
+        +middlePages()
+        +break()
+        +lastPages()
+      if context.currentPage >= context.maxPages - 3
+        +firstPages()
+        +break()
+        +lastPages()
+      

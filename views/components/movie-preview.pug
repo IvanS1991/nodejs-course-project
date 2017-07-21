@@ -1,20 +1,31 @@
+mixin rating(number)
+  div Metacritic score: 
+    if number < 50
+      span.low-rate #{number}
+    else if number >= 50 && number < 85
+      span.mid-rate #{number}
+    else if number >= 85 && number <= 100
+      span.high-rate #{number}
+  hr
+
 mixin moviePreview(movieData)
   h3.movie-title
-    a(href='/movies/view/' + movieData.id)
-      | #{movieData.title}
-    span.year
-      | (#{movieData.year})
+    a(href='/movies/view/' + movieData.id) #{movieData.title}
+    span.year (#{movieData.year})
   div.well.well-sm
-    div.img-container.well.well-sm
-      img.poster(src=movieData.imgSrc alt='movie poster')
     div.info-container
-      p.description.well.well-lg
-        | #{movieData.description}
+      div.img-container.well.well-sm
+        img.poster(src=movieData.imgSrc alt='movie poster')
+      if movieData.rating
+        +rating(movieData.rating)
+      p.description #{movieData.description}
+    hr
+    div
       ul.nav.nav-pills
         each genre in movieData.genres
           li.genre
-            a(href='/movies/view?page=1&size=10&genres=' + genre.toLowerCase())
-              | #{genre}
-      if !context.isOwner
-        a(href='/')
-          | Add to collection
+            a(href='/movies/view?page=1&size=10&genres=' + genre.toLowerCase()) #{genre}
+    if !context.isOwner && context.user.username
+      hr
+      div
+        a(href='/') Add to collection
