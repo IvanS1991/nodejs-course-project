@@ -9,5 +9,7 @@ html
   body
       .main-wrapper
         +nav()
-        .container.main-container
+        .container
           block content
+
+      script(src=context.jsFilePath)

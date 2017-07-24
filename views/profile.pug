@@ -1,7 +1,9 @@
 extends master/layout
 
 block content
-  p #{context.match.username}
+  div.row
+    div.col-sm-12
+      h3 Profile of #{context.match.username} 
   each comment in context.match.comments
     div(class="comment")
       h2 #{comment.title}

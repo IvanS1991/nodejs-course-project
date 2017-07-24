@@ -4,10 +4,12 @@ const miscRouter = (app, data) => {
   const router = new Router();
 
   router.get('/', (req, res) => {
+    // console.log(req.user);
     return res.status(200)
       .render('home', {
         context: {
           user: req.user || {},
+          jsFilePath: './scripts/main.js' 
         },
       });
   });
@@ -17,6 +19,7 @@ const miscRouter = (app, data) => {
       .render('about', {
         context: {
           user: req.user || {},
+          jsFilePath: './scripts/main.js'
         },
       });
   });
@@ -26,6 +29,7 @@ const miscRouter = (app, data) => {
       .render('login', {
         context: {
           user: req.user || {},
+          jsFilePath: './scripts/main.js'
         },
       });
   });
@@ -35,6 +39,7 @@ const miscRouter = (app, data) => {
       .render('register', {
         context: {
           user: req.user || {},
+          jsFilePath: './scripts/main.js'
         },
       });
   });
@@ -49,6 +54,7 @@ const miscRouter = (app, data) => {
       .render('movies', {
         context: {
           user: req.user || {},
+          jsFilePath: './scripts/main.js'
         },
       });
   });

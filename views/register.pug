@@ -1,5 +1,21 @@
 extends master/layout
-include master/components/userForm
 
 block content
-  +userForm('Register', '/users/register')
+  div.main-container.form-width
+    h1(align="center") Register
+    form(action="/users/auth" autocomplete="off" enctype="application/x-www-form-urlencoded" method="post")
+      div.form-group 
+        label(for="text") Username:
+        input.form-control(id="text" type="text" name="username" placeholder="Enter username")
+      div.form-group 
+        label(for="password") Password:
+        input.form-control(id="password" type="password" name="password" placeholder="Enter password")
+      div.form-group 
+        label(for="email") Email:
+        input.form-control(id="email" type="email" name="email" placeholder="Enter email")  
+      div.checkbox
+        label 
+          input(type="checkbox") 
+          | Remember me
+      div.align-center
+        button.btn.btn-primary(type="submit") Submit
