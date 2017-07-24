@@ -12,6 +12,10 @@ a:hover {
     cursor: pointer;
 }
 
+button:focus {
+    outline: 0 !important;
+}
+
 .main-wrapper {
     /*height: 100vh;*/
     /*width: 100vw;*/
@@ -67,4 +71,17 @@ ul.nav.navbar-nav.navbar-right {
 
 .content {
     margin: 0 8% 6% 8%;
+}
+
+.movie-wrapper{
+    margin: 18px;
+    /*background-color: #F8F8F8;*/
+    background-color: #F2F2F2;
+    padding: 10px 33px 20px 33px;
+}
+.movie-wrapper h4{
+    margin-bottom: 20px;
+}
+.color-gray{
+    color: #777;
 }

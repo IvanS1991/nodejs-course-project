@@ -3,7 +3,7 @@ extends master/layout
 block content
   div.main-container.form-width
     h1(align="center") Login
-    form(action="/users/auth" autocomplete="off" enctype="application/x-www-form-urlencoded" method="post")
+    form(action="/users/auth" onsubmit="return some()" autocomplete="off" enctype="application/x-www-form-urlencoded" method="post")
       div.form-group 
         label(for="text") Username:
         input.form-control(id="text" type="text" name="username" placeholder="Enter username")

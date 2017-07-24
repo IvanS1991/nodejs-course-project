@@ -32,9 +32,17 @@ const constants = {
   },
   MOVIE_META: {
     PAGES: 4,
-    GENRES: ['action', 'sci-fi', 'fantasy',
-      'adventure', 'comedy', 'thriller',
-      'drama', 'romance', 'animation'],
+    GENRES: [
+      'action',
+      'animation',
+      'adventure',
+      'comedy',
+      'drama',
+      'fantasy',
+      'sci-fi',
+      'thriller',
+      'romance'
+    ],
   },
 };
 

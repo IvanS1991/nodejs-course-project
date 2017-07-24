@@ -1,15 +1,15 @@
 const { Router } = require('express');
+const { MOVIE_META } = require('../../constants');
 
 const miscRouter = (app, data) => {
   const router = new Router();
 
   router.get('/', (req, res) => {
-    // console.log(req.user);
     return res.status(200)
       .render('home', {
         context: {
           user: req.user || {},
-          jsFilePath: './scripts/main.js' 
+          jsFilePath: './scripts/main.js'
         },
       });
   });
@@ -54,7 +54,8 @@ const miscRouter = (app, data) => {
       .render('movies', {
         context: {
           user: req.user || {},
-          jsFilePath: './scripts/main.js'
+          jsFilePath: './scripts/main.js',
+          geners: MOVIE_META.GENRES
         },
       });
   });

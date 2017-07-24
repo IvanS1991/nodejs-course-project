@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const { ROUTES } = require('../../constants');
+const { MOVIE_META } = require('../../constants');
 
 const moviesRouter = (app, data) => {
   const { movies } = data;
@@ -29,7 +30,6 @@ const moviesRouter = (app, data) => {
     const filter = {};
     if (genres) {
       genres = genres
-        .split(',')
         .map((genre) => {
           return genre.split('-')
             .map((piece) => {
@@ -43,7 +43,15 @@ const moviesRouter = (app, data) => {
     return movies.viewSome({ page, size, filter })
       .then((matches) => {
         return res.status(200)
-          .json(matches);
+          .render('movies', {
+            context: {
+              user: req.user || {},
+              jsFilePath: '../scripts/main.js',
+              geners: MOVIE_META.GENRES,
+              movies: matches
+            },
+          });
+        // .json(matches);
       })
       .catch((err) => {
         next(err);
