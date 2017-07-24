@@ -36,7 +36,7 @@ const users = (database) => {
           if (!match) {
             return Promise.reject('no such user');
           }
-          profile.username = user = match;
+          profile.user = user = match;
           return commentsData.findMany({ author: user.username });
         })
         .then((comments) => {

@@ -1,14 +1,21 @@
 const movies = (database) => {
   const moviesData = database('movies');
+  const commentsData = database('comments');
 
   class MoviesData {
     viewOne(filter) {
+      const output = {};
       return moviesData.findOne(filter)
         .then((match) => {
           if (!match) {
             return Promise.reject('no such movie');
           }
-          return match;
+          output.data = match;
+          return commentsData.findMany({ movieId: match.id });
+        })
+        .then((comments) => {
+          output.comments = comments.reverse();
+          return output;
         });
     }
 

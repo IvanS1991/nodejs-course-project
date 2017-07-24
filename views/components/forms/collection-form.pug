@@ -1,8 +1,11 @@
 mixin collectionForm()
-  .well.well-lg
-    form.form-group(action='/collections/create' method='post')
-      input.form-control(type='text' name='collectionName' placeholder='Collection name...')
-      label
-        input(type='checkbox' name='isPrivate')
-        | Private
-      input.form-control(type='submit' value='submit')
+  div.panel.panel-default
+    div.panel-heading
+      h1 Create Collection
+    div.panel-body.text-center
+      form.form-group(action='/collections/create' method='post')
+        input.form-control(type='text' name='collectionName' placeholder='Collection name...')
+        label
+          input(type='checkbox' name='isPrivate')
+          | Private
+        input.form-control(type='submit' value='submit')

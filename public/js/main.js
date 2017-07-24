@@ -1,0 +1,2 @@
+"use strict";$("#change-password").on("click",function(e){var s=$(e.target);s.toggleClass("hidden"),s.next().toggleClass("hidden")});
+"use strict";var filterMovies=function(){var e=[];[].slice.call($(".genre-option")).forEach(function(c){c.checked&&e.push(c.value)});var c="http://localhost:8000/movies/view?page=1&size=10&genres="+e.join(",");document.location=c};$(".genre-label").on("click",function(e){$(e.target).toggleClass("clicked")});

@@ -1,0 +1,14 @@
+mixin details(match, isOwner)
+  h1 Details
+  hr
+  p Username: #{match.user.username}
+  p Joined on: #{match.user.joined}
+  hr
+  if isOwner
+    input#change-password(type='button' value='Change password')
+    form.form-group.hidden
+      input.form-control(type='password' id='password-first' placeholder='New password')
+      input.form-control(type='password' name=password id='password-second' placeholder='Repeat password')
+      input.form-control(type='submit' value='Submit')
+    hr
+    a(href='/collections/new') Create new collection...

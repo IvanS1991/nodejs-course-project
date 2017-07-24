@@ -1,0 +1,5 @@
+mixin genresNav(genres)
+  ul.nav
+    each genre in genres
+      li.genre(class='col-sm-' + Math.floor(12 / genres.length))
+        a(href='/movies/view?page=1&size=10&genres=' + genre.toLowerCase()) #{genre}

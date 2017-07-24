@@ -36,7 +36,7 @@ mixin break()
     a(href='#') ...
 
 mixin pagination()
-  nav(aria-label="Page navigation")
+  nav.text-center(aria-label="Page navigation")
     ul.pagination
       if context.currentPage <= 4
         +firstPages()

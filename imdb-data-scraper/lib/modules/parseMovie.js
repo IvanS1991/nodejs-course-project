@@ -3,6 +3,15 @@ const _ = require('lodash');
 const { JSDOM } = require('jsdom');
 const { SELECTORS } = require('./constants');
 
+const grabText = (node) => {
+    if (node.children.length > 0) {
+        return grabText(node.firstElementChild);
+    }
+    return node.innerHTML
+        .replace(/\n/g, '')
+        .trim();
+};
+
 const parseMovie = (url) => {
     return fetch(url)
         .then((response) => {
@@ -39,8 +48,11 @@ const parseMovie = (url) => {
             const director = [].slice.call(document
                 .querySelectorAll(SELECTORS.MOVIE_DIRECTOR))[0];
 
-            const actors = document
+            let actors = document
                 .querySelectorAll(SELECTORS.MOVIE_ACTORS);
+
+            let characters = document
+                .querySelectorAll(SELECTORS.MOVIE_CHARACTERS);
 
             if (title) {
                 output.title = title
@@ -71,7 +83,8 @@ const parseMovie = (url) => {
             }
 
             if (description) {
-                output.description = description.innerHTML
+                output.description = description
+                    .firstChild.textContent
                     .replace(/\n/g, '')
                     .trim();
             }
@@ -86,11 +99,22 @@ const parseMovie = (url) => {
                     .innerHTML;
             }
 
-            if (actors) {
-                output.actors = [].slice.call(actors)
-                    .map((span) => {
-                        return span.innerHTML;
+            if (actors && characters) {
+                output.cast = [];
+                actors = [].slice.call(actors)
+                    .map((el) => {
+                        return el.innerHTML;
                     });
+                characters = [].slice.call(characters)
+                    .map((el) => {
+                        return grabText(el);
+                    });
+                actors.forEach((actor, index) => {
+                    output.cast.push({
+                        actor,
+                        character: characters[index],
+                    });
+                });
             }
 
             return output;

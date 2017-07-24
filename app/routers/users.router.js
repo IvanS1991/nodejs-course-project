@@ -37,13 +37,18 @@ const usersRouter = (app, data, passport) => {
 
   // VIEW PROFILE
   router.get(ROUTES.USERS.PROFILE, (req, res, next) => {
-    const id = req.params.id;
-    const filter = { id };
+    const username = req.params.username;
+    const filter = { username };
 
     return users.profile(filter)
       .then((match) => {
         return res.status(200)
-          .json(match);
+          .render('profile', {
+            context: {
+              user: req.user || {},
+              match,
+            },
+          });
       })
       .catch((err) => {
         next(err);
@@ -60,6 +65,7 @@ const usersRouter = (app, data, passport) => {
           context: {
             user: req.user || {},
             match: match,
+            isOwner: true,
           },
         });
       })

@@ -38,12 +38,7 @@ ul.nav.navbar-nav.navbar-right {
 }
 
 .poster {
-    margin: auto;
     height: 200px;
-}
-
-.img-container {
-    float: left;
 }
 
 .low-rate, .mid-rate, .high-rate {
@@ -58,7 +53,7 @@ ul.nav.navbar-nav.navbar-right {
     background-color: yellow;
 }
 
-.high-rate {
+.high-rate, .clicked {
     background-color: lightgreen;
 }
 

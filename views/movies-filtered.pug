@@ -1,15 +1,11 @@
 extends master/layout
 
-include components/movie-preview
+include components/previews/movie-preview
 include components/pagination
+include components/breadcrumb
 
 block content
-  ul.nav.nav-pills
-    each genre in context.genres
-      li.genre
-        a(href='/movies/view?page=1&size=10&genres=' + genre.toLowerCase())
-          h1
-            | #{genre}
+  +breadCrumb(['Home', 'Movies', 'View'])
   +pagination()
   ul
     each movie in context.movies

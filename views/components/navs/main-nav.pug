@@ -21,4 +21,8 @@ mixin nav()
             a(href='/collections') Collections
           li.gray-hover
             a(href='/about') About
+          li
+            form.form-inline
+              input.form-control(type='text' placeholder='Search')
+              input.form-control(type='submit' value='Search')
         +isLoggedIn   

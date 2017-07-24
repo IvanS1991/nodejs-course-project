@@ -13,7 +13,12 @@ const moviesRouter = (app, data) => {
     movies.viewOne(filter)
       .then((movie) => {
         return res.status(200)
-          .json(movie);
+          .render('movie-detailed', {
+            context: {
+              user: req.user || {},
+              movie,
+            },
+          });
       })
       .catch((err) => {
         next(err);

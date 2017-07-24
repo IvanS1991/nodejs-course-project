@@ -1,5 +1,8 @@
 extends master/layout
 
 block content
-  div.well.well-lg
-    h1 Error: &nbsp #{context.err}
+  div.panel.panel-danger
+    div.panel-heading
+      h1 Error!
+    div.panel-body
+      h2 #{context.err}

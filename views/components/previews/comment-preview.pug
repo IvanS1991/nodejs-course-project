@@ -1,0 +1,13 @@
+mixin commentPreview(comment)
+  div.panel.panel-default.text-center
+    div.panel-heading
+      h4 
+        a(href='http://localhost:8000/users/profile/' + comment.author) #{comment.author}
+        span &nbsp; - &nbsp; #{comment.created}
+    div.panel-body
+      p #{comment.content}
+    div.panel-footer
+      if context.user.username === comment.author
+        form.form-group(action='http://localhost:8000/comments/delete/' + comment.id method='post')
+          input.form-control.hidden(type='text' name='movieId' value=comment.movieId)
+          input.form-control(type='submit' value='Delete comment')

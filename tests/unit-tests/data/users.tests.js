@@ -123,7 +123,7 @@ describe('data.users tests', () => {
           users.profile({})
             .then((result) => {
               expect(result).to.be.an('object');
-              expect(result).to.have.property('username');
+              expect(result).to.have.property('user');
               expect(result).to.have.property('comments');
               expect(result).to.have.property('collections');
               expect(Object.keys(result)).to.have.length(3);

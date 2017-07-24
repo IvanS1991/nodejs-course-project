@@ -13,7 +13,7 @@ const commentsRouter = (app, data) => {
     return comments.create({ user, commentData })
       .then((comment) => {
         return res.status(200)
-          .redirect('/');
+          .redirect('/movies/view/' + comment.movieId + '#comments-collapsed');
       })
       .catch((err) => {
         next(err);
@@ -22,13 +22,14 @@ const commentsRouter = (app, data) => {
 
   // DELETE
   router.post(ROUTES.COMMENTS.DELETE, (req, res, next) => {
+    const movieId = req.body.movieId;
     const filter = { id: req.params.id };
     const user = req.user;
 
     return comments.remove({ filter, user })
       .then((comment) => {
         return res.status(200)
-          .redirect('/');
+          .redirect('/movies/view/' + movieId + '#comments-collapsed');
       })
       .catch((err) => {
         next(err);

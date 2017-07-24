@@ -7,7 +7,7 @@ const constants = {
       REGISTER: '/register',
       AUTH: '/auth',
       OWN_PROFILE: '/profile',
-      PROFILE: '/profile/:id',
+      PROFILE: '/profile/:username',
       UPDATE: '/update',
     },
     COLLECTIONS: {

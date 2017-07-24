@@ -1,9 +1,22 @@
 /* globals process */
 
 const gulp = require('gulp');
+const babel = require('gulp-babel');
+const concat = require('gulp-concat');
+const uglify = require('gulp-uglify');
 
-gulp.task('works', () => {
-  console.log('Gulp works');
+gulp.task('compile:js', () => {
+  return gulp.src('src/**/*.js')
+    .pipe(babel({
+      presets: 'es2015',
+    }))
+    .pipe(uglify())
+    .pipe(concat('main.js'))
+    .pipe(gulp.dest('public/js'));
+});
+
+gulp.task('watch:js', () => {
+  return gulp.watch('src/**/*.js', ['compile:js']);
 });
 
 gulp.task('get-movies', (done) => {
@@ -30,8 +43,4 @@ gulp.task('get-movies', (done) => {
           return process.exit();
         });
     });
-});
-
-gulp.task('print', () => {
-  console.log('something');
 });
