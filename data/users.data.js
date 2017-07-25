@@ -22,7 +22,7 @@ const users = (database) => {
       return usersData.findOne({ username: user.username })
         .then((match) => {
           if (match) {
-            return Promise.reject('existing user');
+            return Promise.reject('Existing user!');
           }
           return usersData.insertOne(user);
         });
@@ -34,7 +34,7 @@ const users = (database) => {
       return usersData.findOne(filter)
         .then((match) => {
           if (!match) {
-            return Promise.reject('no such user');
+            return Promise.reject('Non-existing user!');
           }
           profile.user = user = match;
           return commentsData.findMany({ author: user.username });
@@ -54,7 +54,7 @@ const users = (database) => {
       return usersData.findOne(filter)
         .then((match) => {
           if (!match) {
-            return Promise.reject('no such user');
+            return Promise.reject('Non-existing user!');
           }
           return usersData.update(filter, data);
         });

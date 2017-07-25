@@ -19,10 +19,10 @@ const comments = (database) => {
       return commentsData.findOne(filter)
         .then((match) => {
           if (!match) {
-            return Promise.reject('no such comment');
+            return Promise.reject('Non-existing comment!');
           }
           if (match.author !== user.username) {
-            return Promise.reject('you are not the owner of this comment');
+            return Promise.reject('You are not the owner of this comment!');
           }
           return commentsData.remove(filter);
         });

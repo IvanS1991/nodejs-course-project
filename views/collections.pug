@@ -1,8 +1,11 @@
 extends master/layout
 
+include components/previews/collection-preview
+
 block content
   div.panel.panel-default
     div.panel-heading
-      h1 Collections
+      h1 Public collections
     div.panel-body
-      h2 TODO
+      each collection in context.collections
+        +collectionPreview(collection)

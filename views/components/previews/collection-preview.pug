@@ -1,0 +1,13 @@
+mixin collectionPreview(collection)
+  div.panel.panel-default
+    div.panel-heading
+      h4 #{collection.collectionName}
+    div.panel-body
+      p Owner: #{collection.owner}
+      p Created: #{collection.created}
+      p Movies: #{collection.movies.length}
+    div.panel-footer
+      a.collection-view(href='/collections/view/' + collection.id) Detailed view
+      if context.user.username === collection.owner
+        hr
+        a.collection-delete(href='/collections/delete/' + collection.id) Delete collection

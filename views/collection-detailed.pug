@@ -3,7 +3,9 @@ extends master/layout
 include components/previews/movie-preview
 
 block content
-  h1 #{context.collection.collectionName}
-  hr
-  each movie in context.collection.movies
-    +moviePreview(movie)
+  div.panel.panel-default
+    div.panel-heading
+      h1 #{context.collection.collectionName}
+    div.panel-body
+      each movie in context.collection.movies
+        +moviePreview(movie)

@@ -7,17 +7,21 @@ const collections = (database) => {
       return collectionsData.insertOne(collection);
     }
 
+    all() {
+      return collectionsData.findMany({ isPrivate: false });
+    }
+
     view(options) {
       const { filter, user } = options;
 
       return collectionsData.findOne(filter)
         .then((match) => {
           if (!match) {
-            return Promise.reject('no such collection');
+            return Promise.reject('Non-existing collection!');
           }
           if (match.isPrivate) {
             if (match.owner !== user.username) {
-              return Promise.reject('this is a private collection');
+              return Promise.reject('This is a private collection!');
             }
             return match;
           }
@@ -32,7 +36,7 @@ const collections = (database) => {
         .then((match) => {
           if (!match) {
             return Promise
-              .reject('you are not the owner of this collection or it does not exist');
+              .reject('Non-existing collection or you are not its owner!');
           }
           return match;
         });

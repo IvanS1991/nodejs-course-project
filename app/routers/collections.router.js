@@ -7,6 +7,23 @@ const collectionsRouter = (app, data) => {
   const { collections } = data;
   const router = new Router();
 
+  // VIEW ALL PUBLIC
+  router.get('/', (req, res, next) => {
+    return collections.all()
+      .then((matches) => {
+        return res.status(200)
+          .render('collections', {
+            context: {
+              user: req.user || {},
+              collections: matches,
+            },
+          });
+      })
+      .catch((err) => {
+        next(err);
+      });
+  });
+
   // VIEW BY ID
   router.get(ROUTES.COLLECTIONS.VIEW, (req, res, next) => {
     const filter = { id: req.params.id };

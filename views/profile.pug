@@ -1,20 +1,16 @@
 extends master/layout
 
 include components/previews/profile-preview
+include components/previews/collection-preview
 
 block content
   div.panel.panel-default
     div.panel-heading
-      h1= Profile
+      h1 Profile
     div.panel-body
-      h2 Collections
       if context.user.username === context.match.user.username
         +details(context.match, true)
       hr
       each collection in context.match.collections
-        div.collection.well.well-sm
-          h2 #{collection.collectionName} (#{collection.movies.length})
-          a.collection-view(href='/collections/view/' + collection.id) Detailed view
-          hr
-          if context.isOwner
-            a.collection-delete(href='/collections/delete/' + collection.id) Delete collection
+        +collectionPreview(collection)
+          

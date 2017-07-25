@@ -11,12 +11,12 @@ mixin rating(number)
   hr
 
 mixin moviePreview(movieData)
-  div.panel.panel-default
-    div.panel-heading.text-center
+  div.panel.panel-default.text-center
+    div.panel-heading
       h3.movie-title
         a(href='/movies/view/' + movieData.id) #{movieData.title}
         span.year (#{movieData.year})
-    div.panel-body.text-center
+    div.panel-body
       div.row
         div.col-sm-2
           img.poster(src=movieData.imgSrc alt='movie poster')
@@ -28,7 +28,7 @@ mixin moviePreview(movieData)
       hr
       div.row
         +genresNav(movieData.genres)
-    div.panel-footer.text-center
+    div.panel-footer
       if !context.isOwner && context.user.username
         div.row
-          a(href='/') Add to collection
+          input.btn.btn-primary(type='button' value='Add to collection')

@@ -7,8 +7,8 @@ mixin details(match, isOwner)
   if isOwner
     input#change-password(type='button' value='Change password')
     form.form-group.hidden
-      input.form-control(type='password' id='password-first' placeholder='New password')
-      input.form-control(type='password' name=password id='password-second' placeholder='Repeat password')
+      input.form-control(type='password' name='password' placeholder='New password')
+      input.form-control(type='password' name='password-repeat' placeholder='Repeat password')
       input.form-control(type='submit' value='Submit')
     hr
     a(href='/collections/new') Create new collection...
