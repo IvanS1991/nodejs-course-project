@@ -1,6 +1,8 @@
 const { Router } = require('express');
 const { ROUTES } = require('../../constants');
 
+const { commentModel } = require('../models');
+
 const commentsRouter = (app, data) => {
   const { comments } = data;
   const router = new Router();
@@ -10,10 +12,14 @@ const commentsRouter = (app, data) => {
     const user = req.user;
     const commentData = req.body;
 
-    return comments.create({ user, commentData })
-      .then((comment) => {
+    const comment = commentModel(commentData);
+    comment.author = user.username;
+
+
+    return comments.create(comment)
+      .then((result) => {
         return res.status(200)
-          .redirect('/movies/view/' + comment.movieId + '#comments-collapsed');
+          .redirect('/movies/view/' + result.movieId + '#comments-collapsed');
       })
       .catch((err) => {
         next(err);

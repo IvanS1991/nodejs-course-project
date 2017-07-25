@@ -26,19 +26,26 @@ describe(`data.movies tests`, () => {
   });
 
   describe(`data.movies.viewOne tests`, () => {
-    describe(`if a match is found...`, () => {
+    describe(`if a matching movie is found...`, () => {
       let match;
+      let comments;
 
       beforeEach(() => {
         match = {
           movie: 'asd',
-          comments: [],
           id: 5,
         };
+
+        comments = ['comments'];
 
         sinon.stub(crud, 'findOne')
           .callsFake(() => {
             return Promise.resolve(match);
+          });
+
+        sinon.stub(crud, 'findMany')
+          .callsFake(() => {
+            return Promise.resolve(comments);
           });
       });
 
@@ -49,13 +56,17 @@ describe(`data.movies tests`, () => {
       it(`expect to resolve with the match`, (done) => {
         movies.viewOne({})
           .then((result) => {
-            expect(result).to.deep.equal(match);
+            expect(result).to.be.an('object');
+            expect(result).to.have.property('data');
+            expect(result).to.have.property('comments');
+            expect(result.data).to.deep.equal(match);
+            expect(result.comments).to.deep.equal(comments);
           })
           .then(done, done);
       });
     });
 
-    describe(`if no match is found...`, () => {
+    describe(`if no matching movie is found...`, () => {
       beforeEach(() => {
         sinon.stub(crud, 'findOne')
           .callsFake(() => {
@@ -78,7 +89,7 @@ describe(`data.movies tests`, () => {
   });
 
   describe(`data.movies.viewSome tests`, () => {
-    describe(`if matches are found...`, () => {
+    describe(`if matching movies are found...`, () => {
       let options;
       let data;
       let startIndex;
@@ -125,7 +136,7 @@ describe(`data.movies tests`, () => {
       });
     });
 
-    describe(`if no matches are found...`, () => {
+    describe(`if no matching movies are found...`, () => {
       beforeEach(() => {
         sinon.stub(crud, 'findMany')
           .callsFake(() => {

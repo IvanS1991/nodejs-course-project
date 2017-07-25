@@ -47,7 +47,6 @@ const collections = (database) => {
 
       return moviesData.findOne({ id: movieId })
         .then((movie) => {
-          console.log(movie);
           return collectionsData.updatePush({
             owner: user.username,
             id: collectionId,

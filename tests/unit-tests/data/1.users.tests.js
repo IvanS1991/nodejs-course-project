@@ -40,6 +40,119 @@ describe('data.users tests', () => {
     users = init(db).users;
   });
 
+  describe(`data.users.findByUsername`, () => {
+    describe(`if a match is found...`, () => {
+      beforeEach(() => {
+        sinon.stub(crud, 'findOne')
+          .callsFake(() => {
+            return Promise.resolve({});
+          });
+      });
+
+      afterEach(() => {
+        crud.findOne.restore();
+      });
+
+      it(`expect to resolve with an object`, (done) => {
+        users.findByUsername()
+          .then((result) => {
+            expect(result).to.be.an('object');
+          })
+          .then(done, done);
+      });
+    });
+
+    describe(`if no match is found...`, () => {
+      beforeEach(() => {
+        sinon.stub(crud, 'findOne')
+          .callsFake(() => {
+            return Promise.resolve();
+          });
+      });
+
+      afterEach(() => {
+        crud.findOne.restore();
+      });
+
+      it(`expect to reject with an error`, () => {
+        users.findByUsername()
+          .catch((err) => {
+            return expect(err).to.exist
+              .and.to.be.a('string');
+          });
+      });
+    });
+  });
+
+  describe(`data.users.findByAuthKey`, () => {
+    describe(`if match is found...`, () => {
+      beforeEach(() => {
+        sinon.stub(crud, 'findOne')
+          .callsFake(() => {
+            return Promise.resolve({});
+          });
+      });
+
+      afterEach(() => {
+        crud.findOne.restore();
+      });
+
+      it(`expect to resolve with an object`, (done) => {
+        users.findByAuthKey()
+          .then((result) => {
+            expect(result).to.be.an('object');
+          })
+          .then(done, done);
+      });
+    });
+
+    describe(`if no match is found...`, () => {
+      beforeEach(() => {
+        sinon.stub(crud, 'findOne')
+          .callsFake(() => {
+            return Promise.resolve();
+          });
+      });
+
+      afterEach(() => {
+        crud.findOne.restore();
+      });
+
+      it(`expect to reject with an error`, () => {
+        users.findByAuthKey()
+          .catch((err) => {
+            return expect(err).to.exist
+              .and.to.be.a('string');
+          });
+      });
+    });
+  });
+
+  describe(`data.users.getNewAuthKey`, () => {
+    let expected;
+
+    beforeEach(() => {
+      expected = { authKey: 'dsa' };
+
+      sinon.stub(crud, 'update')
+        .callsFake(() => {
+          return Promise.resolve(expected);
+        });
+    });
+
+    afterEach(() => {
+      crud.update.restore();
+    });
+
+    it(`expect to resolve with updated authkey`, (done) => {
+      users.getNewAuthKey({})
+        .then((result) => {
+          expect(result).to.deep.equal(expected);
+        })
+        .then(done, done);
+    });
+  });
+
   describe(`data.users.register tests`, () => {
     describe(`if there is no such user in db...`, () => {
       let expected;

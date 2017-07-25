@@ -94,11 +94,10 @@ const crud = (db) => {
         return new Promise((resolve, reject) => {
           return db.collection(collectionName)
             .deleteMany(query, (deleteErr, result) => {
-              console.log(result);
               if (deleteErr) {
                 return reject(deleteErr);
               }
-              return resolve();
+              return resolve({});
             });
         });
       }

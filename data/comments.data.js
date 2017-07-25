@@ -1,15 +1,8 @@
-const { commentModel } = require('../models');
-
 const comments = (database) => {
   const commentsData = database('comments');
 
   class CommentsData {
-    create(options) {
-      const { user, commentData } = options;
-
-      const comment = commentModel(commentData);
-      comment.author = user.username;
-
+    create(comment) {
       return commentsData.insertOne(comment);
     }
 
