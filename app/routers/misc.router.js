@@ -1,6 +1,6 @@
 const { Router } = require('express');
 
-const { MOVIE_META } = require('../../constants');
+const { MOVIE_META, TWITTER_KEYWORDS } = require('../../constants');
 
 const miscRouter = (app, data) => {
   const router = new Router();
@@ -10,6 +10,7 @@ const miscRouter = (app, data) => {
       .render('home', {
         context: {
           user: req.user || {},
+          twitterKeyword: TWITTER_KEYWORDS,
         },
       });
   });

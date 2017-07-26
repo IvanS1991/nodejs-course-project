@@ -7,6 +7,7 @@ const app = express();
 
 const routers = require('../routers');
 const middlewares = require('./middleware.config');
+const twitter = require('./twitter.config');
 const { errorHandler } = require('../../utils');
 
 const attach = (data, root) => {
@@ -22,7 +23,11 @@ const attach = (data, root) => {
 
   app.use(errorHandler);
 
-  return app;
+  const server = require('http').createServer(app);
+
+  twitter(server);
+
+  return server;
 };
 
 module.exports = attach;

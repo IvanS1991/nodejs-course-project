@@ -4,15 +4,19 @@ const gulp = require('gulp');
 const babel = require('gulp-babel');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
+const pump = require('pump');
 
-gulp.task('compile:js', () => {
-  return gulp.src('src/**/*.js')
-    .pipe(babel({
+gulp.task('compile:js', (callback) => {
+  pump([
+    gulp.src('src/**/*.js'),
+    babel({
       presets: 'es2015',
-    }))
-    .pipe(uglify())
-    .pipe(concat('main.js'))
-    .pipe(gulp.dest('public/js'));
+    }),
+    uglify(),
+    concat('main.js'),
+    gulp.dest('public/js'),
+  ],
+  callback);
 });
 
 gulp.task('watch:js', () => {

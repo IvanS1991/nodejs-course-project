@@ -10,9 +10,7 @@ Promise.resolve()
   .then((data) => {
     return require('./app')(data);
   })
-  .then((app) => {
-    const server = require('http').createServer(app);
-    require('./app/config/twitter.config')(server);
+  .then((server) => {
     return server.listen(PORT, null, null, () => {
       console.log(`Listening on ${PORT}`);
     });

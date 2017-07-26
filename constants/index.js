@@ -38,6 +38,12 @@ const constants = {
       'adventure', 'comedy', 'thriller',
       'drama', 'romance', 'animation'],
   },
+  TWITTER_KEYWORDS: [
+    '#imdb',
+    '#rottentomatoes',
+    '#movienews',
+    '#hollywood',
+  ],
 };
 
 module.exports = constants;

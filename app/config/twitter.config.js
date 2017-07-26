@@ -8,11 +8,14 @@ const cfg = {
 
 const twitter = require('node-tweet-stream')(cfg);
 
+const { TWITTER_KEYWORDS } = require('../../constants');
+
 const attach = (server) => {
   const io = socketio(server);
 
-  twitter.track('imdb');
-  twitter.track('rotten tomatoes');
+  TWITTER_KEYWORDS.forEach((keyword) => {
+    twitter.track(keyword);
+  });
 
   twitter.on('tweet', (tweet) => {
     console.log(tweet.text);

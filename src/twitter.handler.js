@@ -3,6 +3,14 @@ const twitter = io();
 const container = $('#twitter-feed');
 
 const addToFeed = (tweet, container) => {
+  console.log(tweet);
+  
+  const containerElements = container.children().length;
+  
+  if (containerElements >= 20) {
+    container.children().last().remove();
+  }
+
   const $div = $('<div/>')
     .addClass('panel')
     .addClass('panel-default');
@@ -31,8 +39,6 @@ const addToFeed = (tweet, container) => {
   
   $heading.appendTo($div);
   $body.appendTo($div);
-
-  console.log(tweet);
   
   $div.prependTo(container);
 };

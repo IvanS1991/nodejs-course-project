@@ -9,7 +9,7 @@
   "scripts": {
     "scrap": "gulp get-movies",
     "start": "node server.js",
-    "test": "./node_modules/.bin/mocha -R spec ./tests/**/**.js",
+    "test": "./node_modules/.bin/mocha -R dot ./tests/**/**.js",
     "dev-server": "./node_modules/.bin/nodemon server.js",
     "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha tests/**/*.js",
     "eslint-check": "./node_modules/.bin/eslint .",
@@ -34,11 +34,13 @@
     "jsdom": "^11.1.0",
     "lodash": "^4.17.4",
     "mongodb": "^2.2.29",
+    "morgan": "^1.8.2",
     "node-fetch": "^1.7.1",
     "node-tweet-stream": "^2.0.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "pug": "^2.0.0-rc.2",
+    "pump": "^1.0.2",
     "sha-1": "^0.1.1",
     "socket.io": "^2.0.3",
     "toastr": "^2.1.2"

@@ -2,8 +2,10 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const morgan = require('morgan');
 
 const attach = (app, passport) => {
+  app.use(morgan('tiny'));
   app.use(cors());
   app.use(cookieParser());
   app.use(bodyParser.json());
