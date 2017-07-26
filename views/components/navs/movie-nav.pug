@@ -1,0 +1,11 @@
+mixin genresNav(genres)
+  ul.nav
+    each genre in genres
+      li.genre(class='col-sm-' + Math.floor(12 / genres.length))
+        a.btn(href='/movies/view?page=1&size=10&genres=' + genre.toLowerCase()) #{genre}
+
+mixin movieNav(movie)
+  if !context.isOwner && context.user.username
+    div.row
+      input.btn.btn-primary#collection-add-display(type='button' value='Add to collection')
+      form.form-group.hidden

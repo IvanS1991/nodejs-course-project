@@ -35,10 +35,12 @@
     "lodash": "^4.17.4",
     "mongodb": "^2.2.29",
     "node-fetch": "^1.7.1",
+    "node-tweet-stream": "^2.0.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "pug": "^2.0.0-rc.2",
     "sha-1": "^0.1.1",
+    "socket.io": "^2.0.3",
     "toastr": "^2.1.2"
   },
   "devDependencies": {

@@ -1,13 +1,17 @@
-mixin collectionPreview(collection)
-  div.panel.panel-default
-    div.panel-heading
-      h4 #{collection.collectionName}
-    div.panel-body
-      p Owner: #{collection.owner}
-      p Created: #{collection.created}
-      p Movies: #{collection.movies.length}
-    div.panel-footer
-      a.collection-view(href='/collections/view/' + collection.id) Detailed view
-      if context.user.username === collection.owner
-        hr
-        a.collection-delete(href='/collections/delete/' + collection.id) Delete collection
+mixin collectionPreview(collections)
+  each collection, index in collections
+    div.panel.panel-default
+      div.panel-heading.text-center
+        h3 
+          a(data-toggle='collapse' href='#collection-collapsed-' + index) #{collection.collectionName}
+      div.panel-collapse.collapse(id='collection-collapsed-' + index)
+        div.panel-body
+          p Owner: #{collection.owner}
+          p Created: #{collection.created}
+          p Movies: #{collection.movies.length}
+        div.panel-footer
+          a.collection-view.btn.btn-primary.form-control(href='/collections/view/' + collection.id) Detailed view
+          if context.user.username === collection.owner
+            hr
+            form.form-group(action='/collections/delete' + collection.id method='post')
+              input.form-control.btn.btn-primary(type='submit' value='Delete collection')

@@ -123,7 +123,7 @@ describe('data.collections tests', () => {
         });
 
         it(`expect to resolve with the match`, (done) => {
-          collections.view({})
+          collections.view({ user })
             .then((result) => {
               expect(result).to.deep.equal(match);
             })
@@ -155,7 +155,7 @@ describe('data.collections tests', () => {
         });
 
         it(`expect to reject with an error`, () => {
-          collections.view({})
+          collections.view({ user })
             .catch((err) => {
               return expect(err).to.exist
                 .and.to.be.a('string');

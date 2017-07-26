@@ -54,7 +54,7 @@ describe('data.users tests', () => {
       });
 
       it(`expect to resolve with an object`, (done) => {
-        users.findByUsername()
+        users.findByUsername('asd')
           .then((result) => {
             expect(result).to.be.an('object');
           })
@@ -75,7 +75,7 @@ describe('data.users tests', () => {
       });
 
       it(`expect to reject with an error`, () => {
-        users.findByUsername()
+        users.findByUsername('asd')
           .catch((err) => {
             return expect(err).to.exist
               .and.to.be.a('string');

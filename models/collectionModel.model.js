@@ -1,8 +1,8 @@
 const { getKey, parseTime } = require('../utils');
 
 const collectionModel = (options) => {
-  if (!options.collectionName || !options.isPrivate) {
-    throw new Error('collection must have name');
+  if (!options.collectionName) {
+    throw new Error('Collection must have name and isPrivate!');
   }
   class Collection {
     constructor(collectionName, isPrivate) {

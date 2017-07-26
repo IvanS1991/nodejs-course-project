@@ -1,6 +1,6 @@
 extends master/layout
 
-include components/navs/genres-nav
+include components/navs/movie-nav
 include components/previews/movie-preview
 include components//previews/comment-preview
 include components/forms/comment-form
@@ -19,8 +19,11 @@ block content
           p Duration: #{context.movie.data.duration}
           hr
           p #{context.movie.data.description}
+      div.row
+        hr
+        +genresNav(context.movie.data.genres)
     div.panel-footer
-      +genresNav(context.movie.data.genres)
+      +movieNav(context.movie)
   div.panel.panel-default.text-center
     div.panel-heading
       h2 

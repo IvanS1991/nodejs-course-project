@@ -5,10 +5,12 @@ mixin details(match, isOwner)
   p Joined on: #{match.user.joined}
   hr
   if isOwner
-    input#change-password(type='button' value='Change password')
-    form.form-group.hidden
-      input.form-control(type='password' name='password' placeholder='New password')
-      input.form-control(type='password' name='password-repeat' placeholder='Repeat password')
-      input.form-control(type='submit' value='Submit')
+    input#toggle-password-form.btn.btn-primary(type='button' value='Change password')
+    form.form-group.hidden(action='/users/update' onsubmit='encryptPass()' method='post')
+      input.form-control(type='password' id='tb-password' placeholder='New password')
+      input.form-control.hidden(type='password' id='tb-password-secure' name='password')
+      input.form-control(type='password' id='tb-password-repeat' placeholder='Repeat password')
+      input.form-control.hidden(type='password' id='tb-password-repeat-secure' name='passRepeat')
+      input.form-control.btn.btn-primary(type='submit' value='Submit')
     hr
     a(href='/collections/new') Create new collection...

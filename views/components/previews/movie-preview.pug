@@ -1,4 +1,4 @@
-include ../navs/genres-nav
+include ../navs/movie-nav
 
 mixin rating(number)
   div Metacritic score: 
@@ -29,6 +29,4 @@ mixin moviePreview(movieData)
       div.row
         +genresNav(movieData.genres)
     div.panel-footer
-      if !context.isOwner && context.user.username
-        div.row
-          input.btn.btn-primary(type='button' value='Add to collection')
+      +movieNav(movieData)

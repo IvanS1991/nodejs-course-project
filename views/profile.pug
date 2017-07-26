@@ -11,6 +11,7 @@ block content
       if context.user.username === context.match.user.username
         +details(context.match, true)
       hr
-      each collection in context.match.collections
-        +collectionPreview(collection)
+      h2 Your collections
+      hr
+      +collectionPreview(context.match.collections)
           

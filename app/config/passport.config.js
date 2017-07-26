@@ -4,10 +4,10 @@ const LocalStrat = require('passport-local');
 const attach = (data) => {
   const { users } = data;
 
-  passport.use(new LocalStrat((username, password, done) => {
+  passport.use(new LocalStrat((username, passHash, done) => {
     users.findByUsername(username)
       .then((user) => {
-        if (!user || user.passHash !== password) {
+        if (!user || user.passHash !== passHash) {
           done('Wrong username or password!', null);
         }
         done(null, user);

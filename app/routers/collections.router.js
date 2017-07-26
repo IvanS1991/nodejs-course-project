@@ -48,12 +48,13 @@ const collectionsRouter = (app, data) => {
   // CREATE
   router.post(ROUTES.COLLECTIONS.CREATE, (req, res, next) => {
     const username = req.user.username;
+    console.log(req.body);
     const collection = collectionModel(req.body);
     collection.owner = username;
 
     return collections.create(collection)
       .then((output) => {
-        return res.redirect('/');
+        return res.redirect('/users/profile');
       })
       .catch((err) => {
         next(err);

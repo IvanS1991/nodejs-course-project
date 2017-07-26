@@ -7,7 +7,7 @@ const users = (database) => {
 
   class UsersData {
     findByUsername(username) {
-      return usersData.findOne({ username: username });
+      return usersData.findOne({ usernameLC: username.toLowerCase() });
     }
 
     findByAuthKey(authKey) {

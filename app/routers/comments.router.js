@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { ROUTES } = require('../../constants');
 
-const { commentModel } = require('../models');
+const { commentModel } = require('../../models');
 
 const commentsRouter = (app, data) => {
   const { comments } = data;
