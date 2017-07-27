@@ -25,12 +25,12 @@ gulp.task('watch:js', () => {
 
 gulp.task('get-movies', (done) => {
   const scrapeMovies = require('./imdb-data-scraper');
-  const { MOVIE_META } = require('./constants');
+  const { MOVIE_META, DB_PATH } = require('./constants');
   const { getId } = require('./utils');
 
   return Promise.resolve()
     .then(() => {
-      return require('./db');
+      return require('./db')(DB_PATH);
     })
     .then((db) => {
       const moviesDb = db('movies');
