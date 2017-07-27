@@ -17,6 +17,8 @@ const attach = (data, root) => {
 
   app.use('/', express.static(path.join(__dirname, '../../public')));
   app.use('/lib', express.static(path.join(__dirname, '../../node_modules')));
+  app.use('/coverage', express.static(path
+    .join(__dirname, '../../coverage/lcov-report')));
 
   middlewares(app, passport);
   routers(app, data, passport);

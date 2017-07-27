@@ -1,5 +1,5 @@
-// SHOW CHANGE PASS FORM
-$('#toggle-password-form').on('click', (e) => {
+// SHOW HIDDEN FORM
+$('#toggle-password-form, .collection-add-display').on('click', (e) => {
   const $this = $(e.target);
   const $next = $this.next();
   $this.toggleClass('hidden');

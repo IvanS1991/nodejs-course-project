@@ -8,4 +8,4 @@ block content
       h1 #{context.collection.collectionName}
     div.panel-body
       each movie in context.collection.movies
-        +moviePreview(movie)
+        +moviePreview(movie, context.collection.id)

@@ -37,6 +37,7 @@ const collectionsRouter = (app, data) => {
               user: req.user || {},
               collection,
               isOwner: true,
+              inCollection: true,
             },
           });
       })
@@ -48,7 +49,7 @@ const collectionsRouter = (app, data) => {
   // CREATE
   router.post(ROUTES.COLLECTIONS.CREATE, (req, res, next) => {
     const username = req.user.username;
-    console.log(req.body);
+
     const collection = collectionModel(req.body);
     collection.owner = username;
 
@@ -90,13 +91,13 @@ const collectionsRouter = (app, data) => {
   // ADD TO COLLECTION
   router.post(ROUTES.COLLECTIONS.ADD, (req, res, next) => {
     const user = req.user;
-    const collectionId = req.params.id;
+    const collectionName = req.body.collectionName;
     const movieId = parseInt(req.body.movieId, 10);
 
-    return collections.addToCollection({ user, collectionId, movieId })
+    return collections.addToCollection({ user, collectionName, movieId })
       .then((result) => {
         return res.status(200)
-          .json('added to collection');
+          .redirect(req.session.lastReferer);
       })
       .catch((err) => {
         next(err);
@@ -105,13 +106,14 @@ const collectionsRouter = (app, data) => {
 
   // REMOVE FROM COLLECTION
   router.post(ROUTES.COLLECTIONS.REMOVE, (req, res, next) => {
+    const user = req.user;
     const collectionId = req.params.id;
     const movieId = parseInt(req.body.movieId, 10);
 
-    return collections.removeFromCollection({ collectionId, movieId })
+    return collections.removeFromCollection({ user, collectionId, movieId })
       .then((result) => {
         return res.status(200)
-          .json('removed from collection');
+          .redirect(req.session.lastReferer);
       })
       .catch((err) => {
         next(err);

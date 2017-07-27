@@ -9,7 +9,7 @@
   "scripts": {
     "scrap": "gulp get-movies",
     "start": "node server.js",
-    "test": "./node_modules/.bin/mocha -R dot ./tests/**/**.js",
+    "test": "./node_modules/.bin/mocha -R dot ./tests/**/*.js",
     "dev-server": "./node_modules/.bin/nodemon server.js",
     "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha tests/**/*.js",
     "eslint-check": "./node_modules/.bin/eslint .",
@@ -52,6 +52,7 @@
     "eslint-config-google": "^0.8.0",
     "mocha": "^3.4.2",
     "nodemon": "^1.11.0",
+    "selenium-webdriver": "^3.5.0",
     "sinon": "^2.3.8"
   }
 }

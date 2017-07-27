@@ -21,4 +21,16 @@ mixin nav()
             a(href='/collections') Collections
           li.gray-hover
             a(href='/about') About
-        +isLoggedIn   
+          li.dropdown
+            a(href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false")
+              | TESTS 
+              span.caret
+            ul.dropdown-menu
+              li
+                a(href="#") UNIT TESTS
+              li
+                a(href="/coverage") UNIT TESTS COVERAGE
+              li.divider(role='separator')
+          li.gray-hover
+            a(href='https://github.com/Team-Express-1/nodejs-course-project') GITHUB REPO
+        +isLoggedIn

@@ -3,8 +3,6 @@ const twitter = io();
 const container = $('#twitter-feed');
 
 const addToFeed = (tweet, container) => {
-  console.log(tweet);
-  
   const containerElements = container.children().length;
   
   if (containerElements >= 20) {

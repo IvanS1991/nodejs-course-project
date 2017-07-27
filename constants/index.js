@@ -15,7 +15,7 @@ const constants = {
       CREATE: '/create',
       UPDATE: '/update/:id',
       VIEW: '/view/:id',
-      ADD: '/add/:id',
+      ADD: '/add',
       REMOVE: '/remove/:id',
       DELETE: '/delete/:id',
     },
@@ -43,6 +43,8 @@ const constants = {
     '#rottentomatoes',
     '#movienews',
     '#hollywood',
+    '#nodejs',
+    '#javascript',
   ],
 };
 

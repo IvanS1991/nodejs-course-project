@@ -9,7 +9,7 @@ GET - /users/profile
 * Check an user's profile - Public
 GET - /users/profile/:id
 * Update profile - Private
-PUT - /users/update - { stuff to update }
+POST - /users/update - { stuff to update }
 
 Collections
 
@@ -20,7 +20,7 @@ GET - /collections/view/:id
 * Update - Private
 POST - /collections/update/:id - { collectionName:..., isPrivate:... }
 * Add to collection - Private
-POST - /collections/add/:id
+POST - /collections/add
 * Remove from collection - Private
 POST - /collections/remove/:id
 * Delete - Private

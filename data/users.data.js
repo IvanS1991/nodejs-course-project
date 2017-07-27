@@ -11,7 +11,16 @@ const users = (database) => {
     }
 
     findByAuthKey(authKey) {
-      return usersData.findOne({ authKey: authKey });
+      let user;
+      return usersData.findOne({ authKey: authKey })
+        .then((match) => {
+          user = match;
+          return collectionsData.findMany({ owner: user.username });
+        })
+        .then((collections) => {
+          user.collections = collections;
+          return user;
+        });
     }
 
     getNewAuthKey(user) {

@@ -18,7 +18,6 @@ const attach = (server) => {
   });
 
   twitter.on('tweet', (tweet) => {
-    console.log(tweet.text);
     io.emit('tweet', tweet);
   });
 };

@@ -43,13 +43,13 @@ const collections = (database) => {
     }
 
     addToCollection(options) {
-      const { user, collectionId, movieId } = options;
+      const { user, collectionName, movieId } = options;
 
       return moviesData.findOne({ id: movieId })
         .then((movie) => {
           return collectionsData.updatePush({
             owner: user.username,
-            id: collectionId,
+            collectionName: collectionName,
           },
             {
               movies: movie,
@@ -58,9 +58,10 @@ const collections = (database) => {
     }
 
     removeFromCollection(options) {
-      const { collectionId, movieId } = options;
+      const { user, collectionId, movieId } = options;
 
       return collectionsData.updatePull({
+        owner: user.username,
         id: collectionId,
       },
       {

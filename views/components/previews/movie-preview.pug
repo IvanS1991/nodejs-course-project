@@ -10,7 +10,7 @@ mixin rating(number)
       span.high-rate #{number}
   hr
 
-mixin moviePreview(movieData)
+mixin moviePreview(movieData, collId)
   div.panel.panel-default.text-center
     div.panel-heading
       h3.movie-title
@@ -29,4 +29,4 @@ mixin moviePreview(movieData)
       div.row
         +genresNav(movieData.genres)
     div.panel-footer
-      +movieNav(movieData)
+      +movieNav(movieData, collId)

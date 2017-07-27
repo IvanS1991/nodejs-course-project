@@ -4,8 +4,16 @@ mixin genresNav(genres)
       li.genre(class='col-sm-' + Math.floor(12 / genres.length))
         a.btn(href='/movies/view?page=1&size=10&genres=' + genre.toLowerCase()) #{genre}
 
-mixin movieNav(movie)
+mixin movieNav(movie, collId)
   if !context.isOwner && context.user.username
-    div.row
-      input.btn.btn-primary#collection-add-display(type='button' value='Add to collection')
-      form.form-group.hidden
+    input.btn.btn-primary.collection-add-display(type='button' value='Add to collection')
+    form.form-group.hidden.text-center(action='/collections/add' method='post')
+      input.form-control.hidden(type='text' name='movieId' value=movie.id)
+      select.form-control(name='collectionName')
+        each collection in context.user.collections
+          option #{collection.collectionName}
+      input.form-control.btn.btn-primary(type='submit' id='btn-movie-add' value='Add')
+  if collId && context.inCollection
+    form.form-group(action='/collections/remove/' + collId method='post')
+      input.form-control.hidden(type='text' name='movieId' value=movie.id)
+      input.form-control.btn.btn-primary(type='submit' value='Remove from collection')
