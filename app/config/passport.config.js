@@ -4,14 +4,11 @@ const LocalStrat = require('passport-local');
 const attach = (data) => {
   const { users } = data;
 
-  passport.use(new LocalStrat((username, password, done) => {
+  passport.use(new LocalStrat((username, passHash, done) => {
     users.findByUsername(username)
       .then((user) => {
-        if (!user) {
-          done('no such user', null);
-        }
-        if (user.passHash !== password) {
-          done('wrong password', null);
+        if (!user || user.passHash !== passHash) {
+          done('Wrong username or password!', null);
         }
         done(null, user);
       });
@@ -19,8 +16,11 @@ const attach = (data) => {
 
   passport.serializeUser((user, done) => {
     return users.getNewAuthKey(user)
-      .then((result) => {
-        done(null, result.authKey);
+      .then((match) => {
+        if (!match) {
+          done('You have to be logged in for that!', null);
+        }
+        done(null, match.authKey);
       });
   });
 

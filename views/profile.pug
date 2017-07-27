@@ -1,11 +1,17 @@
 extends master/layout
 
+include components/previews/profile-preview
+include components/previews/collection-preview
+
 block content
-  div.row
-    div.col-sm-12
-      h3 Profile of #{context.match.username} 
-  each comment in context.match.comments
-    div(class="comment")
-      h2 #{comment.title}
-      p #{comment.content}
+  div.panel.panel-default
+    div.panel-heading
+      h1 Profile
+    div.panel-body
+      if context.user.username === context.match.user.username
+        +details(context.match, true)
       hr
+      h2 Your collections
+      hr
+      +collectionPreview(context.match.collections)
+          

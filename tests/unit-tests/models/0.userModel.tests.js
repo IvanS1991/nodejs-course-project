@@ -12,10 +12,8 @@ describe('userModel tests', () => {
     expect(result).to.have.property('usernameLC');
     expect(result).to.have.property('passHash');
     expect(result).to.have.property('authKey');
-    expect(result).to.have.property('comments');
-    expect(result).to.have.property('collections');
     expect(result).to.have.property('joined');
-    expect(Object.keys(result)).to.have.length(7);
+    expect(Object.keys(result)).to.have.length(5);
   });
 
   it(`expect to throw if invalid options are passed`, () => {

@@ -1,0 +1,10 @@
+extends master/layout
+
+include components/previews/collection-preview
+
+block content
+  div.panel.panel-default
+    div.panel-heading
+      h1 Public collections
+    div.panel-body
+      +collectionPreview(context.collections)

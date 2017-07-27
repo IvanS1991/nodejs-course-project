@@ -1,0 +1,11 @@
+extends master/layout
+
+include components/previews/movie-preview
+
+block content
+  div.panel.panel-default
+    div.panel-heading
+      h1 #{context.collection.collectionName}
+    div.panel-body
+      each movie in context.collection.movies
+        +moviePreview(movie, context.collection.id)

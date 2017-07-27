@@ -7,7 +7,7 @@ const constants = {
       REGISTER: '/register',
       AUTH: '/auth',
       OWN_PROFILE: '/profile',
-      PROFILE: '/profile/:id',
+      PROFILE: '/profile/:username',
       UPDATE: '/update',
     },
     COLLECTIONS: {
@@ -15,6 +15,8 @@ const constants = {
       CREATE: '/create',
       UPDATE: '/update/:id',
       VIEW: '/view/:id',
+      ADD: '/add',
+      REMOVE: '/remove/:id',
       DELETE: '/delete/:id',
     },
     COMMENTS: {
@@ -41,9 +43,17 @@ const constants = {
       'fantasy',
       'sci-fi',
       'thriller',
-      'romance'
+      'romance',
     ],
   },
+  TWITTER_KEYWORDS: [
+    '#imdb',
+    '#rottentomatoes',
+    '#movienews',
+    '#hollywood',
+    '#nodejs',
+    '#javascript',
+  ],
 };
 
 module.exports = constants;

@@ -1,41 +1,78 @@
 const collections = (database) => {
-  const usersData = database('users');
+  const moviesData = database('movies');
+  const collectionsData = database('collections');
 
   class CollectionsData {
-    create(options) {
-      const { collection, filter } = options;
+    create(collection) {
+      return collectionsData.insertOne(collection);
+    }
 
-      return usersData.updatePush(filter, { collections: collection });
+    all() {
+      return collectionsData.findMany({ isPrivate: false });
     }
 
     view(options) {
-      const { id, filter } = options;
+      const { filter, user } = options;
 
-      return usersData.findOne(filter)
+      return collectionsData.findOne(filter)
         .then((match) => {
-          const result = match.collections
-            .find((collection) => {
-              return collection.id === id;
-            });
-          if (!result) {
-            return Promise.reject('no such collection');
+          if (!match) {
+            return Promise.reject('Non-existing collection!');
           }
-          return result;
+          if (match.isPrivate) {
+            if (match.owner !== user.username) {
+              return Promise.reject('This is a private collection!');
+            }
+            return match;
+          }
+          return match;
         });
     }
 
-    updateInfo(req, res) {
-      const id = req.params.id;
-      res.json('update collection ' + id);
+    updateDetails(options) {
+      const { filter, updateData } = options;
+
+      return collectionsData.update(filter, updateData)
+        .then((match) => {
+          if (!match) {
+            return Promise
+              .reject('Non-existing collection or you are not its owner!');
+          }
+          return match;
+        });
     }
 
-    addToCollection(req, res) {
+    addToCollection(options) {
+      const { user, collectionName, movieId } = options;
 
+      return moviesData.findOne({ id: movieId })
+        .then((movie) => {
+          return collectionsData.updatePush({
+            owner: user.username,
+            collectionName: collectionName,
+          },
+            {
+              movies: movie,
+            });
+        });
     }
 
-    delete(req, res) {
-      const id = req.params.id;
-      res.json('delete collection ' + id);
+    removeFromCollection(options) {
+      const { user, collectionId, movieId } = options;
+
+      return collectionsData.updatePull({
+        owner: user.username,
+        id: collectionId,
+      },
+      {
+        movies: {
+          id: movieId,
+        },
+      });
+    }
+
+    delete(id) {
+      return collectionsData.remove({ id: id });
     }
   }
 

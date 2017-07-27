@@ -1,6 +1,7 @@
-include components/head
-include components/isLoggedIn
-include components/nav
+include external/head
+include external/scripts
+include ../components/is-logged-in
+include ../components/navs/main-nav
 
 html
   head
@@ -9,10 +10,6 @@ html
   body
       .main-wrapper
         +nav()
-        .container
+        .container.main-container
           block content
-      
-      script(src="/lib/jquery/dist/jquery.min.js")
-      //- script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
-      script(src="/lib/crypto-js/crypto-js.js")
-      script(src=context.jsFilePath)
+      +scripts()

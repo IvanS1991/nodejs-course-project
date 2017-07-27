@@ -1,12 +1,10 @@
 const mongo = require('mongodb');
 
-const { DB_PATH } = require('../constants');
-
 const crud = require('./crud');
 
-const database = (() => {
+const database = (dbPath) => {
   return new Promise((resolve, reject) => {
-    mongo.connect(DB_PATH, (err, db) => {
+    mongo.connect(dbPath, (err, db) => {
       if (err) {
         return reject(err);
       }
@@ -16,6 +14,6 @@ const database = (() => {
     .then((db) => {
       return crud(db);
     });
-})();
+};
 
 module.exports = database;

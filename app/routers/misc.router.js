@@ -1,5 +1,6 @@
 const { Router } = require('express');
-const { MOVIE_META } = require('../../constants');
+
+const { MOVIE_META, TWITTER_KEYWORDS } = require('../../constants');
 
 const miscRouter = (app, data) => {
   const router = new Router();
@@ -9,7 +10,7 @@ const miscRouter = (app, data) => {
       .render('home', {
         context: {
           user: req.user || {},
-          jsFilePath: './scripts/main.js'
+          twitterKeyword: TWITTER_KEYWORDS,
         },
       });
   });
@@ -19,7 +20,6 @@ const miscRouter = (app, data) => {
       .render('about', {
         context: {
           user: req.user || {},
-          jsFilePath: './scripts/main.js'
         },
       });
   });
@@ -29,7 +29,6 @@ const miscRouter = (app, data) => {
       .render('login', {
         context: {
           user: req.user || {},
-          jsFilePath: './scripts/main.js'
         },
       });
   });
@@ -39,7 +38,6 @@ const miscRouter = (app, data) => {
       .render('register', {
         context: {
           user: req.user || {},
-          jsFilePath: './scripts/main.js'
         },
       });
   });
@@ -54,8 +52,16 @@ const miscRouter = (app, data) => {
       .render('movies', {
         context: {
           user: req.user || {},
-          jsFilePath: './scripts/main.js',
-          geners: MOVIE_META.GENRES
+          genres: MOVIE_META.GENRES,
+        },
+      });
+  });
+
+  router.get('/collections/new', (req, res, next) => {
+    return res.status(200)
+      .render('collection-create', {
+        context: {
+          user: req.user || {},
         },
       });
   });

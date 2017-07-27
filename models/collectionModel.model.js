@@ -1,22 +1,20 @@
-const { getKey, parseTime, validation } = require('../utils');
+const { getKey, parseTime } = require('../utils');
 
 const collectionModel = (options) => {
   if (!options.collectionName) {
-    throw new Error('collection must have name');
+    throw new Error('Collection must have name and isPrivate!');
   }
   class Collection {
-    constructor(collectionName) {
-      if(validation.validateLength(collectionName, 3, 30)){
-        throw new Error('collection name must be between 3 and 30 symbols');
-      }
+    constructor(collectionName, isPrivate) {
       this.collectionName = collectionName;
+      this.isPrivate = isPrivate === 'on' ? true : false;
       this.id = getKey('coll');
       this.movies = [];
       this.created = parseTime(new Date());
     }
   }
 
-  return new Collection(options.collectionName);
+  return new Collection(options.collectionName, options.isPrivate);
 };
 
 module.exports = collectionModel;

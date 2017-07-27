@@ -1,0 +1,32 @@
+include ../navs/movie-nav
+
+mixin rating(number)
+  div Metacritic score: 
+    if number < 50
+      span.low-rate #{number}
+    else if number >= 50 && number < 85
+      span.mid-rate #{number}
+    else if number >= 85 && number <= 100
+      span.high-rate #{number}
+  hr
+
+mixin moviePreview(movieData, collId)
+  div.panel.panel-default.text-center
+    div.panel-heading
+      h3.movie-title
+        a(href='/movies/view/' + movieData.id) #{movieData.title}
+        span.year (#{movieData.year})
+    div.panel-body
+      div.row
+        div.col-sm-2
+          img.poster(src=movieData.imgSrc alt='movie poster')
+          hr
+        if movieData.rating
+          +rating(movieData.rating)
+        div.row.col-sm-10
+          p.description #{movieData.description}
+      hr
+      div.row
+        +genresNav(movieData.genres)
+    div.panel-footer
+      +movieNav(movieData, collId)

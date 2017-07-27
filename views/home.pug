@@ -1,7 +1,10 @@
 extends master/layout
 
 block content
-  div.main-container
-    div.content
-      h1(align="center") Home
-
+  div.panel.panel-default
+    div.panel-heading
+      h1 Home
+    div.panel-body
+      h2 Twitter feed: #{context.twitterKeyword.join(' ')}
+      hr
+      div#twitter-feed

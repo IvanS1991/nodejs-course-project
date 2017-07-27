@@ -1,16 +1,15 @@
 const validation = () => {
-
     const validateLength = (data, startLength, endLength) => {
-        if (data.trim().length < startLength || data.trim().length > endLength) {
+        if (data.trim().length < startLength
+            || data.trim().length > endLength) {
             return true;
-        } else {
-            return false;
         }
-    }
+        return false;
+    };
 
     return {
-        validateLength
-    }
-}
+        validateLength,
+    };
+};
 
 module.exports = validation;

@@ -1,0 +1,12 @@
+mixin movieForm()
+  div.panel.panel-default
+    div.panel-heading
+      h1 Browse movies
+    div.panel-body
+      form.text-center.form-group(action='javascript:filterMovies();')
+        each genre in context.genres
+          label.form-control.genre-label
+            input.genre-option.hidden(type="checkbox" value=genre)
+            | #{genre}
+        hr
+        input.form-control.genre-submit(type="submit" value="Submit")

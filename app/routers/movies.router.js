@@ -1,6 +1,5 @@
 const { Router } = require('express');
 const { ROUTES } = require('../../constants');
-const { MOVIE_META } = require('../../constants');
 
 const moviesRouter = (app, data) => {
   const { movies } = data;
@@ -15,14 +14,12 @@ const moviesRouter = (app, data) => {
       .then((movie) => {
         console.log(movie);
         return res.status(200)
-           .render('movie', {
+          .render('movie-detailed', {
             context: {
               user: req.user || {},
-              jsFilePath: '../../scripts/main.js',
-              movie: movie
+              movie,
             },
           });
-          // .json(movie);
       })
       .catch((err) => {
         next(err);
@@ -37,10 +34,8 @@ const moviesRouter = (app, data) => {
     let genres = req.query.genres;
     const filter = {};
     if (genres) {
-      if(typeof genres === "string"){
-        genres = new Array(genres)
-      }
-        genres = genres
+      genres = genres
+        .split(',')
         .map((genre) => {
           return genre.split('-')
             .map((piece) => {
@@ -52,17 +47,18 @@ const moviesRouter = (app, data) => {
     }
 
     return movies.viewSome({ page, size, filter })
-      .then((matches) => {
+      .then((result) => {
+        const { matches, maxPages } = result;
         return res.status(200)
-          .render('movies', {
+          .render('movies-filtered', {
             context: {
               user: req.user || {},
-              jsFilePath: '../scripts/main.js',
-              geners: MOVIE_META.GENRES,
-              movies: matches
+              movies: matches,
+              genres,
+              currentPage: page,
+              maxPages,
             },
           });
-        // .json(matches);
       })
       .catch((err) => {
         next(err);

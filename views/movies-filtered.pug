@@ -1,0 +1,13 @@
+extends master/layout
+
+include components/previews/movie-preview
+include components/pagination
+include components/breadcrumb
+
+block content
+  +breadCrumb(['Home', 'Movies', 'View'])
+  +pagination()
+  ul
+    each movie in context.movies
+      +moviePreview(movie)
+  +pagination()

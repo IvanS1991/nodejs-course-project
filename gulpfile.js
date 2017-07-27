@@ -1,9 +1,26 @@
 /* globals process */
 
 const gulp = require('gulp');
+const babel = require('gulp-babel');
+const concat = require('gulp-concat');
+const uglify = require('gulp-uglify');
+const pump = require('pump');
 
-gulp.task('works', () => {
-  console.log('Gulp works');
+gulp.task('compile:js', (callback) => {
+  pump([
+    gulp.src('src/**/*.js'),
+    babel({
+      presets: 'es2015',
+    }),
+    uglify(),
+    concat('main.js'),
+    gulp.dest('public/js'),
+  ],
+  callback);
+});
+
+gulp.task('watch:js', () => {
+  return gulp.watch('src/**/*.js', ['compile:js']);
 });
 
 gulp.task('get-movies', (done) => {
@@ -23,7 +40,6 @@ gulp.task('get-movies', (done) => {
         .then((moviesList) => {
           moviesList.forEach((movie) => {
             movie.id = getId();
-            movie.comments = [];
           });
           return moviesDb.insertMany(moviesList);
         })
@@ -31,8 +47,4 @@ gulp.task('get-movies', (done) => {
           return process.exit();
         });
     });
-});
-
-gulp.task('print', () => {
-  console.log('something');
 });

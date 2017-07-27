@@ -1,10 +1,12 @@
 mixin isLoggedIn()
   if context.user.username
     ul.nav.navbar-nav.navbar-right
+      li 
+        a() Logged in as #{context.user.username}
+      li
+        a.btn.btn-primary(href='/users/profile') View profile
       li
         a.btn.btn-primary(type="button" href="/logout" role="button") Logout
-      li
-        a(href='/users/profile') Hello #{context.user.username} 
 
   else
     ul.nav.navbar-nav.navbar-right

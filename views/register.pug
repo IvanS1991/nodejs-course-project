@@ -3,16 +3,18 @@ extends master/layout
 block content
   div.main-container.form-width
     h1(align="center") Register
-    form(action="/users/auth" autocomplete="off" enctype="application/x-www-form-urlencoded" method="post")
+    form.user-form(action="/users/register" autocomplete="off" enctype="application/x-www-form-urlencoded" method="post")
       div.form-group 
         label(for="text") Username:
-        input.form-control(id="text" type="text" name="username" placeholder="Enter username")
+        input.form-control(id="tb-username" type="text" name="username" placeholder="Enter username")
       div.form-group 
         label(for="password") Password:
-        input.form-control(id="password" type="password" name="password" placeholder="Enter password")
+        input.form-control(id="tb-password" type="password" placeholder="Enter password")
+        input.form-control.hidden(id="tb-password-secure" type="password" name="password" placeholder="Enter password")
       div.form-group 
         label(for="email") Email:
-        input.form-control(id="email" type="email" name="email" placeholder="Enter email")  
+        input.form-control(id="tb-password-repeat" type="password" placeholder="Enter email")  
+        input.form-control.hidden(id="tb-password-repeat-secure" type="password" name="passRepeat" placeholder="Enter email")  
       div.checkbox
         label 
           input(type="checkbox") 

@@ -1,8 +1,8 @@
-const { PORT } = require('./constants');
+const { PORT, DB_PATH } = require('./constants');
 
 Promise.resolve()
   .then(() => {
-    return require('./db');
+    return require('./db')(DB_PATH);
   })
   .then((db) => {
     return require('./data')(db);
@@ -10,8 +10,8 @@ Promise.resolve()
   .then((data) => {
     return require('./app')(data);
   })
-  .then((app) => {
-    app.listen(PORT, () => {
-      console.log(`Listening on port ${PORT}`);
+  .then((server) => {
+    return server.listen(PORT, null, null, () => {
+      console.log(`Listening on ${PORT}`);
     });
   });

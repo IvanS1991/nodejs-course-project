@@ -1,46 +1,6 @@
 extends master/layout
 
+include components/forms/movie-form
+
 block content
-  div.main-container
-    div.content
-      h1(align="center") Movies
-      hr
-      form(action="/movies/view" onsubmit="return some()" name="searchForm" autocomplete="off" method="get")
-        +listGenresCheckbox(context.geners)
-        div(align="center")
-          button.btn.btn-primary(type="submit") Search     
-      if context.movies
-        +listFilms(context.movies)
-            
-
-mixin listGenresCheckbox(genres)
-  each genre in genres
-    div.checkbox
-      input(id=genre type="checkbox" value=genre name="genres")
-      label(for=ganre)= genre
-
-mixin listFilms(movies)
-  each movie in movies
-    div.movie-wrapper
-      div
-        h4
-          a(href="view/" + movie.id)= movie.title
-      div.row
-        div.col-md-2
-          img(src= movie.imgSrc height="120")    
-        div.col-md-10
-          div Year:
-            |
-            | 
-            span.color-gray= movie.year
-          div Description:
-            |
-            |
-            span.color-gray= movie.description  
-          div Genre:  
-            |
-            |
-            each g in movie.genres
-              |
-              |
-              a(href="/movies/view?genres=" + g)= g + ","
+  +movieForm()

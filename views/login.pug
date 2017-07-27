@@ -3,13 +3,14 @@ extends master/layout
 block content
   div.main-container.form-width
     h1(align="center") Login
-    form(action="/users/auth" onsubmit="return some()" autocomplete="off" enctype="application/x-www-form-urlencoded" method="post")
+    form.user-form(action="/users/auth" onsubmit="return some()" autocomplete="off" enctype="application/x-www-form-urlencoded" method="post")
       div.form-group 
         label(for="text") Username:
-        input.form-control(id="text" type="text" name="username" placeholder="Enter username")
+        input.form-control(id="tb-username" type="text" name="username" placeholder="Enter username")
       div.form-group 
         label(for="password") Password:
-        input.form-control(id="password" type="password" name="password" placeholder="Enter password")
+        input.form-control(id="tb-password" type="password" placeholder="Enter password")
+        input.form-control.hidden(id="tb-password-secure" type="password" name="password" placeholder="Enter password")
       div.checkbox
         label 
           input(type="checkbox") 

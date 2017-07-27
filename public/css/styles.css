@@ -117,3 +117,32 @@ ul.nav.navbar-nav.navbar-right {
     /*margin: 5px;*/
     color: gray;
 }
+
+.poster {
+    height: 200px;
+}
+
+.low-rate, .mid-rate, .high-rate {
+    font-size: 20px;
+}
+
+.low-rate {
+    background-color: lightcoral;
+}
+
+.mid-rate {
+    background-color: yellow;
+}
+
+.high-rate, .clicked {
+    background-color: lightgreen;
+}
+
+.pagination {
+    margin: auto;
+}
+
+#twitter-feed {
+    height: 500px;
+    overflow: auto;
+}

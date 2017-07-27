@@ -7,6 +7,7 @@ const app = express();
 
 const routers = require('../routers');
 const middlewares = require('./middleware.config');
+const twitter = require('./twitter.config');
 const { errorHandler } = require('../../utils');
 
 const attach = (data, root) => {
@@ -16,13 +17,19 @@ const attach = (data, root) => {
 
   app.use('/', express.static(path.join(__dirname, '../../public')));
   app.use('/lib', express.static(path.join(__dirname, '../../node_modules')));
+  app.use('/coverage', express.static(path
+    .join(__dirname, '../../coverage/lcov-report')));
 
   middlewares(app, passport);
   routers(app, data, passport);
 
   app.use(errorHandler);
 
-  return app;
+  const server = require('http').createServer(app);
+
+  twitter(server);
+
+  return server;
 };
 
 module.exports = attach;

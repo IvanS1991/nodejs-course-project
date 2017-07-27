@@ -1,0 +1,9 @@
+mixin collectionForm()
+  div.panel.panel-default
+    div.panel-heading
+      h1 Create Collection
+    div.panel-body.text-center
+      form.form-group(action='/collections/create' method='post')
+        input.form-control(type='text' name='collectionName' placeholder='Collection name...')
+        input.form-control(type='checkbox' name='isPrivate')
+        input.form-control.btn.btn-primary(type='submit' value='Submit')

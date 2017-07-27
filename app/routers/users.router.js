@@ -10,6 +10,11 @@ const usersRouter = (app, data, passport) => {
   // REGISTER
   router.post(ROUTES.USERS.REGISTER, (req, res, next) => {
     const userData = req.body;
+
+    if (userData.password !== userData.passRepeat) {
+      return next('Passwords must match!');
+    }
+
     const user = userModel({
       username: userData.username,
       passHash: userData.password,
@@ -21,7 +26,7 @@ const usersRouter = (app, data, passport) => {
           if (err) {
             next(err);
           }
-          return res.redirect('/');
+          return res.redirect('/users/profile');
         });
       })
       .catch((err) => {
@@ -32,18 +37,23 @@ const usersRouter = (app, data, passport) => {
   // LOGIN
   router.post(ROUTES.USERS.AUTH, passport.authenticate('local'),
     (req, res, next) => {
-      return res.redirect('/');
+      return res.redirect('/users/profile');
     });
 
   // VIEW PROFILE
   router.get(ROUTES.USERS.PROFILE, (req, res, next) => {
-    const id = req.params.id;
-    const filter = { id };
+    const username = req.params.username;
+    const filter = { username };
 
     return users.profile(filter)
       .then((match) => {
         return res.status(200)
-          .json(match);
+          .render('profile', {
+            context: {
+              user: req.user || {},
+              match,
+            },
+          });
       })
       .catch((err) => {
         next(err);
@@ -60,6 +70,7 @@ const usersRouter = (app, data, passport) => {
           context: {
             user: req.user || {},
             match: match,
+            isOwner: true,
           },
         });
       })
@@ -71,15 +82,22 @@ const usersRouter = (app, data, passport) => {
   // UPDATE USER DETAILS
   router.post(ROUTES.USERS.UPDATE, (req, res, next) => {
     const newData = req.body;
+
+    if (newData.password !== newData.passRepeat) {
+      return next('Passwords must match!');
+    }
+
     const filter = { authKey: req.user.authKey };
 
     return users.update({
       filter,
-      data: newData,
+      data: {
+        passHash: newData.password,
+      },
     })
       .then((updateData) => {
         return res.status(200)
-          .json(updateData);
+          .redirect('/users/profile');
       })
       .catch((err) => {
         next(err);
