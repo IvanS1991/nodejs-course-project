@@ -1,4 +1,4 @@
-const { getKey, parseTime } = require('../utils');
+const { getKey, parseTime, validation } = require('../utils');
 
 const collectionModel = (options) => {
   if (!options.collectionName) {
@@ -6,6 +6,9 @@ const collectionModel = (options) => {
   }
   class Collection {
     constructor(collectionName) {
+      if(validation.validateLength(collectionName, 3, 30)){
+        throw new Error('collection name must be between 3 and 30 symbols');
+      }
       this.collectionName = collectionName;
       this.id = getKey('coll');
       this.movies = [];

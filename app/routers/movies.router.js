@@ -11,10 +11,18 @@ const moviesRouter = (app, data) => {
     const id = parseInt(req.params.id, 10);
     const filter = { id: id };
 
-    movies.viewOne(filter)
+    return movies.viewOne(filter)
       .then((movie) => {
+        console.log(movie);
         return res.status(200)
-          .json(movie);
+           .render('movie', {
+            context: {
+              user: req.user || {},
+              jsFilePath: '../../scripts/main.js',
+              movie: movie
+            },
+          });
+          // .json(movie);
       })
       .catch((err) => {
         next(err);
@@ -29,7 +37,10 @@ const moviesRouter = (app, data) => {
     let genres = req.query.genres;
     const filter = {};
     if (genres) {
-      genres = genres
+      if(typeof genres === "string"){
+        genres = new Array(genres)
+      }
+        genres = genres
         .map((genre) => {
           return genre.split('-')
             .map((piece) => {

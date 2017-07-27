@@ -1,0 +1,36 @@
+extends master/layout
+
+block content
+    div.main-container
+        div.row
+            div.col-md-12
+                h1(align="center")= context.movie.title
+        div.row
+            div.col-md-4
+                img.img-responsive(src= context.movie.imgSrc)    
+            div.col-md-8
+                div.movie-info Year:
+                    |
+                    |
+                    span= context.movie.year
+                div.movie-info Description:
+                    |
+                    |
+                    span= context.movie.description
+                div.movie-info Duration:
+                    |
+                    |
+                    span= context.movie.duration
+                div.movie-info Genre:
+                    each g in context.movie.genres
+                        |
+                        |
+                        span= g + ','
+        div.row
+            div.col-md-12
+                h3(align="center") Comments
+                if context.movie.comments[0]
+                    each coment in context.movie.comments
+                        div= comment
+                else
+                    div(align="center") No comments yet

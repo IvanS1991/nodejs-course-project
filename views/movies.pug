@@ -27,7 +27,7 @@ mixin listFilms(movies)
           a(href="view/" + movie.id)= movie.title
       div.row
         div.col-md-2
-          img(src= movie.imgSrc height="150")    
+          img(src= movie.imgSrc height="120")    
         div.col-md-10
           div Year:
             |
@@ -43,4 +43,4 @@ mixin listFilms(movies)
             each g in movie.genres
               |
               |
-              span.color-gray= g + ","
+              a(href="/movies/view?genres=" + g)= g + ","
