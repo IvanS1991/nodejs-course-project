@@ -1,6 +1,10 @@
 extends master/layout
 
 include components/previews/movie-preview
+include components/title
+
+block title
+  +title('Collection details')
 
 block content
   div.panel.panel-default

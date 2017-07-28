@@ -1,5 +1,10 @@
 extends master/layout
 
+include components/title
+
+block title
+  +title('Login')
+
 block content
   div.main-container.form-width
     h1(align="center") Login
@@ -16,4 +21,4 @@ block content
           input(type="checkbox") 
           | Remember me
       div.align-center
-        button.btn.btn-primary(type="submit") Submit
+        button.btn.btn-primary#btn-user-login(type="submit") Submit

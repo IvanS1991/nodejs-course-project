@@ -1,6 +1,10 @@
 extends master/layout
 
 include components/forms/collection-form
+include components/title
+
+block title
+ +title('Create collection')
 
 block content
   +collectionForm()

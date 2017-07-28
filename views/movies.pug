@@ -1,6 +1,10 @@
 extends master/layout
 
 include components/forms/movie-form
+include components/title
+
+block title
+  +title('Browse movies')
 
 block content
   +movieForm()

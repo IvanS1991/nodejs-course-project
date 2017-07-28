@@ -4,6 +4,10 @@ include components/navs/movie-nav
 include components/previews/movie-preview
 include components//previews/comment-preview
 include components/forms/comment-form
+include components/title
+
+block title
+  +title(context.movie.data.title)
 
 block content
   div.panel.panel-default.text-center

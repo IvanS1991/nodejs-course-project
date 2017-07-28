@@ -14,6 +14,9 @@ const users = (database) => {
       let user;
       return usersData.findOne({ authKey: authKey })
         .then((match) => {
+          if (!match) {
+            return Promise.reject('No such user!');
+          }
           user = match;
           return collectionsData.findMany({ owner: user.username });
         })

@@ -2,6 +2,10 @@ extends master/layout
 
 include components/previews/profile-preview
 include components/previews/collection-preview
+include components/title
+
+block title
+  +title('User profile')
 
 block content
   div.panel.panel-default

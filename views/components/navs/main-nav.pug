@@ -14,15 +14,15 @@ mixin nav()
       div.collapse.navbar-collapse#bs-example-navbar-collapse-1
         ul.nav.navbar-nav  
           li.gray-hover
-            a(href='/') Home
+            a#btn-nav-home(href='/') Home
           li.gray-hover
-            a(href='/movies') Movies
+            a#btn-nav-movies(href='/movies') Movies
           li.gray-hover
-            a(href='/collections') Collections
+            a#btn-nav-collections(href='/collections') Collections
           li.gray-hover
-            a(href='/about') About
+            a#btn-nav-about(href='/about') About
           li.dropdown
-            a(href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false")
+            a#btn-nav-dropdown(href="#" class="dropdown-toggle" name='tests' data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false")
               | TESTS 
               span.caret
             ul.dropdown-menu

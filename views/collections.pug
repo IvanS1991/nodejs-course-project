@@ -1,6 +1,10 @@
 extends master/layout
 
 include components/previews/collection-preview
+include components/title
+
+block title
+  +title('Private collections')
 
 block content
   div.panel.panel-default

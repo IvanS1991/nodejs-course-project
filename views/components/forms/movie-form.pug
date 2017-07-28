@@ -4,9 +4,8 @@ mixin movieForm()
       h1 Browse movies
     div.panel-body
       form.text-center.form-group(action='javascript:filterMovies();')
-        each genre in context.genres
-          label.form-control.genre-label
+        each genre, index in context.genres
+          label.form-control.genre-label(id='cb-movie-' + (index + 1)) #{genre}
             input.genre-option.hidden(type="checkbox" value=genre)
-            | #{genre}
         hr
-        input.form-control.genre-submit(type="submit" value="Submit")
+        input.form-control.genre-submit#btn-movies-filter(type="submit" name='submit' value="Submit")

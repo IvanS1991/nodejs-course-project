@@ -2,16 +2,16 @@ mixin isLoggedIn()
   if context.user.username
     ul.nav.navbar-nav.navbar-right
       li 
-        a() Logged in as #{context.user.username}
+        a#logged-in(href="#") Logged in as #{context.user.username}
       li
-        a.btn.btn-primary(href='/users/profile') View profile
+        a.btn.btn-primary#btn-profile(href="/users/profile") View profile
       li
-        a.btn.btn-primary(type="button" href="/logout" role="button") Logout
+        a.btn.btn-primary#btn-logout(type="button" href="/logout" role="button") Logout
 
   else
     ul.nav.navbar-nav.navbar-right
       li
-        a.btn.btn-primary(href='/login' role="button") Login
+        a.btn.btn-primary#btn-login(href="/login" role="button") Login
       li
-        a.btn.btn-primary(href='/register' role="button") Register
+        a.btn.btn-primary#btn-register(href="/register" role="button") Register
 

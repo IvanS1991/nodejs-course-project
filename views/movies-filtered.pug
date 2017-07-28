@@ -3,6 +3,10 @@ extends master/layout
 include components/previews/movie-preview
 include components/pagination
 include components/breadcrumb
+include components/title
+
+block title
+  +title('Movies-' + context.genres)
 
 block content
   +breadCrumb(['Home', 'Movies', 'View'])

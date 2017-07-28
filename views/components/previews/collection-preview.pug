@@ -3,15 +3,15 @@ mixin collectionPreview(collections)
     div.panel.panel-default
       div.panel-heading.text-center
         h3 
-          a(data-toggle='collapse' href='#collection-collapsed-' + index) #{collection.collectionName}
+          a(data-toggle='collapse' id='btn-collection-collapse-' + (index + 1) href='#collection-collapsed-' + index) #{collection.collectionName}
       div.panel-collapse.collapse(id='collection-collapsed-' + index)
         div.panel-body
           p Owner: #{collection.owner}
           p Created: #{collection.created}
           p Movies: #{collection.movies.length}
         div.panel-footer
-          a.collection-view.btn.btn-primary.form-control(href='/collections/view/' + collection.id) Detailed view
+          a.collection-view.btn.btn-primary.form-control(href='/collections/view/' + collection.id id='btn-collection-detailed-' + (index + 1)) Detailed view
           if context.user.username === collection.owner
             hr
             form.form-group(action='/collections/delete' + collection.id method='post')
-              input.form-control.btn.btn-primary(type='submit' value='Delete collection')
+              input.form-control.btn.btn-primary(type='submit' value='Delete collection' id='btn-collection-delete-' + (index + 1))

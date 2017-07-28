@@ -1,5 +1,10 @@
 extends master/layout
 
+include components/title
+
+block title
+  +title('About')
+
 block content
   div.main-container
     h1(align="center") About

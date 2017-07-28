@@ -9,9 +9,9 @@
   "scripts": {
     "scrap": "gulp get-movies",
     "start": "node server.js",
-    "test": "./node_modules/.bin/mocha -R dot ./tests/**/*.js",
+    "test": "./node_modules/.bin/mocha -R dot ./tests/unit-tests/**/*.js",
     "dev-server": "./node_modules/.bin/nodemon server.js",
-    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha tests/**/*.js",
+    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha tests/unit-tests/**/*.js",
     "eslint-check": "./node_modules/.bin/eslint .",
     "eslint-fix": "./node_modules/.bin/eslint --fix ."
   },
@@ -29,7 +29,6 @@
     "gulp-concat": "^2.6.1",
     "gulp-uglify": "^3.0.0",
     "gulp-watch": "^4.3.11",
-    "istanbul": "^0.4.5",
     "jquery": "^3.2.1",
     "jquery-ui": "^1.12.1",
     "jsdom": "^11.1.0",
@@ -49,8 +48,12 @@
   "devDependencies": {
     "babel-eslint": "^7.2.3",
     "chai": "^4.0.2",
+    "chromedriver": "^2.31.0",
     "eslint": "^4.1.1",
     "eslint-config-google": "^0.8.0",
+    "gulp-istanbul": "^1.1.2",
+    "gulp-mocha": "^4.3.1",
+    "istanbul": "^0.4.5",
     "mocha": "^3.4.2",
     "nodemon": "^1.11.0",
     "selenium-webdriver": "^3.5.0",

@@ -1,5 +1,10 @@
 extends master/layout
 
+include components/title
+
+block title
+    +title('Movie')
+
 block content
     div.main-container
         div.row
