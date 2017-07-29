@@ -57,6 +57,7 @@ gulp.task('server-start', () => {
       return require('./data')(db);
     })
     .then((data) => {
+      data.movies.populate(100);
       return require('./app')(data);
     })
     .then((server) => {

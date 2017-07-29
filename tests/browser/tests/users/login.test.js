@@ -6,7 +6,7 @@ const { url, title, timeout, id } = constants;
 
 const { user } = require('../../helpers');
 
-describe('Login tests:', () => {
+describe('User login tests:', () => {
   let driver;
   let username;
   let password;

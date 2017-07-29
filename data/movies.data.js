@@ -1,3 +1,5 @@
+const { getKey, getId } = require('../utils');
+
 const movies = (database) => {
   const moviesData = database('movies');
   const commentsData = database('comments');
@@ -32,6 +34,43 @@ const movies = (database) => {
             matches: matches.slice(startIndex, endIndex),
             maxPages: Math.ceil(matches.length / size),
           };
+        });
+    }
+
+    populate(count) {
+      const list = [];
+      for (let i = 0; i < count; i += 1) {
+        const movie = {};
+        movie.title = getKey();
+        movie.year = '2016';
+        movie.duration = '2h';
+        movie.imgsrc = 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTUwMzI5ODEwNF5BMl5BanBnXkFtZTgwNjAzNjI2MDI@._V1_UX182_CR0,0,182,268_AL_.jpg';
+        movie.genres = [
+          'action',
+          'animation',
+          'adventure',
+          'comedy',
+          'drama',
+          'fantasy',
+          'sci-fi',
+          'thriller',
+          'romance',
+        ];
+        movie.description = getKey();
+        movie.rating = 50;
+        movie.director = getKey();
+        movie.cast = [
+          {
+            actor: getKey(),
+            character: getKey(),
+          },
+        ];
+        movie.id = getId();
+        list.push(movie);
+      }
+      moviesData.insertMany(list)
+        .then(() => {
+          console.log('populated db');
         });
     }
   }
