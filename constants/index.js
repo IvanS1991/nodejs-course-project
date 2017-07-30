@@ -31,6 +31,15 @@ const constants = {
       VIEW_SOME: '/view',
       UPDATE: '/update',
     },
+    MISC: {
+      ROOT: '/',
+      ABOUT: '/about',
+      LOGIN: '/login',
+      REGISTER: '/register',
+      LOGOUT: '/logout',
+      MOVIES: '/movies',
+      NEW_COLLECTION: '/collections/new',
+    },
   },
   MOVIE_META: {
     PAGES: 4,

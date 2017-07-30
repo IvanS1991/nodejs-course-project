@@ -1,7 +1,4 @@
-/* globals __dirname */
-
 const express = require('express');
-const path = require('path');
 
 const app = express();
 
@@ -10,18 +7,17 @@ const middlewares = require('./middleware.config');
 const twitter = require('./twitter.config');
 const { errorHandler } = require('../../utils');
 
-const attach = (data, root) => {
+const attach = (data, controllers, root) => {
   const passport = require('./passport.config')(data);
 
   app.set('view engine', 'pug');
 
-  app.use('/', express.static(path.join(__dirname, '../../public')));
-  app.use('/lib', express.static(path.join(__dirname, '../../node_modules')));
-  app.use('/coverage', express.static(path
-    .join(__dirname, '../../coverage/lcov-report')));
+  app.use('/', express.static('public'));
+  app.use('/lib', express.static('node_modules'));
+  app.use('/coverage', express.static('coverage/lcov-report'));
 
   middlewares(app, passport);
-  routers(app, data, passport);
+  routers(app, controllers, passport);
 
   app.use(errorHandler);
 

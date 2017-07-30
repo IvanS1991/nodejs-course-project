@@ -1,70 +1,25 @@
 const { Router } = require('express');
 
-const { MOVIE_META, TWITTER_KEYWORDS } = require('../../constants');
+const { ROUTES } = require('../../constants');
 
-const miscRouter = (app, data) => {
+const miscRouter = (app, controllers) => {
+  const { misc } = controllers;
+
   const router = new Router();
 
-  router.get('/', (req, res) => {
-    return res.status(200)
-      .render('home', {
-        context: {
-          user: req.user || {},
-          twitterKeyword: TWITTER_KEYWORDS,
-        },
-      });
-  });
+  router.get('/', misc.home);
 
-  router.get('/about', (req, res) => {
-    return res.status(200)
-      .render('about', {
-        context: {
-          user: req.user || {},
-        },
-      });
-  });
+  router.get(ROUTES.MISC.ABOUT, misc.about);
 
-  router.get('/login', (req, res) => {
-    return res.status(200)
-      .render('login', {
-        context: {
-          user: req.user || {},
-        },
-      });
-  });
+  router.get(ROUTES.MISC.LOGIN, misc.login);
 
-  router.get('/register', (req, res) => {
-    return res.status(200)
-      .render('register', {
-        context: {
-          user: req.user || {},
-        },
-      });
-  });
+  router.get(ROUTES.MISC.REGISTER, misc.register);
 
-  router.get('/logout', (req, res) => {
-    req.logout();
-    return res.redirect('/');
-  });
+  router.get(ROUTES.MISC.LOGOUT, misc.logout);
 
-  router.get('/movies', (req, res) => {
-    return res.status(200)
-      .render('movies', {
-        context: {
-          user: req.user || {},
-          genres: MOVIE_META.GENRES,
-        },
-      });
-  });
+  router.get(ROUTES.MISC.MOVIES, misc.movies);
 
-  router.get('/collections/new', (req, res, next) => {
-    return res.status(200)
-      .render('collection-create', {
-        context: {
-          user: req.user || {},
-        },
-      });
-  });
+  router.get(ROUTES.MISC.NEW_COLLECTION, misc.newCollection);
 
   app.use('/', router);
 };

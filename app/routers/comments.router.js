@@ -1,46 +1,15 @@
 const { Router } = require('express');
 const { ROUTES } = require('../../constants');
 
-const { commentModel } = require('../../models');
-
-const commentsRouter = (app, data) => {
-  const { comments } = data;
+const commentsRouter = (app, controllers) => {
+  const { comments } = controllers;
   const router = new Router();
 
   // CREATE
-  router.post(ROUTES.COMMENTS.CREATE, (req, res, next) => {
-    const user = req.user;
-    const commentData = req.body;
-
-    const comment = commentModel(commentData);
-    comment.author = user.username;
-
-
-    return comments.create(comment)
-      .then((result) => {
-        return res.status(200)
-          .redirect('/movies/view/' + result.movieId + '#comments-collapsed');
-      })
-      .catch((err) => {
-        next(err);
-      });
-  });
+  router.post(ROUTES.COMMENTS.CREATE, comments.create);
 
   // DELETE
-  router.post(ROUTES.COMMENTS.DELETE, (req, res, next) => {
-    const movieId = req.body.movieId;
-    const filter = { id: req.params.id };
-    const user = req.user;
-
-    return comments.remove({ filter, user })
-      .then((comment) => {
-        return res.status(200)
-          .redirect('/movies/view/' + movieId + '#comments-collapsed');
-      })
-      .catch((err) => {
-        next(err);
-      });
-  });
+  router.post(ROUTES.COMMENTS.DELETE, comments.delete);
 
   app.use(ROUTES.COMMENTS.ROOT, router);
 };

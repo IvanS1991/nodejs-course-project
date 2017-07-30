@@ -5,10 +5,9 @@ Promise.resolve()
     return require('./db')(DB_PATH);
   })
   .then((db) => {
-    return require('./data')(db);
-  })
-  .then((data) => {
-    return require('./app')(data);
+    const data = require('./data')(db);
+    const controllers = require('./controllers')(data);
+    return require('./app')(data, controllers);
   })
   .then((server) => {
     return server.listen(PORT, null, null, () => {

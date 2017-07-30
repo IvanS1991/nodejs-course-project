@@ -1,108 +1,24 @@
 const { Router } = require('express');
 const { ROUTES } = require('../../constants');
 
-const { userModel } = require('../../models');
-
-const usersRouter = (app, data, passport) => {
-  const { users } = data;
+const usersRouter = (app, controllers, passport) => {
+  const { users } = controllers;
   const router = new Router();
 
   // REGISTER
-  router.post(ROUTES.USERS.REGISTER, (req, res, next) => {
-    const userData = req.body;
-
-    if (userData.password !== userData.passRepeat) {
-      return next('Passwords must match!');
-    }
-
-    const user = userModel({
-      username: userData.username,
-      passHash: userData.password,
-    });
-
-    return users.register(user)
-      .then((newUser) => {
-        req.login(newUser, (err) => {
-          if (err) {
-            next(err);
-          }
-          return res.redirect('/users/profile');
-        });
-      })
-      .catch((err) => {
-        next(err);
-      });
-  });
+  router.post(ROUTES.USERS.REGISTER, users.register);
 
   // LOGIN
-  router.post(ROUTES.USERS.AUTH, passport.authenticate('local'),
-    (req, res, next) => {
-      return res.redirect('/users/profile');
-    });
+  router.post(ROUTES.USERS.AUTH, passport.authenticate('local'), users.login);
 
   // VIEW PROFILE
-  router.get(ROUTES.USERS.PROFILE, (req, res, next) => {
-    const username = req.params.username;
-    const filter = { username };
-
-    return users.profile(filter)
-      .then((match) => {
-        return res.status(200)
-          .render('profile', {
-            context: {
-              user: req.user || {},
-              match,
-            },
-          });
-      })
-      .catch((err) => {
-        next(err);
-      });
-  });
+  router.get(ROUTES.USERS.PROFILE, users.profile);
 
   // VIEW OWN PROFILE
-  router.get(ROUTES.USERS.OWN_PROFILE, (req, res, next) => {
-    const filter = { authKey: req.user.authKey };
-
-    return users.profile(filter)
-      .then((match) => {
-        return res.render('profile', {
-          context: {
-            user: req.user || {},
-            match: match,
-            isOwner: true,
-          },
-        });
-      })
-      .catch((err) => {
-        next(err);
-      });
-  });
+  router.get(ROUTES.USERS.OWN_PROFILE, users.ownProfile);
 
   // UPDATE USER DETAILS
-  router.post(ROUTES.USERS.UPDATE, (req, res, next) => {
-    const newData = req.body;
-
-    if (newData.password !== newData.passRepeat) {
-      return next('Passwords must match!');
-    }
-
-    const filter = { authKey: req.user.authKey };
-
-    return users.update({
-      filter,
-      data: {
-        passHash: newData.password,
-      },
-    })
-      .then((updateData) => {
-        return res.status(200)
-          .redirect('/users/profile');
-      })
-      .catch((err) => {
-        next(err);
-      });
-  });
+  router.post(ROUTES.USERS.UPDATE, users.update);
 
   app.use(ROUTES.USERS.ROOT, router);
 };
