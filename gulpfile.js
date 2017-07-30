@@ -40,7 +40,7 @@ gulp.task('tests:browser', ['server-start'], () => {
   return gulp.src('tests/browser/tests/**/*.js')
     .pipe(mocha({
       reporter: config.MOCHA_REPORTER,
-      timeout: 10000,
+      timeout: 20000,
     }))
     .once('end', () => {
       gulp.start('server-stop');
