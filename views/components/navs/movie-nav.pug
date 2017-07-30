@@ -9,7 +9,7 @@ mixin movieNav(movie, collId)
     input.btn.btn-primary.collection-add-display(type='button' value='Add to collection' id='btn-add-form-display-' + movie.id)
     form.form-group.hidden.text-center(action='/collections/add' method='post')
       input.form-control.hidden(type='text' name='movieId' value=movie.id)
-      select.form-control#select-collection-name(name='collectionName')
+      select.form-control(name='collectionName' id='select-collection-name-' + movie.id)
         each collection, index in context.user.collections
           option(id='collection-' + (index + 1)) #{collection.collectionName} 
       input.form-control.btn.btn-primary#btn-movie-add(type='submit' value='Add')

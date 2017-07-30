@@ -53,6 +53,10 @@ const userController = (data) => {
     }
 
     ownProfile(req, res, next) {
+      if (!req.user) {
+        return next('You have to be logged in for that!');
+      }
+
       const filter = { authKey: req.user.authKey };
 
       return users.profile(filter)
@@ -71,6 +75,10 @@ const userController = (data) => {
     }
 
     update(req, res, next) {
+      if (!req.user) {
+        return next('You have to be logged in for that!');
+      }
+
       const newData = req.body;
 
       if (newData.password !== newData.passRepeat) {

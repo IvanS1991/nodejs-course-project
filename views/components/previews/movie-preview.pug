@@ -14,7 +14,7 @@ mixin moviePreview(movieData, collId)
   div.panel.panel-default.text-center
     div.panel-heading
       h3.movie-title
-        a(href='/movies/view/' + movieData.id) #{movieData.title}
+        a(href='/movies/view/' + movieData.id id='btn-movie-' + movieData.id) #{movieData.title}
         span.year (#{movieData.year})
     div.panel-body
       div.row

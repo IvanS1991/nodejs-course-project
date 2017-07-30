@@ -11,6 +11,7 @@ const config = {
   DB_PATH: 'mongodb://localhost/nodejs-project-test',
   PORT: 8808,
   MONGO_CLIENT: require('mongodb').MongoClient,
+  MOCHA_REPORTER: 'spec',
 };
 
 // TESTS
@@ -27,7 +28,7 @@ gulp.task('tests:pre', () => {
 gulp.task('tests:unit', ['tests:pre'], () => {
   return gulp.src('./tests/unit-tests/**/*.js')
     .pipe(mocha({
-      reporter: 'dot',
+      reporter: config.MOCHA_REPORTER,
     }))
     .pipe(istanbul.writeReports())
     .on('end', () => {
@@ -38,7 +39,7 @@ gulp.task('tests:unit', ['tests:pre'], () => {
 gulp.task('tests:browser', ['server-start'], () => {
   return gulp.src('tests/browser/tests/**/*.js')
     .pipe(mocha({
-      reporter: 'dot',
+      reporter: config.MOCHA_REPORTER,
       timeout: 10000,
     }))
     .once('end', () => {
@@ -56,6 +57,7 @@ gulp.task('server-start', () => {
     .then((db) => {
       const data = require('./data')(db);
       const controllers = require('./controllers')(data);
+      data.movies.populate(100);
       return require('./app')(data, controllers);
     })
     .then((server) => {
@@ -69,7 +71,9 @@ gulp.task('server-stop', () => {
   const { DB_PATH, MONGO_CLIENT } = config;
   return MONGO_CLIENT.connect(DB_PATH)
     .then((db) => {
-      db.dropDatabase();
+      return db.dropDatabase();
+    })
+    .then(() => {
       return process.exit();
     });
 });

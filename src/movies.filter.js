@@ -8,9 +8,9 @@ const filterMovies = () => {
       output.push(genre.value);
     }
   });
-  const url = 'http://localhost:8000/movies/view?page=1&size=10&genres=' + output.join(',');
+  const url = '/movies/view?page=1&size=10&genres=' + output.join(',');
 
-  document.location = url;
+  document.location.href = url;
 };
 
 $('.genre-label').on('click', (e) => {

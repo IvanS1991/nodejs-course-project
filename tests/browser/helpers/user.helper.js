@@ -57,8 +57,15 @@ const logout = (driver) => {
     .click();
 };
 
+const profile = (driver) => {
+  return driver.findElement(By
+    .id(id.btnProfile))
+    .click();
+};
+
 module.exports = {
   register,
   login,
   logout,
+  profile,
 };

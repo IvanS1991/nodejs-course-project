@@ -1,5 +1,5 @@
 mixin commentForm(movieId)
-  form.form-group(action='http://localhost:8000/comments/create' method='post')
+  form.form-group(action='/comments/create' method='post')
     textarea.form-control#tb-comment-content(name='content' placeholder='Content')
     input.form-control.hidden(type='text' name='movieId' value=movieId)
     input.form-control#btn-comment-create(type='submit' value='Submit')

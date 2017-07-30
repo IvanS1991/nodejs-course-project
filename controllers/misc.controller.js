@@ -55,6 +55,10 @@ const miscController = (data) => {
     }
 
     newCollection(req, res, next) {
+      if (!req.user) {
+        return next('You have to be logged in for that!');
+      }
+
       return res.status(200)
         .render('collection-create', {
           context: {

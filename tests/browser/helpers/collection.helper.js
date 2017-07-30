@@ -27,8 +27,25 @@ const create = (driver, collectionName) => {
       });
 };
 
-const add = (driver, movieId) => {
-
+const add = (driver) => {
+  return driver.findElement(By
+    .id(id.btnCollAddDisplay))
+    .click()
+      .then(() => {
+        return driver.findElement(By
+          .id(id.btnCollSelect))
+          .click();
+      })
+      .then(() => {
+        return driver.findElement(By
+          .id(id.btnCollOption))
+          .click();
+      })
+      .then(() => {
+        return driver.findElement(By
+          .id(id.btnCollAdd))
+          .click();
+      });
 };
 
 const filter = (driver, ...genres) => {

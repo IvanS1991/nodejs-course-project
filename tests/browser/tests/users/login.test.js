@@ -22,6 +22,7 @@ describe('User login tests:', () => {
     afterEach(() => {
       driver.quit();
     });
+
     it('expect to show error', (done) => {
       driver.get(url)
         .then(() => {

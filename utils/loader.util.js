@@ -25,4 +25,3 @@ const loader = (dir, filter, ...dependencies) => {
 };
 
 module.exports = loader;
-

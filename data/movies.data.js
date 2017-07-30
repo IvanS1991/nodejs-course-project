@@ -46,15 +46,15 @@ const movies = (database) => {
         movie.duration = '2h';
         movie.imgsrc = 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTUwMzI5ODEwNF5BMl5BanBnXkFtZTgwNjAzNjI2MDI@._V1_UX182_CR0,0,182,268_AL_.jpg';
         movie.genres = [
-          'action',
-          'animation',
-          'adventure',
-          'comedy',
-          'drama',
-          'fantasy',
-          'sci-fi',
-          'thriller',
-          'romance',
+          'Action',
+          'Animation',
+          'Adventure',
+          'Comedy',
+          'Drama',
+          'Fantasy',
+          'Sci-fi',
+          'Thriller',
+          'Romance',
         ];
         movie.description = getKey();
         movie.rating = 50;
