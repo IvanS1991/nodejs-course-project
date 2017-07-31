@@ -25,7 +25,10 @@ const attach = (data, controllers, root) => {
 
   twitter(server);
 
-  return app;
+  return {
+    app,
+    server,
+  };
 };
 
 module.exports = attach;

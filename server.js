@@ -9,8 +9,9 @@ Promise.resolve()
     const controllers = require('./controllers')(data);
     return require('./app')(data, controllers);
   })
-  .then((app) => {
-    return app.listen(PORT, () => {
-      console.log(`Listening at :${PORT}...`);
+  .then((options) => {
+    const { server } = options;
+    return server.listen(PORT, null, null, () => {
+      console.log(`Listening on :${PORT}...`);
     });
   });

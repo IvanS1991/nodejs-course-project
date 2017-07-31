@@ -8,7 +8,7 @@ const getApp = () => {
     .then((db) => {
       const data = require('../../data')(db);
       const controllers = require('../../controllers/')(data);
-      return require('../../app')(data, controllers);
+      return require('../../app')(data, controllers).app;
     });
 };
 

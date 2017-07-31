@@ -91,7 +91,8 @@ gulp.task('server:start', () => {
       data.movies.populate(100);
       return require('./app')(data, controllers);
     })
-    .then((server) => {
+    .then((options) => {
+      const { server } = options;
       return server.listen(PORT, null, null, () => {
         console.log(`Listening on ${PORT}`);
       });
