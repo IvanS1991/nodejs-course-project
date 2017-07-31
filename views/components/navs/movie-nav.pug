@@ -13,7 +13,7 @@ mixin movieNav(movie, collId)
         each collection, index in context.user.collections
           option(id='collection-' + (index + 1)) #{collection.collectionName} 
       input.form-control.btn.btn-primary#btn-movie-add(type='submit' value='Add')
-  if collId && context.inCollection
+  if collId && context.inCollection && context.isOwner
     form.form-group(action='/collections/remove/' + collId method='post')
       input.form-control.hidden(type='text' name='movieId' value=movie.id)
       input.form-control.btn.btn-primary#btn-collection-remove(type='submit' value='Remove from collection')

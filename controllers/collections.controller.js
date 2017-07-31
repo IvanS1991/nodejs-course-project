@@ -1,5 +1,8 @@
 const { collectionModel } = require('../models');
 
+const { validation } = require('../utils/');
+const { isInvalidCollectionName } = validation();
+
 const collectionsController = (data) => {
   const { collections } = data;
 
@@ -43,8 +46,13 @@ const collectionsController = (data) => {
 
     create(req, res, next) {
       const username = req.user.username;
+      const collData = req.body;
 
-      const collection = collectionModel(req.body);
+      if (isInvalidCollectionName(collData.collectionName)) {
+        return next('Collection name must be between 1 and 40 symbols long!');
+      }
+
+      const collection = collectionModel(collData);
       collection.owner = username;
 
       return collections.create(collection)
@@ -117,7 +125,7 @@ const collectionsController = (data) => {
       return collections.delete(collectionId)
         .then((result) => {
           return res.status(200)
-            .json('deleted collection');
+            .redirect('/users/profile');
         })
         .catch((err) => {
           next(err);

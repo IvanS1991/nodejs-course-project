@@ -13,5 +13,5 @@ mixin collectionPreview(collections)
           a.collection-view.btn.btn-primary.form-control(href='/collections/view/' + collection.id id='btn-collection-detailed-' + (index + 1)) Detailed view
           if context.user.username === collection.owner
             hr
-            form.form-group(action='/collections/delete' + collection.id method='post')
+            form.form-group(action='/collections/delete/' + collection.id method='post')
               input.form-control.btn.btn-primary(type='submit' value='Delete collection' id='btn-collection-delete-' + (index + 1))

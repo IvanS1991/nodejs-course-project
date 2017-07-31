@@ -1,5 +1,8 @@
 const { commentModel } = require('../models');
 
+const { validation } = require('../utils/');
+const { isInvalidCommentContent } = validation();
+
 const commentsController = (data) => {
   const { comments } = data;
 
@@ -7,6 +10,10 @@ const commentsController = (data) => {
     create(req, res, next) {
       const user = req.user;
       const commentData = req.body;
+
+      if (isInvalidCommentContent(commentData.content)) {
+        return next('Comments must be between 1 and 200 symbols long!');
+      }
 
       const comment = commentModel(commentData);
       comment.author = user.username;

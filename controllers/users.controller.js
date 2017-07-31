@@ -1,5 +1,8 @@
 const { userModel } = require('../models');
 
+const { validation } = require('../utils/');
+const { isInvalidUsername } = validation();
+
 const userController = (data) => {
   const { users } = data;
   class UserController {
@@ -8,6 +11,10 @@ const userController = (data) => {
 
       if (userData.password !== userData.passRepeat) {
         return next('Passwords must match!');
+      }
+
+      if (isInvalidUsername(userData.username)) {
+        return next(`Username must be between 2 and 20 symbols long!`);
       }
 
       const user = userModel({

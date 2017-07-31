@@ -25,6 +25,9 @@ const attach = (data) => {
   });
 
   passport.deserializeUser((authKey, done) => {
+    if (!authKey) {
+      return done('You are not logged in!', null);
+    }
     return users.findByAuthKey(authKey)
       .then((user) => {
         done(null, user);
