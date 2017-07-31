@@ -4,20 +4,18 @@ const { constants, getDriver, By, until } = require('../../setup-selenium');
 
 const { url, title, timeout, id, expected } = constants;
 
-const { user, collection, movie, comment } = require('../../helpers');
+const { user, movie, comment } = require('../../helpers');
 
 describe('Comment create test:', () => {
   let driver;
   let username;
   let password;
-  let collName;
   let content;
   let movieTitle;
 
   beforeEach(() => {
     username = 'gosho' + Math.floor(Math.random() * 100000);
     password = 'asd123';
-    collName = 'test-collection-123';
     content = 'test-content-123';
 
     driver = getDriver();

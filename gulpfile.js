@@ -6,19 +6,36 @@ const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 const mocha = require('gulp-mocha');
 const istanbul = require('gulp-istanbul');
+const eslint = require('gulp-eslint');
+const { sync } = require('gulp-sync')(gulp);
 
 const config = {
   DB_PATH: 'mongodb://localhost/nodejs-project-test',
   PORT: 8808,
   MONGO_CLIENT: require('mongodb').MongoClient,
-  MOCHA_REPORTER: 'spec',
+  MOCHA_REPORTER: 'dot',
 };
 
 // TESTS
-gulp.task('test', ['tests:unit']);
+gulp.task('test', sync(['tests:eslint', 'tests:unit', 'tests:browser']));
+
+gulp.task('tests:eslint', () => {
+  return gulp.src([
+    '**/*.js',
+    '!node_modules',
+    '!coverage',
+  ])
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
+});
 
 gulp.task('tests:pre', () => {
-  return gulp.src(['./data/**/*.js'])
+  return gulp.src([
+      './data/**/*.js',
+      './utils/**/*.js',
+      './models/**/*.js',
+    ])
     .pipe(istanbul({
       includeUntested: true,
     }))
@@ -31,21 +48,24 @@ gulp.task('tests:unit', ['tests:pre'], () => {
       reporter: config.MOCHA_REPORTER,
     }))
     .pipe(istanbul.writeReports())
-    .on('end', () => {
-      gulp.start('tests:browser');
-    });
+    .pipe(istanbul.enforceThresholds({
+      thresholds: { global: 50 },
+    }));
 });
 
-gulp.task('tests:browser', ['server-start'], () => {
+gulp.task('tests:selenium', () => {
   return gulp.src('tests/browser/tests/**/*.js')
     .pipe(mocha({
       reporter: config.MOCHA_REPORTER,
       timeout: 20000,
-    }))
-    .once('end', () => {
-      gulp.start('server-stop');
-    });
+    }));
 });
+
+gulp.task('tests:browser', sync([
+  'server-start',
+  'tests:selenium',
+  'server-stop',
+]));
 
 // SERVER AND DB
 gulp.task('server-start', () => {

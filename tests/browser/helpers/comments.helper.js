@@ -1,6 +1,6 @@
 const { constants, By, until } = require('../setup-selenium');
 
-const { id, title, timeout } = constants;
+const { id } = constants;
 
 const create = (driver, content, movieTitle) => {
   return driver.findElement(By
