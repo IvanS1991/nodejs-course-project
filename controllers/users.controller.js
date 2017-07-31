@@ -28,7 +28,8 @@ const userController = (data) => {
             if (err) {
               next(err);
             }
-            return res.redirect('/users/profile');
+            return res.status(302)
+              .redirect('/users/profile');
           });
         })
         .catch((err) => {
@@ -37,7 +38,8 @@ const userController = (data) => {
     }
 
     login(req, res, next) {
-      return res.redirect('/users/profile');
+      return res.status(302)
+        .redirect('/users/profile');
     }
 
     profile(req, res, next) {

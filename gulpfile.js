@@ -9,15 +9,17 @@ const istanbul = require('gulp-istanbul');
 const eslint = require('gulp-eslint');
 const { sync } = require('gulp-sync')(gulp);
 
-const config = {
-  DB_PATH: 'mongodb://localhost/nodejs-project-test',
-  PORT: 8808,
-  MONGO_CLIENT: require('mongodb').MongoClient,
-  MOCHA_REPORTER: 'dot',
-};
+const config = require('./constants').TEST;
 
 // TESTS
-gulp.task('test', sync(['tests:eslint', 'tests:unit', 'tests:browser']));
+gulp.task('test', sync([
+  'tests:eslint',
+  'tests:unit',
+  'server:start',
+  'tests:supertest',
+  'tests:selenium',
+  'server:stop',
+]));
 
 gulp.task('tests:eslint', () => {
   return gulp.src([
@@ -62,13 +64,22 @@ gulp.task('tests:selenium', () => {
 });
 
 gulp.task('tests:browser', sync([
-  'server-start',
+  'server:start',
   'tests:selenium',
-  'server-stop',
+  'server:stop',
 ]));
 
+gulp.task('tests:supertest', () => {
+  return gulp.src('tests/integration-tests/tests/**/*.js')
+    .pipe(mocha({
+      reporter: config.MOCHA_REPORTER,
+    }));
+});
+
+gulp.task('tests:integration', sync(['tests:supertest', 'server:stop']));
+
 // SERVER AND DB
-gulp.task('server-start', () => {
+gulp.task('server:start', () => {
   const { DB_PATH, PORT } = config;
   return Promise.resolve()
     .then(() => {
@@ -87,7 +98,7 @@ gulp.task('server-start', () => {
     });
 });
 
-gulp.task('server-stop', () => {
+gulp.task('server:stop', () => {
   const { DB_PATH, MONGO_CLIENT } = config;
   return MONGO_CLIENT.connect(DB_PATH)
     .then((db) => {

@@ -63,6 +63,12 @@ const constants = {
     '#nodejs',
     '#javascript',
   ],
+  TEST: {
+    DB_PATH: 'mongodb://localhost/nodejs-project-test',
+    PORT: 8808,
+    MONGO_CLIENT: require('mongodb').MongoClient,
+    MOCHA_REPORTER: 'dot',
+  },
 };
 
 module.exports = constants;
