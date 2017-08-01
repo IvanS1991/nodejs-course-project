@@ -27,7 +27,9 @@ RUN
 gulp get-movies
 ```
 
-TO FILL THE DB WITH MOVIES (takes some time...)
+TO FILL THE DB WITH MOVIES 
+
+THIS TAKES SOME TIME - change parameters of MOVIE_META in ./constants/index.js if you want to wait less
 
 ## Running the tests
 
