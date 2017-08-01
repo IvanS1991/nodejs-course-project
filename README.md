@@ -19,6 +19,16 @@ or
 yarn
 ```
 
+!!!!!!!!!!
+
+RUN 
+
+```
+gulp get-movies
+```
+
+TO FILL THE DB WITH MOVIES (takes some time...)
+
 ## Running the tests
 
 Run
