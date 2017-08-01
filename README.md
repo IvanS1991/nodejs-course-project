@@ -36,7 +36,14 @@ THIS TAKES SOME TIME - change parameters of MOVIE_META in ./constants/index.js i
 Run
 
 ```
-npm test
+gulp test
+```
+## Running the server
+
+Run
+
+```
+npm start OR npm run dev-server
 ```
 
 ## Built With
