@@ -19,7 +19,7 @@ or
 yarn
 ```
 
-!!!!!!!!!!
+# FILLING THE DB WITH MOVIES
 
 RUN 
 
@@ -27,9 +27,14 @@ RUN
 gulp get-movies
 ```
 
+OR
+```
+gulp get-movies-quick
+```
+
 TO FILL THE DB WITH MOVIES 
 
-THIS TAKES SOME TIME - change parameters of MOVIE_META in ./constants/index.js if you want to wait less
+SECOND ONE IS ALMOST INSTANT, FIRST TAKES SOME TIME
 
 ## Running the tests
 

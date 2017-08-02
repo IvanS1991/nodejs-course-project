@@ -1,6 +1,6 @@
 const constants = {
   PORT: 8000,
-  DB_PATH: 'mongodb://localhost:27017/test',
+  DB_PATH: 'mongodb://localhost:27017/db-express-1',
   ROUTES: {
     USERS: {
       ROOT: '/users',

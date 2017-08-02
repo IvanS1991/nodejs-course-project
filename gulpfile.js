@@ -1,5 +1,5 @@
 /* globals process */
-
+const fs = require('fs');
 const gulp = require('gulp');
 const babel = require('gulp-babel');
 const concat = require('gulp-concat');
@@ -10,6 +10,8 @@ const eslint = require('gulp-eslint');
 const { sync } = require('gulp-sync')(gulp);
 
 const config = require('./constants').TEST;
+
+const moviesFile = './movie-data/data.json';
 
 // TESTS
 gulp.task('test', sync([
@@ -132,6 +134,8 @@ gulp.task('get-movies', (done) => {
   const { MOVIE_META, DB_PATH } = require('./constants');
   const { getId } = require('./utils');
 
+  let movies;
+
   return Promise.resolve()
     .then(() => {
       return require('./db')(DB_PATH);
@@ -142,13 +146,53 @@ gulp.task('get-movies', (done) => {
         ' - started scraping..  .   .    .');
       return scrapeMovies(MOVIE_META.PAGES, ...MOVIE_META.GENRES)
         .then((moviesList) => {
+          console.log('Inserting to DB...');
           moviesList.forEach((movie) => {
             movie.id = getId();
           });
-          return moviesDb.insertMany(moviesList);
+          movies = moviesList;
+          return moviesDb.insertMany(movies);
+        })
+        .then(() => {
+          console.log('Writing data to file...');
+          return new Promise((resolve, reject) => {
+            fs.writeFile(moviesFile, JSON.stringify(movies), (err) => {
+              if (err) {
+                return reject(err);
+              }
+              return resolve();
+            });
+          });
         })
         .then(() => {
           return process.exit();
         });
+    });
+});
+
+gulp.task('get-movies-quick', () => {
+  const { DB_PATH } = require('./constants');
+  const { getId } = require('./utils');
+
+  let movies;
+
+  return Promise.resolve()
+    .then(() => {
+      return require('./movie-data/');
+    })
+    .then((moviesList) => {
+      movies = moviesList;
+      return require('./db')(DB_PATH);
+    })
+    .then((db) => {
+      const moviesDb = db('movies');
+      movies.forEach((movie) => {
+        movie.id = getId();
+      });
+      return moviesDb.insertMany(movies);
+    })
+    .then(() => {
+      console.log('Filled DB with ' + movies.length + ' movies.');
+      return process.exit();
     });
 });
