@@ -8,6 +8,7 @@
   "license": "MIT",
   "scripts": {
     "scrap": "gulp get-movies",
+    "prestart": "gulp get-movies-quick",
     "start": "node server.js",
     "test": "gulp test",
     "dev-server": "./node_modules/.bin/nodemon server.js",

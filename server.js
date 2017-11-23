@@ -1,4 +1,7 @@
 const { PORT, DB_PATH } = require('./constants');
+const process = require('process');
+
+const port = process.env.PORT || PORT;
 
 Promise.resolve()
   .then(() => {
@@ -11,7 +14,7 @@ Promise.resolve()
   })
   .then((options) => {
     const { server } = options;
-    return server.listen(PORT, null, null, () => {
-      console.log(`Listening on :${PORT}...`);
+    return server.listen(port, null, null, () => {
+      console.log(`Listening on :${port}...`);
     });
   });
