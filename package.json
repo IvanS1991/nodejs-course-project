@@ -7,10 +7,10 @@
   "author": "Ivan Shtarbanov <haifischy91@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "scrap": "gulp get-movies",
-    "prestart": "gulp get-movies-quick",
+    "scrap": "./node_modules/.bin/gulp get-movies",
+    "prestart": "./node_modules/.bin/gulp get-movies-quick",
     "start": "node server.js",
-    "test": "gulp test",
+    "test": "./node_modules/.bin/gulp test",
     "dev-server": "./node_modules/.bin/nodemon server.js",
     "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha tests/unit-tests/**/*.js",
     "eslint-check": "./node_modules/.bin/eslint .",
